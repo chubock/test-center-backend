@@ -50,7 +50,6 @@ public class File implements Serializable {
     }
 
     @NotNull
-    @Column(length = 1024 * 1024 * 10)
     public long getSize() {
         return size;
     }
@@ -59,6 +58,8 @@ public class File implements Serializable {
         this.size = size;
     }
 
+    @NotNull
+    @Column(length = 1024 * 1024 * 100)
     public byte[] getContent() {
         return content;
     }
