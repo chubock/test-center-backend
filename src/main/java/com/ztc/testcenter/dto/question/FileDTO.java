@@ -1,29 +1,18 @@
-package com.ztc.testcenter.dto;
+package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.File;
+import com.ztc.testcenter.dto.AbstractDTO;
 
 /**
  * Created by Yubar on 1/15/2017.
  */
-public class FileDTO {
+public class FileDTO extends AbstractDTO<File> {
 
     private long id;
     private String name;
     private String contentType;
     private long size;
     private byte[] content;
-
-    public FileDTO() {
-    }
-
-    public FileDTO(File file) {
-        if (file != null) {
-            setId(file.getId());
-            setName(file.getName());
-            setContentType(file.getContentType());
-            setSize(file.getSize());
-        }
-    }
 
     public long getId() {
         return id;
@@ -63,6 +52,31 @@ public class FileDTO {
 
     public void setContent(byte[] content) {
         this.content = content;
+    }
+
+    public File convert() {
+        File file = new File();
+        file.setId(getId());
+        file.setContentType(getContentType());
+        file.setName(getName());
+        file.setSize(getSize());
+        file.setContent(getContent());
+        return file;
+    }
+
+    void copy(File file) {
+        setId(file.getId());
+        setName(file.getName());
+        setContentType(file.getContentType());
+        setSize(file.getSize());
+    }
+
+    public static FileDTO valueOf(File file) {
+        if (file == null)
+            return null;
+        FileDTO fileDTO = new FileDTO();
+        fileDTO.copy(file);
+        return fileDTO;
     }
 
 }
