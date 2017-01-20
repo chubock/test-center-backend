@@ -3,6 +3,7 @@ package com.ztc.testcenter.dto.question;
 import com.ztc.testcenter.domain.question.Difficulty;
 import com.ztc.testcenter.domain.question.Question;
 import com.ztc.testcenter.dto.AbstractDTO;
+import com.ztc.testcenter.dto.FileDTO;
 
 /**
  * Created by Yubar on 1/19/2017.

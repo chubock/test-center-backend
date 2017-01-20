@@ -1,7 +1,6 @@
-package com.ztc.testcenter.dto.question;
+package com.ztc.testcenter.dto;
 
 import com.ztc.testcenter.domain.File;
-import com.ztc.testcenter.dto.AbstractDTO;
 
 /**
  * Created by Yubar on 1/15/2017.

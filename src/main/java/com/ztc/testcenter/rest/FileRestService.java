@@ -3,7 +3,7 @@ package com.ztc.testcenter.rest;
 import com.ztc.testcenter.domain.File;
 import com.ztc.testcenter.dto.FileDTO;
 import com.ztc.testcenter.repository.FileRepository;
-import com.ztc.testcenter.service.FileService;
+import com.ztc.testcenter.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
 
 /**
  * Created by Yubar on 1/15/2017.
@@ -24,11 +23,15 @@ import java.security.Principal;
 @RequestMapping("/files")
 public class FileRestService {
 
-    @Autowired
-    FileRepository fileRepository;
+    final private FileRepository fileRepository;
+
+    final private ManagerService managerService;
 
     @Autowired
-    FileService fileService;
+    public FileRestService(FileRepository fileRepository, ManagerService managerService) {
+        this.fileRepository = fileRepository;
+        this.managerService = managerService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public void getFile(@PathVariable long id, HttpServletResponse response) throws IOException {
@@ -52,8 +55,8 @@ public class FileRestService {
             f.setContentType(file.getContentType());
             f.setSize(file.getSize());
             f.setContent(file.getBytes());
-            f = fileService.saveFile(f);
-            return new FileDTO(f);
+            f = managerService.saveFile(f);
+            return FileDTO.valueOf(f);
         } else {
             return null;
         }
