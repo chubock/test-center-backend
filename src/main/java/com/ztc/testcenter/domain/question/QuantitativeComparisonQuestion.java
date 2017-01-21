@@ -14,8 +14,17 @@ import java.util.List;
 @Entity
 public class QuantitativeComparisonQuestion extends Question {
 
+    private String quantityB;
     private int answer;
     private List<Choice> choices = new ArrayList<>();
+
+    public String getQuantityB() {
+        return quantityB;
+    }
+
+    public void setQuantityB(String quantityB) {
+        this.quantityB = quantityB;
+    }
 
     public int getAnswer() {
         return answer;

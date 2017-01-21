@@ -11,8 +11,17 @@ import java.util.List;
  */
 public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
 
+    private String quantityB;
     private int answer;
     private List<Choice> choices = new ArrayList<>();
+
+    public String getQuantityB() {
+        return quantityB;
+    }
+
+    public void setQuantityB(String quantityB) {
+        this.quantityB = quantityB;
+    }
 
     public int getAnswer() {
         return answer;
@@ -32,6 +41,7 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
 
     void convert(QuantitativeComparisonQuestion question) {
         super.convert(question);
+        question.setQuantityB(getQuantityB());
         question.setAnswer(getAnswer());
         getChoices().forEach(choice -> question.getChoices().add(choice.clone()));
     }
@@ -45,6 +55,7 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
 
     void copy(QuantitativeComparisonQuestion question) {
         super.copy(question);
+        setQuantityB(question.getQuantityB());
         getChoices().clear();
         question.getChoices().forEach(choice -> getChoices().add(choice.clone()));
     }
