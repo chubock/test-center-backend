@@ -33,8 +33,8 @@ public class QuantitativeSingleAnswerQuestionRestService implements QuestionRest
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public QuantitativeSingleAnswerQuestionDTO save(@RequestBody QuantitativeSingleAnswerQuestionDTO sentenceEquivalenceQuestionDTO) {
-        QuantitativeSingleAnswerQuestion question = sentenceEquivalenceQuestionDTO.convert();
+    public QuantitativeSingleAnswerQuestionDTO save(@RequestBody QuantitativeSingleAnswerQuestionDTO questionDTO) {
+        QuantitativeSingleAnswerQuestion question = questionDTO.convert();
         question = (QuantitativeSingleAnswerQuestion) managerService.saveQuestion(question);
         return QuantitativeSingleAnswerQuestionDTO.valueOf(question);
     }

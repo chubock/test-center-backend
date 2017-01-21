@@ -33,8 +33,8 @@ public class NumericQuestionRestService implements QuestionRestService<NumericQu
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public NumericQuestionDTO save(@RequestBody NumericQuestionDTO sentenceEquivalenceQuestionDTO) {
-        NumericQuestion question = sentenceEquivalenceQuestionDTO.convert();
+    public NumericQuestionDTO save(@RequestBody NumericQuestionDTO questionDTO) {
+        NumericQuestion question = questionDTO.convert();
         question = (NumericQuestion) managerService.saveQuestion(question);
         return NumericQuestionDTO.valueOf(question);
     }

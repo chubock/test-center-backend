@@ -33,8 +33,8 @@ public class SelectInPassageQuestionRestService implements QuestionRestService<S
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public SelectInPassageQuestionDTO save(@RequestBody SelectInPassageQuestionDTO sentenceEquivalenceQuestionDTO) {
-        SelectInPassageQuestion question = sentenceEquivalenceQuestionDTO.convert();
+    public SelectInPassageQuestionDTO save(@RequestBody SelectInPassageQuestionDTO questionDTO) {
+        SelectInPassageQuestion question = questionDTO.convert();
         question = (SelectInPassageQuestion) managerService.saveQuestion(question);
         return SelectInPassageQuestionDTO.valueOf(question);
     }

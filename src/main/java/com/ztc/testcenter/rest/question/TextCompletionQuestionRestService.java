@@ -33,8 +33,8 @@ public class TextCompletionQuestionRestService implements QuestionRestService<Te
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public TextCompletionQuestionDTO save(@RequestBody TextCompletionQuestionDTO sentenceEquivalenceQuestionDTO) {
-        TextCompletionQuestion question = sentenceEquivalenceQuestionDTO.convert();
+    public TextCompletionQuestionDTO save(@RequestBody TextCompletionQuestionDTO questionDTO) {
+        TextCompletionQuestion question = questionDTO.convert();
         question = (TextCompletionQuestion) managerService.saveQuestion(question);
         return TextCompletionQuestionDTO.valueOf(question);
     }

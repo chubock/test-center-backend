@@ -33,8 +33,8 @@ public class QuantitativeMultipleAnswerQuestionRestService implements QuestionRe
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public QuantitativeMultipleAnswerQuestionDTO save(@RequestBody QuantitativeMultipleAnswerQuestionDTO sentenceEquivalenceQuestionDTO) {
-        QuantitativeMultipleAnswerQuestion question = sentenceEquivalenceQuestionDTO.convert();
+    public QuantitativeMultipleAnswerQuestionDTO save(@RequestBody QuantitativeMultipleAnswerQuestionDTO questionDTO) {
+        QuantitativeMultipleAnswerQuestion question = questionDTO.convert();
         question = (QuantitativeMultipleAnswerQuestion) managerService.saveQuestion(question);
         return QuantitativeMultipleAnswerQuestionDTO.valueOf(question);
     }

@@ -33,8 +33,8 @@ public class ReadingComprehensionMultipleAnswerQuestionRestService implements Qu
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ReadingComprehensionMultipleAnswerQuestionDTO save(@RequestBody ReadingComprehensionMultipleAnswerQuestionDTO sentenceEquivalenceQuestionDTO) {
-        ReadingComprehensionMultipleAnswerQuestion question = sentenceEquivalenceQuestionDTO.convert();
+    public ReadingComprehensionMultipleAnswerQuestionDTO save(@RequestBody ReadingComprehensionMultipleAnswerQuestionDTO questionDTO) {
+        ReadingComprehensionMultipleAnswerQuestion question = questionDTO.convert();
         question = (ReadingComprehensionMultipleAnswerQuestion) managerService.saveQuestion(question);
         return ReadingComprehensionMultipleAnswerQuestionDTO.valueOf(question);
     }

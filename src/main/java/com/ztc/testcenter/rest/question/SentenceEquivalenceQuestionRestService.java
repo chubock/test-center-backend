@@ -33,8 +33,8 @@ public class SentenceEquivalenceQuestionRestService implements QuestionRestServi
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public SentenceEquivalenceQuestionDTO save(@RequestBody SentenceEquivalenceQuestionDTO sentenceEquivalenceQuestionDTO) {
-        SentenceEquivalenceQuestion question = sentenceEquivalenceQuestionDTO.convert();
+    public SentenceEquivalenceQuestionDTO save(@RequestBody SentenceEquivalenceQuestionDTO questionDTO) {
+        SentenceEquivalenceQuestion question = questionDTO.convert();
         question = (SentenceEquivalenceQuestion) managerService.saveQuestion(question);
         return SentenceEquivalenceQuestionDTO.valueOf(question);
     }

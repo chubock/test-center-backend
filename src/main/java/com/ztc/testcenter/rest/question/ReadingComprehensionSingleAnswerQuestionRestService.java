@@ -33,8 +33,8 @@ public class ReadingComprehensionSingleAnswerQuestionRestService implements Ques
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ReadingComprehensionSingleAnswerQuestionDTO save(@RequestBody ReadingComprehensionSingleAnswerQuestionDTO sentenceEquivalenceQuestionDTO) {
-        ReadingComprehensionSingleAnswerQuestion question = sentenceEquivalenceQuestionDTO.convert();
+    public ReadingComprehensionSingleAnswerQuestionDTO save(@RequestBody ReadingComprehensionSingleAnswerQuestionDTO questionDTO) {
+        ReadingComprehensionSingleAnswerQuestion question = questionDTO.convert();
         question = (ReadingComprehensionSingleAnswerQuestion) managerService.saveQuestion(question);
         return ReadingComprehensionSingleAnswerQuestionDTO.valueOf(question);
     }
