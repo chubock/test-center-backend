@@ -7,5 +7,5 @@ import javax.persistence.Entity;
  */
 
 @Entity
-public class QuantitativeSingleAnswerQuestion extends ThreeChoiceQuestion {
+public class QuantitativeSingleAnswerQuestion extends FiveChoiceQuestion {
 }
