@@ -9,16 +9,16 @@ import javax.persistence.Entity;
 @Entity
 public class NumericQuestion extends Question {
 
-    private long nominator;
+    private long nominatorAnswer;
     private boolean fraction;
-    private long denominator;
+    private long denominatorAnswer;
 
-    public long getNominator() {
-        return nominator;
+    public long getNominatorAnswer() {
+        return nominatorAnswer;
     }
 
-    public void setNominator(long nominator) {
-        this.nominator = nominator;
+    public void setNominatorAnswer(long nominatorAnswer) {
+        this.nominatorAnswer = nominatorAnswer;
     }
 
     public boolean isFraction() {
@@ -29,11 +29,11 @@ public class NumericQuestion extends Question {
         this.fraction = fraction;
     }
 
-    public long getDenominator() {
-        return denominator;
+    public long getDenominatorAnswer() {
+        return denominatorAnswer;
     }
 
-    public void setDenominator(long denominator) {
-        this.denominator = denominator;
+    public void setDenominatorAnswer(long denominatorAnswer) {
+        this.denominatorAnswer = denominatorAnswer;
     }
 }

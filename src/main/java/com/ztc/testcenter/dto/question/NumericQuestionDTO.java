@@ -7,16 +7,16 @@ import com.ztc.testcenter.domain.question.NumericQuestion;
  */
 public class NumericQuestionDTO extends QuestionDTO {
 
-    private long nominator;
+    private long nominatorAnswer;
     private boolean fraction;
-    private long denominator;
+    private long denominatorAnswer;
 
-    public long getNominator() {
-        return nominator;
+    public long getNominatorAnswer() {
+        return nominatorAnswer;
     }
 
-    public void setNominator(long nominator) {
-        this.nominator = nominator;
+    public void setNominatorAnswer(long nominatorAnswer) {
+        this.nominatorAnswer = nominatorAnswer;
     }
 
     public boolean isFraction() {
@@ -27,19 +27,19 @@ public class NumericQuestionDTO extends QuestionDTO {
         this.fraction = fraction;
     }
 
-    public long getDenominator() {
-        return denominator;
+    public long getDenominatorAnswer() {
+        return denominatorAnswer;
     }
 
-    public void setDenominator(long denominator) {
-        this.denominator = denominator;
+    public void setDenominatorAnswer(long denominatorAnswer) {
+        this.denominatorAnswer = denominatorAnswer;
     }
 
     void convert(NumericQuestion question) {
         super.convert(question);
-        question.setNominator(getNominator());
+        question.setNominatorAnswer(getNominatorAnswer());
         question.setFraction(isFraction());
-        question.setDenominator(getDenominator());
+        question.setDenominatorAnswer(getDenominatorAnswer());
     }
 
     @Override
@@ -51,9 +51,9 @@ public class NumericQuestionDTO extends QuestionDTO {
 
     void copy(NumericQuestion question) {
         super.copy(question);
-        setNominator(question.getNominator());
+        setNominatorAnswer(question.getNominatorAnswer());
         setFraction(question.isFraction());
-        setDenominator(question.getDenominator());
+        setDenominatorAnswer(question.getDenominatorAnswer());
     }
 
     public static NumericQuestionDTO valueOf(NumericQuestion question) {
