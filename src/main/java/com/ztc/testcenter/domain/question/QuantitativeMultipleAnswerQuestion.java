@@ -8,4 +8,14 @@ import javax.persistence.Entity;
 
 @Entity
 public class QuantitativeMultipleAnswerQuestion extends ThreeChoiceQuestion {
+
+    private int maxAnswerCount = 0;
+
+    public int getMaxAnswerCount() {
+        return maxAnswerCount;
+    }
+
+    public void setMaxAnswerCount(int maxAnswerCount) {
+        this.maxAnswerCount = maxAnswerCount;
+    }
 }
