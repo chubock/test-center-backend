@@ -7,6 +7,6 @@ import javax.persistence.Entity;
  */
 
 @Entity
-public class ReadingComprehensionMultipleAnswerQuestion extends FiveChoiceQuestion {
+public class ReadingComprehensionMultipleAnswerQuestion extends ThreeChoiceQuestion {
 
 }
