@@ -29,7 +29,8 @@ public class TextCompletionQuestionRestService implements QuestionRestService<Te
 
     @RequestMapping(method = RequestMethod.GET)
     public Page<TextCompletionQuestionDTO> getQuestions(Pageable pageable) {
-        return repository.findAll(pageable).map(TextCompletionQuestionDTO::valueOf);
+        Page<TextCompletionQuestion> allWithItems = repository.findAllWithItems(pageable);
+        return allWithItems.map(TextCompletionQuestionDTO::valueOf);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
