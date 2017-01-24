@@ -1,6 +1,7 @@
 package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.TextCompletionQuestion;
+import com.ztc.testcenter.domain.question.TextCompletionQuestionItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,11 @@ public class TextCompletionQuestionDTO extends QuestionDTO {
     void convert(TextCompletionQuestion question) {
         super.convert(question);
         question.getItems().clear();
-        getItems().forEach(item -> question.getItems().add(item.convert()));
+        getItems().forEach(itemDTO -> {
+            TextCompletionQuestionItem item = itemDTO.convert();
+            item.setQuestion(question);
+            question.getItems().add(item);
+        });
     }
 
     @Override
