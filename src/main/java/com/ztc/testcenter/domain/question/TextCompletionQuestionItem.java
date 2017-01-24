@@ -2,6 +2,8 @@ package com.ztc.testcenter.domain.question;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Yubar on 1/20/2017.
@@ -18,6 +20,7 @@ public class TextCompletionQuestionItem {
     private String choice5;
     private int answer;
     private TextCompletionQuestion question;
+    private List<Choice> choices = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,12 +83,46 @@ public class TextCompletionQuestionItem {
         this.answer = answer;
     }
 
-    @ManyToOne
+    @NotNull
+    @ManyToOne(optional = false)
     public TextCompletionQuestion getQuestion() {
         return question;
     }
 
     public void setQuestion(TextCompletionQuestion question) {
         this.question = question;
+    }
+
+    @Transient
+    public List<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
+    }
+
+    public void prepare() {
+        setChoice1(getChoices().get(0).getText());
+        setChoice2(getChoices().get(1).getText());
+        setChoice3(getChoices().get(2).getText());
+        setChoice4(getChoices().get(3).getText());
+        setChoice5(getChoices().get(4).getText());
+        for (int i = 0; i < getChoices().size(); i++)
+            if (getChoices().get(i).isAnswer())
+                setAnswer(i);
+    }
+
+    @PostLoad
+    @PostUpdate
+    void afterLoad() {
+        if (getChoices().isEmpty()) {
+            getChoices().add(new Choice(choice1));
+            getChoices().add(new Choice(choice2));
+            getChoices().add(new Choice(choice3));
+            getChoices().add(new Choice(choice4));
+            getChoices().add(new Choice(choice5));
+            getChoices().get(this.answer).setAnswer(true);
+        }
     }
 }
