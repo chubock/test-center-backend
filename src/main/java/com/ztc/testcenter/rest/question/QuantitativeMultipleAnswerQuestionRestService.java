@@ -35,7 +35,7 @@ public class QuantitativeMultipleAnswerQuestionRestService implements QuestionRe
     @RequestMapping(method = RequestMethod.PUT)
     public QuantitativeMultipleAnswerQuestionDTO save(@RequestBody QuantitativeMultipleAnswerQuestionDTO questionDTO) {
         QuantitativeMultipleAnswerQuestion question = questionDTO.convert();
-        question = (QuantitativeMultipleAnswerQuestion) managerService.saveQuestion(question);
+        question = (QuantitativeMultipleAnswerQuestion) managerService.save(question);
         return QuantitativeMultipleAnswerQuestionDTO.valueOf(question);
     }
 

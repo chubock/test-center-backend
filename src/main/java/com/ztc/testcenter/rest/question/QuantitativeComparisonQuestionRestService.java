@@ -35,7 +35,7 @@ public class QuantitativeComparisonQuestionRestService implements QuestionRestSe
     @RequestMapping(method = RequestMethod.PUT)
     public QuantitativeComparisonQuestionDTO save(@RequestBody QuantitativeComparisonQuestionDTO questionDTO) {
         QuantitativeComparisonQuestion question = questionDTO.convert();
-        question = (QuantitativeComparisonQuestion) managerService.saveQuestion(question);
+        question = (QuantitativeComparisonQuestion) managerService.save(question);
         return QuantitativeComparisonQuestionDTO.valueOf(question);
     }
 

@@ -19,7 +19,6 @@ public class TextCompletionQuestionItem {
     private String choice4;
     private String choice5;
     private int answer;
-    private TextCompletionQuestion question;
     private List<Choice> choices = new ArrayList<>();
 
     @Id
@@ -83,16 +82,6 @@ public class TextCompletionQuestionItem {
         this.answer = answer;
     }
 
-    @NotNull
-    @ManyToOne(optional = false)
-    public TextCompletionQuestion getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(TextCompletionQuestion question) {
-        this.question = question;
-    }
-
     @Transient
     public List<Choice> getChoices() {
         return choices;
@@ -102,12 +91,17 @@ public class TextCompletionQuestionItem {
         this.choices = choices;
     }
 
-    public void prepare() {
+    void prepare() {
         setChoice1(getChoices().get(0).getText());
         setChoice2(getChoices().get(1).getText());
         setChoice3(getChoices().get(2).getText());
-        setChoice4(getChoices().get(3).getText());
-        setChoice5(getChoices().get(4).getText());
+        if (getChoices().size() > 3) {
+            setChoice4(getChoices().get(3).getText());
+            setChoice5(getChoices().get(4).getText());
+        } else {
+            setChoice4(null);
+            setChoice5(null);
+        }
         for (int i = 0; i < getChoices().size(); i++)
             if (getChoices().get(i).isAnswer())
                 setAnswer(i);
@@ -115,14 +109,14 @@ public class TextCompletionQuestionItem {
 
     @PostLoad
     @PostUpdate
-    void afterLoad() {
-        if (getChoices().isEmpty()) {
-            getChoices().add(new Choice(choice1));
-            getChoices().add(new Choice(choice2));
-            getChoices().add(new Choice(choice3));
+    public void populateChoices() {
+        getChoices().add(new Choice(choice1));
+        getChoices().add(new Choice(choice2));
+        getChoices().add(new Choice(choice3));
+        if (choice4 != null)
             getChoices().add(new Choice(choice4));
+        if (choice5 != null)
             getChoices().add(new Choice(choice5));
-            getChoices().get(this.answer).setAnswer(true);
-        }
+        getChoices().get(this.answer).setAnswer(true);
     }
 }

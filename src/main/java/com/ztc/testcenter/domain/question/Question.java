@@ -10,16 +10,18 @@ import java.io.Serializable;
  */
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING)
 public abstract class Question implements Serializable {
 
     private long id;
     private String text;
     private File image;
     private Difficulty difficulty = Difficulty.MEDIUM;
+    private String answers;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
@@ -51,6 +53,14 @@ public abstract class Question implements Serializable {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    String getAnswers() {
+        return answers;
+    }
+
+    void setAnswers(String answers) {
+        this.answers = answers;
     }
 
     public void prepare() {

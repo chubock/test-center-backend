@@ -1,8 +1,6 @@
 package com.ztc.testcenter.domain.question;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +9,13 @@ import java.util.List;
  */
 
 @Entity
+@DiscriminatorValue("TEXT_COMPLETION")
 public class TextCompletionQuestion extends Question {
 
     List<TextCompletionQuestionItem> items = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "question_id")
     public List<TextCompletionQuestionItem> getItems() {
         return items;
     }
@@ -23,4 +23,10 @@ public class TextCompletionQuestion extends Question {
     public void setItems(List<TextCompletionQuestionItem> items) {
         this.items = items;
     }
+
+    @Override
+    public void prepare(){
+        getItems().forEach(item -> item.prepare());
+    }
+
 }

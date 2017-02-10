@@ -25,11 +25,11 @@ public class ManagerService {
         this.fileRepository = fileRepository;
     }
 
-    public File saveFile(File file) {
+    public File save(File file) {
         return fileRepository.save(file);
     }
 
-    public Question saveQuestion(Question question) {
+    public Question save(Question question) {
         question.prepare();
         return questionRepository.save(question);
     }

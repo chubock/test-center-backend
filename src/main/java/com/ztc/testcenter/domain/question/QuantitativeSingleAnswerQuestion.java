@@ -1,5 +1,6 @@
 package com.ztc.testcenter.domain.question;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
@@ -7,5 +8,6 @@ import javax.persistence.Entity;
  */
 
 @Entity
-public class QuantitativeSingleAnswerQuestion extends FiveChoiceQuestion {
+@DiscriminatorValue("Q_SINGLE_ANSWER")
+public class QuantitativeSingleAnswerQuestion extends AbstractQuantitativeSingleAnswerQuestion {
 }

@@ -1,5 +1,6 @@
 package com.ztc.testcenter.domain.question;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
@@ -7,15 +8,7 @@ import javax.persistence.Entity;
  */
 
 @Entity
-public class QuantitativeMultipleAnswerQuestion extends ThreeChoiceQuestion {
+@DiscriminatorValue("Q_MULTIPLE_ANSWER")
+public class QuantitativeMultipleAnswerQuestion extends AbstractQuantitativeMultipleAnswerQuestion {
 
-    private int maxAnswerCount = 0;
-
-    public int getMaxAnswerCount() {
-        return maxAnswerCount;
-    }
-
-    public void setMaxAnswerCount(int maxAnswerCount) {
-        this.maxAnswerCount = maxAnswerCount;
-    }
 }

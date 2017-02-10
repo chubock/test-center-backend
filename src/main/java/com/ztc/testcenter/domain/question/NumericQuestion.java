@@ -1,5 +1,6 @@
 package com.ztc.testcenter.domain.question;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
@@ -7,33 +8,7 @@ import javax.persistence.Entity;
  */
 
 @Entity
-public class NumericQuestion extends Question {
+@DiscriminatorValue("NUMERIC")
+public class NumericQuestion extends AbstractNumericQuestion {
 
-    private long nominatorAnswer;
-    private boolean fraction;
-    private long denominatorAnswer;
-
-    public long getNominatorAnswer() {
-        return nominatorAnswer;
-    }
-
-    public void setNominatorAnswer(long nominatorAnswer) {
-        this.nominatorAnswer = nominatorAnswer;
-    }
-
-    public boolean isFraction() {
-        return fraction;
-    }
-
-    public void setFraction(boolean fraction) {
-        this.fraction = fraction;
-    }
-
-    public long getDenominatorAnswer() {
-        return denominatorAnswer;
-    }
-
-    public void setDenominatorAnswer(long denominatorAnswer) {
-        this.denominatorAnswer = denominatorAnswer;
-    }
 }

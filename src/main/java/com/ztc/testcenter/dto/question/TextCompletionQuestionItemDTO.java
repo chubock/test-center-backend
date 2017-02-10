@@ -14,7 +14,6 @@ import java.util.List;
 public class TextCompletionQuestionItemDTO extends AbstractDTO<TextCompletionQuestionItem> {
 
     private long id;
-    private TextCompletionQuestionDTO question;
     private List<Choice> choices = new ArrayList<>();
 
     public long getId() {
@@ -23,14 +22,6 @@ public class TextCompletionQuestionItemDTO extends AbstractDTO<TextCompletionQue
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public TextCompletionQuestionDTO getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(TextCompletionQuestionDTO question) {
-        this.question = question;
     }
 
     public List<Choice> getChoices() {
@@ -45,8 +36,6 @@ public class TextCompletionQuestionItemDTO extends AbstractDTO<TextCompletionQue
     public TextCompletionQuestionItem convert() {
         TextCompletionQuestionItem item = new TextCompletionQuestionItem();
         getChoices().forEach(choice -> item.getChoices().add(choice.clone()));
-        if (getQuestion() != null)
-            item.setQuestion(getQuestion().convert());
         return item;
     }
 

@@ -1,9 +1,6 @@
 package com.ztc.testcenter.domain.question;
 
-import javax.persistence.Entity;
-import javax.persistence.PostLoad;
-import javax.persistence.PostUpdate;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +9,10 @@ import java.util.List;
  */
 
 @Entity
+@DiscriminatorValue("Q_COMPARISON")
 public class QuantitativeComparisonQuestion extends Question {
 
     private String quantityB;
-    private int answer;
 
     public String getQuantityB() {
         return quantityB;
@@ -25,11 +22,12 @@ public class QuantitativeComparisonQuestion extends Question {
         this.quantityB = quantityB;
     }
 
+    @Transient
     public int getAnswer() {
-        return answer;
+        return Integer.valueOf(getAnswers());
     }
 
     public void setAnswer(int answer) {
-        this.answer = answer;
+        setAnswers(String.valueOf(answer));
     }
 }

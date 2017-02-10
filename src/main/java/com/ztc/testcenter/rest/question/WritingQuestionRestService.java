@@ -35,7 +35,7 @@ public class WritingQuestionRestService implements QuestionRestService<WritingQu
     @RequestMapping(method = RequestMethod.PUT)
     public WritingQuestionDTO save(@RequestBody WritingQuestionDTO questionDTO) {
         WritingQuestion question = questionDTO.convert();
-        question = (WritingQuestion) managerService.saveQuestion(question);
+        question = (WritingQuestion) managerService.save(question);
         return WritingQuestionDTO.valueOf(question);
     }
 

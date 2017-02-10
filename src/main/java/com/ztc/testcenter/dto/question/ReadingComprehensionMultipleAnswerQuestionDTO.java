@@ -6,6 +6,26 @@ import com.ztc.testcenter.domain.question.ReadingComprehensionMultipleAnswerQues
  * Created by Yubar on 1/20/2017.
  */
 public class ReadingComprehensionMultipleAnswerQuestionDTO extends ChoicesQuestionDTO {
+    private int number;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void convert(ReadingComprehensionMultipleAnswerQuestion question) {
+        super.convert(question);
+        question.setNumber(getNumber());
+    }
+
+    public void copy(ReadingComprehensionMultipleAnswerQuestion question) {
+        super.copy(question);
+        setNumber(question.getNumber());
+    }
+
     @Override
     public ReadingComprehensionMultipleAnswerQuestion convert() {
         ReadingComprehensionMultipleAnswerQuestion question = new ReadingComprehensionMultipleAnswerQuestion();

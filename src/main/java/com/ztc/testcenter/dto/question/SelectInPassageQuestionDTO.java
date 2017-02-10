@@ -7,7 +7,16 @@ import com.ztc.testcenter.domain.question.SelectInPassageQuestion;
  */
 public class SelectInPassageQuestionDTO extends QuestionDTO {
 
+    private int number;
     private int answer;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public int getAnswer() {
         return answer;
@@ -19,6 +28,7 @@ public class SelectInPassageQuestionDTO extends QuestionDTO {
 
     void convert(SelectInPassageQuestion question) {
         super.convert(question);
+        question.setNumber(getNumber());
         question.setAnswer(getAnswer());
     }
 
@@ -32,6 +42,7 @@ public class SelectInPassageQuestionDTO extends QuestionDTO {
     void copy(SelectInPassageQuestion question) {
         super.copy(question);
         setAnswer(question.getAnswer());
+        setNumber(question.getNumber());
     }
 
     public static SelectInPassageQuestionDTO valueOf(SelectInPassageQuestion question) {

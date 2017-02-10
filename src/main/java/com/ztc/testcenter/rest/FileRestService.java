@@ -47,7 +47,7 @@ public class FileRestService {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public FileDTO uploadFile(MultipartHttpServletRequest request) throws IOException {
+    public long uploadFile(MultipartHttpServletRequest request) throws IOException {
         MultipartFile file = request.getFile("file");
         if (file != null) {
             File f = new File();
@@ -55,10 +55,10 @@ public class FileRestService {
             f.setContentType(file.getContentType());
             f.setSize(file.getSize());
             f.setContent(file.getBytes());
-            f = managerService.saveFile(f);
-            return FileDTO.valueOf(f);
+            f = managerService.save(f);
+            return f.getId();
         } else {
-            return null;
+            return 0;
         }
     }
 }

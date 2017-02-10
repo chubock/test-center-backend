@@ -7,5 +7,6 @@ import javax.persistence.*;
  */
 
 @Entity
+@DiscriminatorValue("SENTENCE_EQUIVALENCE")
 public class SentenceEquivalenceQuestion extends SixChoiceQuestion {
 }

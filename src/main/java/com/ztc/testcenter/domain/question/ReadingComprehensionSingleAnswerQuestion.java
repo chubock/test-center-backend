@@ -1,5 +1,6 @@
 package com.ztc.testcenter.domain.question;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
@@ -7,6 +8,17 @@ import javax.persistence.Entity;
  */
 
 @Entity
+@DiscriminatorValue("RC_SINGLE_ANSWER")
 public class ReadingComprehensionSingleAnswerQuestion extends FiveChoiceQuestion {
+
+    private int number;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
 }

@@ -12,17 +12,7 @@ import java.util.List;
 @MappedSuperclass
 public abstract class ChoiceQuestion extends Question {
 
-    private String answers;
     private List<Choice> choices = new ArrayList<>();
-
-    @NotNull
-    String getAnswers() {
-        return answers;
-    }
-
-    void setAnswers(String answers) {
-        this.answers = answers;
-    }
 
     @Transient
     public List<Choice> getChoices() {
@@ -49,7 +39,7 @@ public abstract class ChoiceQuestion extends Question {
             if (getChoices().get(i).isAnswer())
                 answersBuilder.append(i);
         }
-        this.answers = answersBuilder.toString();
+        this.setAnswers(answersBuilder.toString());
     }
 
     @Override
@@ -59,6 +49,7 @@ public abstract class ChoiceQuestion extends Question {
 
     @PostLoad
     @PostUpdate
+    @PostPersist
     void afterLoad() {
         populateChoices();
         markAnswers();

@@ -24,11 +24,7 @@ public class TextCompletionQuestionDTO extends QuestionDTO {
     void convert(TextCompletionQuestion question) {
         super.convert(question);
         question.getItems().clear();
-        getItems().forEach(itemDTO -> {
-            TextCompletionQuestionItem item = itemDTO.convert();
-            item.setQuestion(question);
-            question.getItems().add(item);
-        });
+        getItems().forEach(itemDTO -> question.getItems().add(itemDTO.convert()));
     }
 
     @Override

@@ -36,7 +36,8 @@ public class TextCompletionQuestionRestService implements QuestionRestService<Te
     @RequestMapping(method = RequestMethod.PUT)
     public TextCompletionQuestionDTO save(@RequestBody TextCompletionQuestionDTO questionDTO) {
         TextCompletionQuestion question = questionDTO.convert();
-        question = (TextCompletionQuestion) managerService.saveQuestion(question);
+        question = (TextCompletionQuestion) managerService.save(question);
+        question.getItems().forEach(item -> item.populateChoices());
         return TextCompletionQuestionDTO.valueOf(question);
     }
 
