@@ -11,4 +11,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("NUMERIC")
 public class NumericQuestion extends AbstractNumericQuestion {
 
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_NUMERIC;
+    }
 }

@@ -9,7 +9,6 @@ import javax.persistence.Transient;
  */
 
 @Entity
-@DiscriminatorValue("SELECT_IN_PASSAGE")
 public class SelectInPassageQuestion extends Question {
 
     private int number;
@@ -31,4 +30,8 @@ public class SelectInPassageQuestion extends Question {
         setAnswers(String.valueOf(answer));
     }
 
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_READING_COMPREHENSION_SELECT_IN_PASSAGE;
+    }
 }

@@ -20,4 +20,9 @@ public class DataInterpretationNumericQuestion extends AbstractNumericQuestion {
     public void setNumber(int number) {
         this.number = number;
     }
+
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_DATA_INTERPRETATION_SET_NUMERIC;
+    }
 }

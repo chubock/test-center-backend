@@ -47,6 +47,11 @@ public class DataInterpretationSetQuestion extends Question {
     }
 
     @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_DATA_INTERPRETATION_SET;
+    }
+
+    @Override
     public void prepare() {
         getNumericQuestions().forEach(question -> question.prepare());
         getMultipleAnswerQuestions().forEach(question -> question.prepare());

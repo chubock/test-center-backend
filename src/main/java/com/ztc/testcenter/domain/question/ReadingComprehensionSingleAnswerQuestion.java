@@ -8,7 +8,6 @@ import javax.persistence.Entity;
  */
 
 @Entity
-@DiscriminatorValue("RC_SINGLE_ANSWER")
 public class ReadingComprehensionSingleAnswerQuestion extends FiveChoiceQuestion {
 
     private int number;
@@ -21,4 +20,8 @@ public class ReadingComprehensionSingleAnswerQuestion extends FiveChoiceQuestion
         this.number = number;
     }
 
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_READING_COMPREHENSION_SINGLE_ANSWER;
+    }
 }

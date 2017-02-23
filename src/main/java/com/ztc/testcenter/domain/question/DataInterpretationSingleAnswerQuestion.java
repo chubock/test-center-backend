@@ -20,4 +20,9 @@ public class DataInterpretationSingleAnswerQuestion extends AbstractQuantitative
     public void setNumber(int number) {
         this.number = number;
     }
+
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_DATA_INTERPRETATION_SET_SINGLE_ANSWER;
+    }
 }

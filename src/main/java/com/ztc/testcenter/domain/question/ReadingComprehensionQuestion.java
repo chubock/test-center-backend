@@ -9,7 +9,6 @@ import java.util.List;
  */
 
 @Entity
-@DiscriminatorValue("READING_COMPREHENSION")
 public class ReadingComprehensionQuestion extends Question {
 
     List<ReadingComprehensionSingleAnswerQuestion> singleAnswerQuestions = new ArrayList<>();
@@ -44,6 +43,11 @@ public class ReadingComprehensionQuestion extends Question {
 
     public void setSelectInPassageQuestions(List<SelectInPassageQuestion> selectInPassageQuestions) {
         this.selectInPassageQuestions = selectInPassageQuestions;
+    }
+
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_READING_COMPREHENSION;
     }
 
     @Override

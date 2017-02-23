@@ -20,4 +20,9 @@ public class DataInterpretationMultipleAnswerQuestion extends AbstractQuantitati
     public void setNumber(int number) {
         this.number = number;
     }
+
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_DATA_INTERPRETATION_SET_MULTIPLE_ANSWER;
+    }
 }

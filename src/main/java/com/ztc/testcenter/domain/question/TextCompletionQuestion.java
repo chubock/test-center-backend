@@ -9,7 +9,6 @@ import java.util.List;
  */
 
 @Entity
-@DiscriminatorValue("TEXT_COMPLETION")
 public class TextCompletionQuestion extends Question {
 
     List<TextCompletionQuestionItem> items = new ArrayList<>();
@@ -22,6 +21,11 @@ public class TextCompletionQuestion extends Question {
 
     public void setItems(List<TextCompletionQuestionItem> items) {
         this.items = items;
+    }
+
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_TEXT_COMPLETION;
     }
 
     @Override

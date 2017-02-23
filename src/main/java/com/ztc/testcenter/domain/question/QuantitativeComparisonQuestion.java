@@ -30,4 +30,9 @@ public class QuantitativeComparisonQuestion extends Question {
     public void setAnswer(int answer) {
         setAnswers(String.valueOf(answer));
     }
+
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_QUANTITATIVE_COMPARISON;
+    }
 }

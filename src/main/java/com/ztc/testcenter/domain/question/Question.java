@@ -11,7 +11,6 @@ import java.io.Serializable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING)
 public abstract class Question implements Serializable {
 
     private long id;
@@ -62,6 +61,12 @@ public abstract class Question implements Serializable {
     void setAnswers(String answers) {
         this.answers = answers;
     }
+
+    @Enumerated
+    @Column(nullable = false)
+    abstract QuestionType getQuestionType();
+
+    private void setQuestionType(QuestionType questionType) {}
 
     public void prepare() {
 

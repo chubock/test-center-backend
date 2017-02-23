@@ -8,6 +8,9 @@ import javax.persistence.Entity;
  */
 
 @Entity
-@DiscriminatorValue("Q_SINGLE_ANSWER")
 public class QuantitativeSingleAnswerQuestion extends AbstractQuantitativeSingleAnswerQuestion {
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER;
+    }
 }

@@ -8,7 +8,10 @@ import javax.persistence.Entity;
  */
 
 @Entity
-@DiscriminatorValue("Q_MULTIPLE_ANSWER")
 public class QuantitativeMultipleAnswerQuestion extends AbstractQuantitativeMultipleAnswerQuestion {
 
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER;
+    }
 }

@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-@DiscriminatorValue("WRITING")
 public class WritingQuestion extends Question {
 
     private TaskType taskType;
@@ -25,6 +24,11 @@ public class WritingQuestion extends Question {
 
     public void setTaskType(TaskType taskType) {
         this.taskType = taskType;
+    }
+
+    @Override
+    QuestionType getQuestionType() {
+        return QuestionType.GRE_WRITING;
     }
 
     public static enum TaskType {
