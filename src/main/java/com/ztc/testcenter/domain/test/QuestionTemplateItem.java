@@ -38,9 +38,7 @@ public class QuestionTemplateItem implements Serializable {
         this.number = number;
     }
 
-    @NotNull
     @Enumerated
-    @Column(nullable = false)
     public QuestionType getQuestionType() {
         return questionType;
     }
@@ -49,9 +47,7 @@ public class QuestionTemplateItem implements Serializable {
         this.questionType = questionType;
     }
 
-    @NotNull
     @Enumerated
-    @Column(nullable = false)
     public Difficulty getDifficulty() {
         return difficulty;
     }

@@ -16,6 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "TESTS")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Test implements Serializable {
 
     private long id;
