@@ -41,7 +41,7 @@ public class ReadingComprehensionQuestionRestService implements QuestionRestServ
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }
 

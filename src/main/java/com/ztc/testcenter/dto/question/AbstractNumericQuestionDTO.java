@@ -8,31 +8,31 @@ import com.ztc.testcenter.domain.question.NumericQuestion;
  */
 public abstract class AbstractNumericQuestionDTO extends QuestionDTO {
 
-    private long nominatorAnswer;
-    private boolean fraction;
-    private long denominatorAnswer;
+    private Long nominatorAnswer;
+    private Boolean fraction;
+    private Long denominatorAnswer;
 
-    public long getNominatorAnswer() {
+    public Long getNominatorAnswer() {
         return nominatorAnswer;
     }
 
-    public void setNominatorAnswer(long nominatorAnswer) {
+    public void setNominatorAnswer(Long nominatorAnswer) {
         this.nominatorAnswer = nominatorAnswer;
     }
 
-    public boolean isFraction() {
+    public Boolean isFraction() {
         return fraction;
     }
 
-    public void setFraction(boolean fraction) {
+    public void setFraction(Boolean fraction) {
         this.fraction = fraction;
     }
 
-    public long getDenominatorAnswer() {
+    public Long getDenominatorAnswer() {
         return denominatorAnswer;
     }
 
-    public void setDenominatorAnswer(long denominatorAnswer) {
+    public void setDenominatorAnswer(Long denominatorAnswer) {
         this.denominatorAnswer = denominatorAnswer;
     }
 

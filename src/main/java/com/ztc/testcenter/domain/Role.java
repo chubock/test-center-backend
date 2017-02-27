@@ -14,17 +14,17 @@ import java.util.List;
 @Table(name = "ROLES")
 public class Role implements Serializable {
 
-    private long id;
+    private Long id;
     private String name;
     private List<Authority> authorities = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

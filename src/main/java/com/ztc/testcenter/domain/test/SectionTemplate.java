@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "SECTION_TEMPLATES")
 public class SectionTemplate implements Serializable {
 
-    private long id;
+    private Long id;
     private String name;
     private SectionType sectionType;
     private Difficulty difficulty;
@@ -24,11 +24,11 @@ public class SectionTemplate implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Created by Yubar on 1/15/2017.
@@ -12,10 +13,10 @@ import java.util.Arrays;
 @Entity
 public class File implements Serializable {
 
-    private long id;
+    private Long id;
     private String name;
     private String contentType;
-    private long size;
+    private Long size;
     private byte[] content;
 
     public File() {
@@ -23,11 +24,11 @@ public class File implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,11 +51,11 @@ public class File implements Serializable {
     }
 
     @NotNull
-    public long getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(long size) {
+    public void setSize(Long size) {
         this.size = size;
     }
 
@@ -71,29 +72,17 @@ public class File implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof File)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         File file = (File) o;
-
-        if (getId() != file.getId()) return false;
-        if (getId() > 0)
-            return true;
-        if (getSize() != file.getSize()) return false;
-        if (getName() != null ? !getName().equals(file.getName()) : file.getName() != null) return false;
-        if (getContentType() != null ? !getContentType().equals(file.getContentType()) : file.getContentType() != null)
-            return false;
-        return true;
+        return Objects.equals(id, file.id) &&
+                Objects.equals(name, file.name) &&
+                Objects.equals(contentType, file.contentType) &&
+                Objects.equals(size, file.size) &&
+                Arrays.equals(content, file.content);
     }
 
     @Override
     public int hashCode() {
-        if (getId() > 0)
-            return (int) getId();
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getContentType() != null ? getContentType().hashCode() : 0);
-        result = 31 * result + (int) (getSize() ^ (getSize() >>> 32));
-        result = 31 * result + Arrays.hashCode(getContent());
-        return result;
+        return Objects.hash(id, name, contentType, size, content);
     }
 }

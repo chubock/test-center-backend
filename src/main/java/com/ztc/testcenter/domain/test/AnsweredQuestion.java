@@ -15,39 +15,39 @@ import java.io.Serializable;
 @Table(name = "ANSWERED_QUESTIONS")
 public class AnsweredQuestion implements Serializable {
 
-    private long id;
-    private int number;
-    private Test test;
+    private Long id;
+    private Integer number;
+    private TestSection testSection;
     private User user;
     private Question question;
     private String userAnswer;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    public Test getTest() {
-        return test;
+    public TestSection getTestSection() {
+        return testSection;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTestSection(TestSection testSection) {
+        this.testSection = testSection;
     }
 
     @NotNull

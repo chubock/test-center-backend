@@ -12,7 +12,7 @@ import java.util.List;
 @MappedSuperclass
 abstract class DynamicChoiceQuestion extends SixChoiceQuestion {
 
-    private int choicesCount;
+    private Integer choicesCount;
     private List<String> otherChoices = new ArrayList<>();
 
     @ElementCollection

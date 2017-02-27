@@ -7,17 +7,17 @@ import com.ztc.testcenter.domain.File;
  */
 public class FileDTO extends AbstractDTO<File> {
 
-    private long id;
+    private Long id;
     private String name;
     private String contentType;
-    private long size;
+    private Long size;
     private byte[] content;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -37,11 +37,11 @@ public class FileDTO extends AbstractDTO<File> {
         this.contentType = contentType;
     }
 
-    public long getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(long size) {
+    public void setSize(Long size) {
         this.size = size;
     }
 

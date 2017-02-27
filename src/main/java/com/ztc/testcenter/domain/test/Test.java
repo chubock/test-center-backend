@@ -19,20 +19,20 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Test implements Serializable {
 
-    private long id;
+    private Long id;
     private Date date;
     private Difficulty difficulty;
     private TestIntelligentType intelligentType = TestIntelligentType.INTELLIGENT;
     private User user;
-    private List<AnsweredQuestion> answeredQuestions = new ArrayList<>();
+    private List<TestSection> testSections = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -81,12 +81,12 @@ public class Test implements Serializable {
 
     @OrderBy("number")
     @OneToMany(mappedBy = "test")
-    public List<AnsweredQuestion> getAnsweredQuestions() {
-        return answeredQuestions;
+    public List<TestSection> getTestSections() {
+        return testSections;
     }
 
-    public void setAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
-        this.answeredQuestions = answeredQuestions;
+    public void setTestSections(List<TestSection> testSections) {
+        this.testSections = testSections;
     }
 
     public static enum TestIntelligentType {

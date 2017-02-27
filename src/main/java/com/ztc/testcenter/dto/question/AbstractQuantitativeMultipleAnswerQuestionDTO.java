@@ -8,13 +8,13 @@ import com.ztc.testcenter.domain.question.QuantitativeMultipleAnswerQuestion;
  */
 public abstract class AbstractQuantitativeMultipleAnswerQuestionDTO extends ChoicesQuestionDTO {
 
-    private int maxAnswerCount = 0;
+    private Integer maxAnswerCount = 0;
 
-    public int getMaxAnswerCount() {
+    public Integer getMaxAnswerCount() {
         return maxAnswerCount;
     }
 
-    public void setMaxAnswerCount(int maxAnswerCount) {
+    public void setMaxAnswerCount(Integer maxAnswerCount) {
         this.maxAnswerCount = maxAnswerCount;
     }
 

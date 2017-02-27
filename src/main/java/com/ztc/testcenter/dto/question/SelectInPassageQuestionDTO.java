@@ -7,22 +7,22 @@ import com.ztc.testcenter.domain.question.SelectInPassageQuestion;
  */
 public class SelectInPassageQuestionDTO extends QuestionDTO {
 
-    private int number;
-    private int answer;
+    private Integer number;
+    private Integer answer;
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public int getAnswer() {
+    public Integer getAnswer() {
         return answer;
     }
 
-    public void setAnswer(int answer) {
+    public void setAnswer(Integer answer) {
         this.answer = answer;
     }
 

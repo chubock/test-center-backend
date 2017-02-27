@@ -25,18 +25,18 @@ public class QuestionsGenerator {
         this.questionRepository = questionRepository;
     }
 
-    private void createSingleAnswerChoices(List<Choice> choices, int number) {
+    private void createSingleAnswerChoices(List<Choice> choices, Integer number) {
         for (int i=0; i< number; i++)
             choices.add(new Choice("Choice " + (i + 1)));
         choices.get(random.nextInt(number)).setAnswer(true);
     }
 
-    private int createMultipleAnswerChoices(List<Choice> choices, int number, int maxAnswer, int minAnswer) {
+    private Integer createMultipleAnswerChoices(List<Choice> choices, Integer number, Integer maxAnswer, Integer minAnswer) {
         if (maxAnswer > number)
             throw new IllegalArgumentException();
         if (minAnswer > maxAnswer)
             throw new IllegalArgumentException();
-        int answersCount = 0;
+        Integer answersCount = 0;
         for (int i=0; i< number; i++) {
             Choice choice = new Choice("Choice " + (i + 1));
             if (answersCount < maxAnswer)
@@ -55,31 +55,34 @@ public class QuestionsGenerator {
         return answersCount;
     }
 
-    private void createNumericQuestion(int number, AbstractNumericQuestion question) {
+    private void createNumericQuestion(Integer number, AbstractNumericQuestion question) {
         question.setText("This is a sample Numeric question " + number);
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
-        question.setNominatorAnswer(random.nextInt(99) + 1);
+        question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
+        question.setNominatorAnswer((long) (random.nextInt(99) + 1));
         question.setFraction(random.nextBoolean());
         if (question.isFraction())
-            question.setDenominatorAnswer(random.nextInt(99) + 1);
+            question.setDenominatorAnswer((long) (random.nextInt(99) + 1));
     }
 
-    private void createQuantitativeMultipleAnswerQuestion(int number, AbstractQuantitativeMultipleAnswerQuestion question) {
+    private void createQuantitativeMultipleAnswerQuestion(Integer number, AbstractQuantitativeMultipleAnswerQuestion question) {
         question.setText("This is a sample Quantitative Multiple Answer question " + number);
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
-        int answersCount = createMultipleAnswerChoices(question.getChoices(), 3, 3, 1);
+        question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
+        Integer answersCount = createMultipleAnswerChoices(question.getChoices(), 3, 3, 1);
         if (answersCount > 1 && answersCount <3 && random.nextBoolean())
             question.setMaxAnswerCount(answersCount);
     }
 
-    private void createQuantitativeSingleAnswerQuestion(int number, AbstractQuantitativeSingleAnswerQuestion question) {
+    private void createQuantitativeSingleAnswerQuestion(Integer number, AbstractQuantitativeSingleAnswerQuestion question) {
         question.setText("This is a sample Quantitative Single Answer question " + number);
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
+        question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
         createSingleAnswerChoices(question.getChoices(), 5);
     }
 
     @Transactional
-    public void createNumericQuestion(int number) {
+    public void createNumericQuestion(Integer number) {
         NumericQuestion question = new NumericQuestion();
         createNumericQuestion(number, question);
         question.prepare();
@@ -87,18 +90,19 @@ public class QuestionsGenerator {
     }
 
     @Transactional
-    public void createQuantitativeComparisonQuestion(int number) {
+    public void createQuantitativeComparisonQuestion(Integer number) {
         QuantitativeComparisonQuestion question = new QuantitativeComparisonQuestion();
         question.setText("Sample Quantitative A in question " + number);
         question.setQuantityB("Sample Quantitative B in question " + number);
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
+        question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
         question.setAnswer(random.nextInt(4));
         question.prepare();
         questionRepository.save(question);
     }
 
     @Transactional
-    public void createQuantitativeMultipleAnswerQuestion(int number) {
+    public void createQuantitativeMultipleAnswerQuestion(Integer number) {
         QuantitativeMultipleAnswerQuestion question = new QuantitativeMultipleAnswerQuestion();
         createQuantitativeMultipleAnswerQuestion(number, question);
         question.prepare();
@@ -106,7 +110,7 @@ public class QuestionsGenerator {
     }
 
     @Transactional
-    public void createQuantitativeSingleAnswerQuestion(int number) {
+    public void createQuantitativeSingleAnswerQuestion(Integer number) {
         QuantitativeSingleAnswerQuestion question = new QuantitativeSingleAnswerQuestion();
         createQuantitativeSingleAnswerQuestion(number, question);
         question.prepare();
@@ -114,21 +118,23 @@ public class QuestionsGenerator {
     }
 
     @Transactional
-    public void createSentenceEquivalenceQuestion(int number) {
+    public void createSentenceEquivalenceQuestion(Integer number) {
         SentenceEquivalenceQuestion question = new SentenceEquivalenceQuestion();
         question.setText("This is a sample Sentence Equivalence question " + number);
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
+        question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
         createMultipleAnswerChoices(question.getChoices(), 6, 2, 2);
         question.prepare();
         questionRepository.save(question);
     }
 
     @Transactional
-    public void createTextCompletionQuestion(int number) {
+    public void createTextCompletionQuestion(Integer number) {
         TextCompletionQuestion question = new TextCompletionQuestion();
         question.setText("This is a sample Text Completion question " + number);
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
-        int questionItemsCount = random.nextInt(3) + 1;
+        question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
+        Integer questionItemsCount = random.nextInt(3) + 1;
         if (questionItemsCount == 1) {
             TextCompletionQuestionItem item = new TextCompletionQuestionItem();
             for (int i=0; i< 5; i++)
@@ -138,7 +144,7 @@ public class QuestionsGenerator {
         } else {
             for (int i=0; i< questionItemsCount; i++) {
                 TextCompletionQuestionItem item = new TextCompletionQuestionItem();
-                for (int j=0; j< 3; j++)
+                for (Integer j=0; j< 3; j++)
                     item.getChoices().add(new Choice("Choice " + (j + 1)));
                 item.getChoices().get(random.nextInt(3)).setAnswer(true);
                 question.getItems().add(item);
@@ -149,23 +155,24 @@ public class QuestionsGenerator {
     }
 
     @Transactional
-    public void createWritingQuestion(int number) {
+    public void createWritingQuestion(Integer number) {
         WritingQuestion question = new WritingQuestion();
         question.setText("This is a sample Writing question " + number);
         question.setTaskType(WritingQuestion.TaskType.values()[random.nextInt(2)]);
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
+        question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
         question.prepare();
         questionRepository.save(question);
     }
 
     @SuppressWarnings("Duplicates")
     @Transactional
-    public void createDataInterpretationSetQuestion(int number) {
+    public void createDataInterpretationSetQuestion(Integer number) {
         DataInterpretationSetQuestion question = new DataInterpretationSetQuestion();
         question.setText("This is a sample Data Interpretation Set question " + number);
-        int count = random.nextInt(3);
-        int difficultyWeight = 0;
-        int n = 1;
+        Integer count = random.nextInt(3);
+        Integer difficultyWeight = 0;
+        Integer n = 1;
         for (int i=0; i< count; i++) {
             DataInterpretationNumericQuestion dataInterpretationNumericQuestion = new DataInterpretationNumericQuestion();
             createNumericQuestion(i + 1, dataInterpretationNumericQuestion);
@@ -219,12 +226,12 @@ public class QuestionsGenerator {
 
     @SuppressWarnings("Duplicates")
     @Transactional
-    public void createReadingComprehensionQuestion(int number) {
+    public void createReadingComprehensionQuestion(Integer number) {
         ReadingComprehensionQuestion question = new ReadingComprehensionQuestion();
         question.setText("This is a sample Reading Comprehension question " + number);
-        int count = random.nextInt(3);
-        int difficultyWeight = 0;
-        int n = 1;
+        Integer count = random.nextInt(3);
+        Integer difficultyWeight = 0;
+        Integer n = 1;
         for (int i=0; i< count; i++) {
             ReadingComprehensionSingleAnswerQuestion readingComprehensionSingleAnswerQuestion = new ReadingComprehensionSingleAnswerQuestion();
             readingComprehensionSingleAnswerQuestion.setText("This is a sample Reading Comprehension Single Answer question " + (i + 1));
@@ -281,7 +288,7 @@ public class QuestionsGenerator {
         questionRepository.save(question);
     }
 
-    public void generateAll(int count) {
+    public void generateAll(Integer count) {
         for (int i=0; i< count; i++) {
             createDataInterpretationSetQuestion(i + 1);
             createNumericQuestion(i + 1);

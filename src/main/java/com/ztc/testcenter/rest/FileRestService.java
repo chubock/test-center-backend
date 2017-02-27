@@ -34,7 +34,7 @@ public class FileRestService {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public void getFile(@PathVariable long id, HttpServletResponse response) throws IOException {
+    public void getFile(@PathVariable Long id, HttpServletResponse response) throws IOException {
         File file = fileRepository.findOne(id);
         if (file == null) {
             response.sendError(404);
@@ -47,7 +47,7 @@ public class FileRestService {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public long uploadFile(MultipartHttpServletRequest request) throws IOException {
+    public Long uploadFile(MultipartHttpServletRequest request) throws IOException {
         MultipartFile file = request.getFile("file");
         if (file != null) {
             File f = new File();
@@ -58,7 +58,7 @@ public class FileRestService {
             f = managerService.save(f);
             return f.getId();
         } else {
-            return 0;
+            return Long.valueOf(0);
         }
     }
 }

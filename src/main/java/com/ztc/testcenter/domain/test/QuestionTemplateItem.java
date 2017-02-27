@@ -1,10 +1,10 @@
 package com.ztc.testcenter.domain.test;
 
 import com.ztc.testcenter.domain.question.Difficulty;
+import com.ztc.testcenter.domain.question.DifficultyLevel;
 import com.ztc.testcenter.domain.question.QuestionType;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -15,44 +15,25 @@ import java.io.Serializable;
 @Table(name = "QUESTION_TEMPLATE_ITEMS")
 public class QuestionTemplateItem implements Serializable {
 
-    private long id;
-    private int number;
-    private QuestionType questionType;
-    private Difficulty difficulty;
+    private Long id;
+    private DifficultyLevel difficultyLevel;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
     @Enumerated
-    public QuestionType getQuestionType() {
-        return questionType;
+    public DifficultyLevel getDifficultyLevel() {
+        return difficultyLevel;
     }
 
-    public void setQuestionType(QuestionType questionType) {
-        this.questionType = questionType;
-    }
-
-    @Enumerated
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
     }
 }

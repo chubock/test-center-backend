@@ -9,8 +9,8 @@ import java.io.Serializable;
 public class Choice implements Serializable {
 
     private String text;
-    private boolean answer;
-    private boolean selected;
+    private Boolean answer;
+    private Boolean selected;
 
     public Choice() {
     }
@@ -27,19 +27,19 @@ public class Choice implements Serializable {
         this.text = text;
     }
 
-    public boolean isAnswer() {
+    public Boolean isAnswer() {
         return answer;
     }
 
-    public void setAnswer(boolean answer) {
+    public void setAnswer(Boolean answer) {
         this.answer = answer;
     }
 
-    public boolean isSelected() {
+    public Boolean isSelected() {
         return selected;
     }
 
-    public void setSelected(boolean selected) {
+    public void setSelected(Boolean selected) {
         this.selected = selected;
     }
 

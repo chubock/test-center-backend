@@ -11,17 +11,17 @@ import com.ztc.testcenter.dto.FileDTO;
  */
 public abstract class QuestionDTO extends AbstractDTO<Question> {
 
-    private long id;
+    private Long id;
     private String text;
-    private long image;
+    private Long image;
     private Difficulty difficulty = Difficulty.MEDIUM;
     private String answers;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,11 +33,11 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
         this.text = text;
     }
 
-    public long getImage() {
+    public Long getImage() {
         return image;
     }
 
-    public void setImage(long image) {
+    public void setImage(Long image) {
         this.image = image;
     }
 

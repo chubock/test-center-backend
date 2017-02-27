@@ -8,13 +8,13 @@ import com.ztc.testcenter.domain.question.ReadingComprehensionSingleAnswerQuesti
  */
 public class ReadingComprehensionSingleAnswerQuestionDTO extends ChoicesQuestionDTO {
 
-    private int number;
+    private Integer number;
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

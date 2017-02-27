@@ -40,7 +40,7 @@ public class QuantitativeMultipleAnswerQuestionRestService implements QuestionRe
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }
 

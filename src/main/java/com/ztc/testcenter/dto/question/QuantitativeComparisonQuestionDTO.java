@@ -12,7 +12,7 @@ import java.util.List;
 public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
 
     private String quantityB;
-    private int answer;
+    private Integer answer;
 
     public String getQuantityB() {
         return quantityB;
@@ -22,11 +22,11 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
         this.quantityB = quantityB;
     }
 
-    public int getAnswer() {
+    public Integer getAnswer() {
         return answer;
     }
 
-    public void setAnswer(int answer) {
+    public void setAnswer(Integer answer) {
         this.answer = answer;
     }
 

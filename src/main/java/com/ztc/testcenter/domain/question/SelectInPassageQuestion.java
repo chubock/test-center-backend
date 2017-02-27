@@ -11,22 +11,22 @@ import javax.persistence.Transient;
 @Entity
 public class SelectInPassageQuestion extends Question {
 
-    private int number;
+    private Integer number;
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
     @Transient
-    public int getAnswer() {
+    public Integer getAnswer() {
         return Integer.valueOf(getAnswers());
     }
 
-    public void setAnswer(int answer) {
+    public void setAnswer(Integer answer) {
         setAnswers(String.valueOf(answer));
     }
 

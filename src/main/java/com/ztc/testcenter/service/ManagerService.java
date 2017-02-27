@@ -34,7 +34,7 @@ public class ManagerService {
         return questionRepository.save(question);
     }
 
-    public void deleteQuestion(long id) {
+    public void deleteQuestion(Long id) {
         questionRepository.delete(questionRepository.getOne(id));
     }
 

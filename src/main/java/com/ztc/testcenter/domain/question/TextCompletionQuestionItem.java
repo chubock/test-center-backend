@@ -12,22 +12,22 @@ import java.util.List;
 @Entity
 public class TextCompletionQuestionItem {
 
-    private long id;
+    private Long id;
     private String choice1;
     private String choice2;
     private String choice3;
     private String choice4;
     private String choice5;
-    private int answer;
+    private Integer answer;
     private List<Choice> choices = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -74,11 +74,11 @@ public class TextCompletionQuestionItem {
         this.choice5 = choice5;
     }
 
-    public int getAnswer() {
+    public Integer getAnswer() {
         return answer;
     }
 
-    public void setAnswer(int answer) {
+    public void setAnswer(Integer answer) {
         this.answer = answer;
     }
 

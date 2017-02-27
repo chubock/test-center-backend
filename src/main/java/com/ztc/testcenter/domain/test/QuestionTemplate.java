@@ -17,30 +17,19 @@ import java.util.List;
 @Table(name = "QUESTION_TEMPLATES")
 public class QuestionTemplate implements Serializable {
 
-    private long id;
-    private String name;
+    private Long id;
     private QuestionType questionType;
     private Difficulty difficulty;
     private List<QuestionTemplateItem> questionTemplateItems = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    @NotNull
-    @Column(nullable = false, unique = true)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @NotNull
@@ -65,7 +54,6 @@ public class QuestionTemplate implements Serializable {
         this.difficulty = difficulty;
     }
 
-    @OrderBy("number")
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = "QUESTION_TEMPLATE")
     public List<QuestionTemplateItem> getQuestionTemplateItems() {

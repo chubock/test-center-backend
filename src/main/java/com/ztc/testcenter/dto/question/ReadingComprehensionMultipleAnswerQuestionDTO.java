@@ -6,13 +6,13 @@ import com.ztc.testcenter.domain.question.ReadingComprehensionMultipleAnswerQues
  * Created by Yubar on 1/20/2017.
  */
 public class ReadingComprehensionMultipleAnswerQuestionDTO extends ChoicesQuestionDTO {
-    private int number;
+    private Integer number;
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

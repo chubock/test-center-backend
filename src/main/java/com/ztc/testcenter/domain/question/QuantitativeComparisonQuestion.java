@@ -23,11 +23,11 @@ public class QuantitativeComparisonQuestion extends Question {
     }
 
     @Transient
-    public int getAnswer() {
+    public Integer getAnswer() {
         return Integer.valueOf(getAnswers());
     }
 
-    public void setAnswer(int answer) {
+    public void setAnswer(Integer answer) {
         setAnswers(String.valueOf(answer));
     }
 

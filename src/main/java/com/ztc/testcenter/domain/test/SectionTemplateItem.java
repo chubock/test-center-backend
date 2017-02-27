@@ -1,6 +1,7 @@
 package com.ztc.testcenter.domain.test;
 
 import com.ztc.testcenter.domain.question.Difficulty;
+import com.ztc.testcenter.domain.question.DifficultyLevel;
 import com.ztc.testcenter.domain.question.QuestionType;
 
 import javax.persistence.*;
@@ -15,27 +16,27 @@ import java.io.Serializable;
 @Table(name = "SECTION_TEMPLATE_ITEMS")
 public class SectionTemplateItem implements Serializable {
 
-    private long id;
-    private int number;
+    private Long id;
+    private Integer number;
     private QuestionType questionType;
-    private Difficulty difficulty;
+    private DifficultyLevel difficulty;
     private QuestionTemplate questionTemplate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -49,11 +50,11 @@ public class SectionTemplateItem implements Serializable {
     }
 
     @Enumerated
-    public Difficulty getDifficulty() {
+    public DifficultyLevel getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
+    public void setDifficulty(DifficultyLevel difficulty) {
         this.difficulty = difficulty;
     }
 

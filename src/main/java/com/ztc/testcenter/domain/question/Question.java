@@ -1,8 +1,10 @@
 package com.ztc.testcenter.domain.question;
 
 import com.ztc.testcenter.domain.File;
+import com.ztc.testcenter.domain.test.Section;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -13,19 +15,21 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Question implements Serializable {
 
-    private long id;
+    private Long id;
     private String text;
     private File image;
     private Difficulty difficulty = Difficulty.MEDIUM;
+    private DifficultyLevel difficultyLevel = DifficultyLevel.LEVEL3;
     private String answers;
+    private Section section;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,6 +58,17 @@ public abstract class Question implements Serializable {
         this.difficulty = difficulty;
     }
 
+    @NotNull
+    @Enumerated
+    @Column(nullable = false)
+    public DifficultyLevel getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
+    }
+
     String getAnswers() {
         return answers;
     }
@@ -67,6 +82,15 @@ public abstract class Question implements Serializable {
     abstract QuestionType getQuestionType();
 
     private void setQuestionType(QuestionType questionType) {}
+
+    public void setSection(Section section) {
+        this.section = section;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Section getSection() {
+        return section;
+    }
 
     public void prepare() {
 

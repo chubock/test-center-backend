@@ -11,25 +11,25 @@ import java.io.Serializable;
 @Entity
 public class User implements Serializable {
 
-    private long id;
+    private Long id;
     private String username;
     private String password;
     private String lastName;
     private String firstName;
     private Gender gender;
-    private boolean enabled;
-    private boolean accountExpired;
-    private boolean credentialExpired;
-    private boolean locked;
+    private Boolean enabled;
+    private Boolean accountExpired;
+    private Boolean credentialExpired;
+    private Boolean locked;
     private Role role;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -82,35 +82,35 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
-    public boolean isAccountExpired() {
+    public Boolean isAccountExpired() {
         return accountExpired;
     }
 
-    public void setAccountExpired(boolean accountExpired) {
+    public void setAccountExpired(Boolean accountExpired) {
         this.accountExpired = accountExpired;
     }
 
-    public boolean isCredentialExpired() {
+    public Boolean isCredentialExpired() {
         return credentialExpired;
     }
 
-    public void setCredentialExpired(boolean credentialExpired) {
+    public void setCredentialExpired(Boolean credentialExpired) {
         this.credentialExpired = credentialExpired;
     }
 
-    public boolean isLocked() {
+    public Boolean isLocked() {
         return locked;
     }
 
-    public void setLocked(boolean locked) {
+    public void setLocked(Boolean locked) {
         this.locked = locked;
     }
 

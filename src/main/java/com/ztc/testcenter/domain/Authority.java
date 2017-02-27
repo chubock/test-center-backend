@@ -12,17 +12,17 @@ import java.io.Serializable;
 @Table(name = "AUTHORITIES")
 public class Authority implements Serializable {
 
-    private long id;
+    private Long id;
     private String name;
-    private boolean restricted = false;
+    private Boolean restricted = false;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -36,11 +36,11 @@ public class Authority implements Serializable {
         this.name = name;
     }
 
-    public boolean isRestricted() {
+    public Boolean isRestricted() {
         return restricted;
     }
 
-    public void setRestricted(boolean restricted) {
+    public void setRestricted(Boolean restricted) {
         this.restricted = restricted;
     }
 }

@@ -11,6 +11,6 @@ public interface QuestionRestService<T extends QuestionDTO> {
 
     Page<T> getQuestions(Pageable pageable);
     T save(T questionDto);
-    void delete(long id);
+    void delete(Long id);
 
 }
