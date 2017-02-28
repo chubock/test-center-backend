@@ -170,56 +170,43 @@ public class QuestionsGenerator {
     public void createDataInterpretationSetQuestion(Integer number) {
         DataInterpretationSetQuestion question = new DataInterpretationSetQuestion();
         question.setText("This is a sample Data Interpretation Set question " + number);
+        question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
         Integer count = random.nextInt(3);
         Integer difficultyWeight = 0;
         Integer n = 1;
         for (int i=0; i< count; i++) {
             DataInterpretationNumericQuestion dataInterpretationNumericQuestion = new DataInterpretationNumericQuestion();
             createNumericQuestion(i + 1, dataInterpretationNumericQuestion);
+            dataInterpretationNumericQuestion.setDifficulty(question.getDifficulty());
+            int difficultyLevel = random.nextInt(5);
+            dataInterpretationNumericQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
+            difficultyWeight += difficultyLevel;
             dataInterpretationNumericQuestion.setNumber(n++);
             question.getNumericQuestions().add(dataInterpretationNumericQuestion);
-            switch (dataInterpretationNumericQuestion.getDifficulty()) {
-                case EASY:
-                    difficultyWeight--;
-                    break;
-                case HARD:
-                    difficultyWeight++;
-            }
         }
         count = random.nextInt(3);
         for (int i=0; i< count; i++) {
             DataInterpretationMultipleAnswerQuestion dataInterpretationMultipleAnswerQuestion = new DataInterpretationMultipleAnswerQuestion();
             createQuantitativeMultipleAnswerQuestion(i + 1, dataInterpretationMultipleAnswerQuestion);
+            dataInterpretationMultipleAnswerQuestion.setDifficulty(question.getDifficulty());
+            int difficultyLevel = random.nextInt(5);
+            dataInterpretationMultipleAnswerQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
             dataInterpretationMultipleAnswerQuestion.setNumber(n++);
+            difficultyWeight += difficultyLevel;
             question.getMultipleAnswerQuestions().add(dataInterpretationMultipleAnswerQuestion);
-            switch (dataInterpretationMultipleAnswerQuestion.getDifficulty()) {
-                case EASY:
-                    difficultyWeight--;
-                    break;
-                case HARD:
-                    difficultyWeight++;
-            }
         }
         count = random.nextInt(3);
         for (int i=0; i< count; i++) {
             DataInterpretationMultipleAnswerQuestion dataInterpretationMultipleAnswerQuestion = new DataInterpretationMultipleAnswerQuestion();
             createQuantitativeMultipleAnswerQuestion(i + 1, dataInterpretationMultipleAnswerQuestion);
+            dataInterpretationMultipleAnswerQuestion.setDifficulty(question.getDifficulty());
+            int difficultyLevel = random.nextInt(5);
+            dataInterpretationMultipleAnswerQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
+            difficultyWeight += difficultyLevel;
             dataInterpretationMultipleAnswerQuestion.setNumber(n++);
             question.getMultipleAnswerQuestions().add(dataInterpretationMultipleAnswerQuestion);
-            switch (dataInterpretationMultipleAnswerQuestion.getDifficulty()) {
-                case EASY:
-                    difficultyWeight--;
-                    break;
-                case HARD:
-                    difficultyWeight++;
-            }
         }
-        if (difficultyWeight < 0)
-            question.setDifficulty(Difficulty.EASY);
-        else if (difficultyWeight > 0)
-            question.setDifficulty(Difficulty.HARD);
-        else
-            question.setDifficulty(Difficulty.MEDIUM);
+        question.setDifficultyLevel(DifficultyLevel.values()[difficultyWeight / (question.getMultipleAnswerQuestions().size() + question.getSingleAnswerQuestions().size() + question.getNumericQuestions().size())]);
         question.prepare();
         questionRepository.save(question);
     }
@@ -229,39 +216,32 @@ public class QuestionsGenerator {
     public void createReadingComprehensionQuestion(Integer number) {
         ReadingComprehensionQuestion question = new ReadingComprehensionQuestion();
         question.setText("This is a sample Reading Comprehension question " + number);
+        question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
         Integer count = random.nextInt(3);
         Integer difficultyWeight = 0;
         Integer n = 1;
         for (int i=0; i< count; i++) {
             ReadingComprehensionSingleAnswerQuestion readingComprehensionSingleAnswerQuestion = new ReadingComprehensionSingleAnswerQuestion();
             readingComprehensionSingleAnswerQuestion.setText("This is a sample Reading Comprehension Single Answer question " + (i + 1));
-            readingComprehensionSingleAnswerQuestion.setDifficulty(Difficulty.values()[random.nextInt(3)]);
+            readingComprehensionSingleAnswerQuestion.setDifficulty(question.getDifficulty());
+            int difficultyLevel = random.nextInt(5);
+            readingComprehensionSingleAnswerQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
+            difficultyWeight += difficultyLevel;
             createSingleAnswerChoices(readingComprehensionSingleAnswerQuestion.getChoices(), 5);
             readingComprehensionSingleAnswerQuestion.setNumber(n++);
             question.getSingleAnswerQuestions().add(readingComprehensionSingleAnswerQuestion);
-            switch (readingComprehensionSingleAnswerQuestion.getDifficulty()) {
-                case EASY:
-                    difficultyWeight--;
-                    break;
-                case HARD:
-                    difficultyWeight++;
-            }
         }
         count = random.nextInt(3);
         for (int i=0; i< count; i++) {
             ReadingComprehensionMultipleAnswerQuestion readingComprehensionMultipleAnswerQuestion = new ReadingComprehensionMultipleAnswerQuestion();
             readingComprehensionMultipleAnswerQuestion.setText("This is a sample Reading Comprehension Multiple Answer question " + (i + 1));
-            readingComprehensionMultipleAnswerQuestion.setDifficulty(Difficulty.values()[random.nextInt(3)]);
+            readingComprehensionMultipleAnswerQuestion.setDifficulty(question.getDifficulty());
+            int difficultyLevel = random.nextInt(5);
+            readingComprehensionMultipleAnswerQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
+            difficultyWeight += difficultyLevel;
             createMultipleAnswerChoices(readingComprehensionMultipleAnswerQuestion.getChoices(), 3, 3, 1);
             readingComprehensionMultipleAnswerQuestion.setNumber(n++);
             question.getMultipleAnswerQuestions().add(readingComprehensionMultipleAnswerQuestion);
-            switch (readingComprehensionMultipleAnswerQuestion.getDifficulty()) {
-                case EASY:
-                    difficultyWeight--;
-                    break;
-                case HARD:
-                    difficultyWeight++;
-            }
         }
         count = random.nextInt(2);
         for (int i=0; i< count; i++) {
@@ -269,21 +249,13 @@ public class QuestionsGenerator {
             selectInPassageQuestion.setText("<p><u>This</u> is a <u>sample</u> <u>Select</u> In <u>Passage Question</u>.</p>");
             selectInPassageQuestion.setNumber(n++);
             selectInPassageQuestion.setAnswer(random.nextInt(4));
+            selectInPassageQuestion.setDifficulty(question.getDifficulty());
+            int difficultyLevel = random.nextInt(5);
+            selectInPassageQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
+            difficultyWeight += difficultyLevel;
             question.getSelectInPassageQuestions().add(selectInPassageQuestion);
-            switch (selectInPassageQuestion.getDifficulty()) {
-                case EASY:
-                    difficultyWeight--;
-                    break;
-                case HARD:
-                    difficultyWeight++;
-            }
         }
-        if (difficultyWeight < 0)
-            question.setDifficulty(Difficulty.EASY);
-        else if (difficultyWeight > 0)
-            question.setDifficulty(Difficulty.HARD);
-        else
-            question.setDifficulty(Difficulty.MEDIUM);
+        question.setDifficultyLevel(DifficultyLevel.values()[difficultyWeight / (question.getMultipleAnswerQuestions().size() + question.getSingleAnswerQuestions().size() + question.getSelectInPassageQuestions().size())]);
         question.prepare();
         questionRepository.save(question);
     }

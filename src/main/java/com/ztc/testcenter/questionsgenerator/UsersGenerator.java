@@ -42,6 +42,6 @@ public class UsersGenerator {
 
     public void generateUsers(int count) {
         for (int i=0; i<count; i++)
-            createUser(i);
+            createUser(i + 1);
     }
 }
