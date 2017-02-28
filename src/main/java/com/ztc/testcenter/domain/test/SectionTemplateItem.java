@@ -1,11 +1,10 @@
 package com.ztc.testcenter.domain.test;
 
-import com.ztc.testcenter.domain.question.Difficulty;
 import com.ztc.testcenter.domain.question.DifficultyLevel;
+import com.ztc.testcenter.domain.question.QuestionTemplate;
 import com.ztc.testcenter.domain.question.QuestionType;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

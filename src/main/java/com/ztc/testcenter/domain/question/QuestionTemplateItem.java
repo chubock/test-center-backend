@@ -1,4 +1,4 @@
-package com.ztc.testcenter.domain.test;
+package com.ztc.testcenter.domain.question;
 
 import com.ztc.testcenter.domain.question.Difficulty;
 import com.ztc.testcenter.domain.question.DifficultyLevel;

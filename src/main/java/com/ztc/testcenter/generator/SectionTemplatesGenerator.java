@@ -3,7 +3,7 @@ package com.ztc.testcenter.generator;
 import com.ztc.testcenter.domain.question.Difficulty;
 import com.ztc.testcenter.domain.question.DifficultyLevel;
 import com.ztc.testcenter.domain.question.QuestionType;
-import com.ztc.testcenter.domain.test.QuestionTemplate;
+import com.ztc.testcenter.domain.question.QuestionTemplate;
 import com.ztc.testcenter.domain.test.SectionTemplate;
 import com.ztc.testcenter.domain.test.SectionTemplateItem;
 import com.ztc.testcenter.domain.test.SectionType;
@@ -11,7 +11,6 @@ import com.ztc.testcenter.repository.test.QuestionTemplateRepository;
 import com.ztc.testcenter.repository.test.SectionTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by yubar on 2/28/17.

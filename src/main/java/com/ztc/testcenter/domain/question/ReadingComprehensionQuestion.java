@@ -1,6 +1,7 @@
 package com.ztc.testcenter.domain.question;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,20 @@ import java.util.List;
 @Entity
 public class ReadingComprehensionQuestion extends Question {
 
-    List<ReadingComprehensionSingleAnswerQuestion> singleAnswerQuestions = new ArrayList<>();
-    List<ReadingComprehensionMultipleAnswerQuestion> multipleAnswerQuestions = new ArrayList<>();
-    List<SelectInPassageQuestion> selectInPassageQuestions = new ArrayList<>();
+    private QuestionTemplate template;
+    private List<ReadingComprehensionSingleAnswerQuestion> singleAnswerQuestions = new ArrayList<>();
+    private List<ReadingComprehensionMultipleAnswerQuestion> multipleAnswerQuestions = new ArrayList<>();
+    private List<SelectInPassageQuestion> selectInPassageQuestions = new ArrayList<>();
+
+    @NotNull
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    public QuestionTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(QuestionTemplate template) {
+        this.template = template;
+    }
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "question")

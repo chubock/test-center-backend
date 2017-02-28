@@ -3,14 +3,12 @@ package com.ztc.testcenter.generator;
 import com.ztc.testcenter.domain.question.Difficulty;
 import com.ztc.testcenter.domain.question.DifficultyLevel;
 import com.ztc.testcenter.domain.question.QuestionType;
-import com.ztc.testcenter.domain.test.QuestionTemplate;
-import com.ztc.testcenter.domain.test.QuestionTemplateItem;
+import com.ztc.testcenter.domain.question.QuestionTemplate;
+import com.ztc.testcenter.domain.question.QuestionTemplateItem;
 import com.ztc.testcenter.repository.test.QuestionTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Random;
 
 /**
  * Created by yubar on 2/28/17.

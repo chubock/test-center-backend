@@ -1,8 +1,8 @@
 package com.ztc.testcenter.generator;
 
 import com.ztc.testcenter.domain.question.*;
-import com.ztc.testcenter.domain.test.QuestionTemplate;
-import com.ztc.testcenter.domain.test.QuestionTemplateItem;
+import com.ztc.testcenter.domain.question.QuestionTemplate;
+import com.ztc.testcenter.domain.question.QuestionTemplateItem;
 import com.ztc.testcenter.repository.question.QuestionRepository;
 import com.ztc.testcenter.repository.test.QuestionTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,6 +182,7 @@ public class QuestionsGenerator {
     public void createDataInterpretationSetQuestion(int number) {
         QuestionTemplate template = dataInterpretationTemplates.get(random.nextInt(dataInterpretationTemplates.size()));
         DataInterpretationSetQuestion question = new DataInterpretationSetQuestion();
+        question.setTemplate(template);
         question.setText("This is a sample Data Interpretation Set question " + number);
         question.setDifficulty(template.getDifficulty());
         int n = 1;
@@ -230,6 +231,7 @@ public class QuestionsGenerator {
     private void createReadingComprehensionQuestion(int number) {
         QuestionTemplate template = dataInterpretationTemplates.get(random.nextInt(dataInterpretationTemplates.size()));
         ReadingComprehensionQuestion question = new ReadingComprehensionQuestion();
+        question.setTemplate(template);
         question.setText("This is a sample Reading Comprehension question " + number);
         question.setDifficulty(template.getDifficulty());
         int n = 1;

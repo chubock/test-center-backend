@@ -1,7 +1,4 @@
-package com.ztc.testcenter.domain.test;
-
-import com.ztc.testcenter.domain.question.Difficulty;
-import com.ztc.testcenter.domain.question.QuestionType;
+package com.ztc.testcenter.domain.question;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

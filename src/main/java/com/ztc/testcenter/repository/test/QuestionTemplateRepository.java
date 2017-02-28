@@ -1,10 +1,9 @@
 package com.ztc.testcenter.repository.test;
 
 import com.ztc.testcenter.domain.question.QuestionType;
-import com.ztc.testcenter.domain.test.QuestionTemplate;
+import com.ztc.testcenter.domain.question.QuestionTemplate;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
