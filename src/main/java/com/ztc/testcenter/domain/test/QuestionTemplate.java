@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class QuestionTemplate implements Serializable {
     private QuestionType questionType;
     private Difficulty difficulty;
     private List<QuestionTemplateItem> questionTemplateItems = new ArrayList<>();
+    private String label;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,5 +64,31 @@ public class QuestionTemplate implements Serializable {
 
     public void setQuestionTemplateItems(List<QuestionTemplateItem> questionTemplateItems) {
         this.questionTemplateItems = questionTemplateItems;
+    }
+
+    @Column(nullable = false)
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void prepare() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getQuestionType().name());
+        builder.append('-');
+        builder.append(getDifficulty().name());
+        builder.append('-');
+        Iterator<QuestionTemplateItem> itemIterator = getQuestionTemplateItems().iterator();
+        while(itemIterator.hasNext()) {
+            QuestionTemplateItem item = itemIterator.next();
+            builder.append(item.getCount());
+            builder.append("L" + (item.getDifficultyLevel().ordinal() + 1));
+            if (itemIterator.hasNext())
+                builder.append('-');
+        }
+        setLabel(builder.toString());
     }
 }

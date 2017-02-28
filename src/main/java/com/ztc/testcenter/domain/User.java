@@ -3,12 +3,15 @@ package com.ztc.testcenter.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Yubar on 2/10/2017.
  */
 
 @Entity
+@Table(name = "users")
 public class User implements Serializable {
 
     private Long id;
@@ -17,11 +20,11 @@ public class User implements Serializable {
     private String lastName;
     private String firstName;
     private Gender gender;
-    private Boolean enabled;
-    private Boolean accountExpired;
-    private Boolean credentialExpired;
-    private Boolean locked;
-    private Role role;
+    private Boolean enabled = true;
+    private Boolean accountExpired = false;
+    private Boolean credentialExpired = false;
+    private Boolean locked = false;
+    private List<Role> roles = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -114,13 +117,14 @@ public class User implements Serializable {
         this.locked = locked;
     }
 
-    @ManyToOne
-    public Role getRole() {
-        return role;
+    @ManyToMany
+    @JoinTable(name = "USER_ROLES")
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public static enum Gender {

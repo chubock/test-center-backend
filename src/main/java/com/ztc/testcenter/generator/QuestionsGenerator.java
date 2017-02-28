@@ -1,14 +1,16 @@
-package com.ztc.testcenter.questionsgenerator;
+package com.ztc.testcenter.generator;
 
 import com.ztc.testcenter.domain.question.*;
+import com.ztc.testcenter.domain.test.QuestionTemplate;
+import com.ztc.testcenter.domain.test.QuestionTemplateItem;
 import com.ztc.testcenter.repository.question.QuestionRepository;
-import com.ztc.testcenter.repository.question.WritingQuestionRepository;
+import com.ztc.testcenter.repository.test.QuestionTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Random;
+import javax.annotation.PostConstruct;
+import java.util.*;
 
 /**
  * Created by Yubar on 2/24/2017.
@@ -19,10 +21,21 @@ public class QuestionsGenerator {
 
     private final QuestionRepository questionRepository;
     private final Random random = new Random(1);
+    private final QuestionTemplateRepository questionTemplateRepository;
+
+    private List<QuestionTemplate> dataInterpretationTemplates;
+    private List<QuestionTemplate> readingComprehensionTemplates;
 
     @Autowired
-    public QuestionsGenerator(QuestionRepository questionRepository) {
+    public QuestionsGenerator(QuestionRepository questionRepository, QuestionTemplateRepository questionTemplateRepository) {
         this.questionRepository = questionRepository;
+        this.questionTemplateRepository = questionTemplateRepository;
+    }
+
+    @PostConstruct
+    private void init() {
+        dataInterpretationTemplates = questionTemplateRepository.findByQuestionType(QuestionType.GRE_DATA_INTERPRETATION_SET);
+        readingComprehensionTemplates = questionTemplateRepository.findByQuestionType(QuestionType.GRE_READING_COMPREHENSION);
     }
 
     private void createSingleAnswerChoices(List<Choice> choices, Integer number) {
@@ -165,97 +178,101 @@ public class QuestionsGenerator {
         questionRepository.save(question);
     }
 
-    @SuppressWarnings("Duplicates")
     @Transactional
-    public void createDataInterpretationSetQuestion(Integer number) {
+    public void createDataInterpretationSetQuestion(int number) {
+        QuestionTemplate template = dataInterpretationTemplates.get(random.nextInt(dataInterpretationTemplates.size()));
         DataInterpretationSetQuestion question = new DataInterpretationSetQuestion();
         question.setText("This is a sample Data Interpretation Set question " + number);
-        question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
-        Integer count = random.nextInt(3);
-        Integer difficultyWeight = 0;
-        Integer n = 1;
-        for (int i=0; i< count; i++) {
-            DataInterpretationNumericQuestion dataInterpretationNumericQuestion = new DataInterpretationNumericQuestion();
-            createNumericQuestion(i + 1, dataInterpretationNumericQuestion);
-            dataInterpretationNumericQuestion.setDifficulty(question.getDifficulty());
-            int difficultyLevel = random.nextInt(5);
-            dataInterpretationNumericQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
-            difficultyWeight += difficultyLevel;
-            dataInterpretationNumericQuestion.setNumber(n++);
-            question.getNumericQuestions().add(dataInterpretationNumericQuestion);
+        question.setDifficulty(template.getDifficulty());
+        int n = 1;
+        int difficultyWeight = 0;
+        for (QuestionTemplateItem item : template.getQuestionTemplateItems()) {
+            for (int i=0; i< item.getCount(); i++) {
+                switch (random.nextInt(3)) {
+                    case 0:
+                        DataInterpretationNumericQuestion dataInterpretationNumericQuestion = new DataInterpretationNumericQuestion();
+                        createNumericQuestion(i + 1, dataInterpretationNumericQuestion);
+                        dataInterpretationNumericQuestion.setDifficulty(template.getDifficulty());
+                        dataInterpretationNumericQuestion.setDifficultyLevel(item.getDifficultyLevel());
+                        difficultyWeight += item.getDifficultyLevel().ordinal();
+                        dataInterpretationNumericQuestion.setNumber(n++);
+                        question.getNumericQuestions().add(dataInterpretationNumericQuestion);
+                        break;
+                    case 1:
+                        DataInterpretationMultipleAnswerQuestion dataInterpretationMultipleAnswerQuestion = new DataInterpretationMultipleAnswerQuestion();
+                        createQuantitativeMultipleAnswerQuestion(i + 1, dataInterpretationMultipleAnswerQuestion);
+                        dataInterpretationMultipleAnswerQuestion.setDifficulty(template.getDifficulty());
+                        dataInterpretationMultipleAnswerQuestion.setDifficultyLevel(item.getDifficultyLevel());
+                        difficultyWeight += item.getDifficultyLevel().ordinal();
+                        dataInterpretationMultipleAnswerQuestion.setNumber(n++);
+                        question.getMultipleAnswerQuestions().add(dataInterpretationMultipleAnswerQuestion);
+                        break;
+                    case 2:
+                        DataInterpretationSingleAnswerQuestion dataInterpretationSingleAnswerQuestion = new DataInterpretationSingleAnswerQuestion();
+                        createQuantitativeSingleAnswerQuestion(i + 1, dataInterpretationSingleAnswerQuestion);
+                        dataInterpretationSingleAnswerQuestion.setDifficulty(template.getDifficulty());
+                        dataInterpretationSingleAnswerQuestion.setDifficultyLevel(item.getDifficultyLevel());
+                        difficultyWeight += item.getDifficultyLevel().ordinal();
+                        dataInterpretationSingleAnswerQuestion.setNumber(n++);
+                        question.getSingleAnswerQuestions().add(dataInterpretationSingleAnswerQuestion);
+                }
+            }
         }
-        count = random.nextInt(3);
-        for (int i=0; i< count; i++) {
-            DataInterpretationMultipleAnswerQuestion dataInterpretationMultipleAnswerQuestion = new DataInterpretationMultipleAnswerQuestion();
-            createQuantitativeMultipleAnswerQuestion(i + 1, dataInterpretationMultipleAnswerQuestion);
-            dataInterpretationMultipleAnswerQuestion.setDifficulty(question.getDifficulty());
-            int difficultyLevel = random.nextInt(5);
-            dataInterpretationMultipleAnswerQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
-            dataInterpretationMultipleAnswerQuestion.setNumber(n++);
-            difficultyWeight += difficultyLevel;
-            question.getMultipleAnswerQuestions().add(dataInterpretationMultipleAnswerQuestion);
-        }
-        count = random.nextInt(3);
-        for (int i=0; i< count; i++) {
-            DataInterpretationMultipleAnswerQuestion dataInterpretationMultipleAnswerQuestion = new DataInterpretationMultipleAnswerQuestion();
-            createQuantitativeMultipleAnswerQuestion(i + 1, dataInterpretationMultipleAnswerQuestion);
-            dataInterpretationMultipleAnswerQuestion.setDifficulty(question.getDifficulty());
-            int difficultyLevel = random.nextInt(5);
-            dataInterpretationMultipleAnswerQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
-            difficultyWeight += difficultyLevel;
-            dataInterpretationMultipleAnswerQuestion.setNumber(n++);
-            question.getMultipleAnswerQuestions().add(dataInterpretationMultipleAnswerQuestion);
-        }
-        question.setDifficultyLevel(DifficultyLevel.values()[difficultyWeight / (question.getMultipleAnswerQuestions().size() + question.getSingleAnswerQuestions().size() + question.getNumericQuestions().size())]);
+        int questionsCount = question.getMultipleAnswerQuestions().size() + question.getSingleAnswerQuestions().size() + question.getNumericQuestions().size();
+        if (questionsCount == 0)
+            return ;
+        question.setDifficultyLevel(DifficultyLevel.values()[Math.round((float)difficultyWeight / questionsCount)]);
         question.prepare();
         questionRepository.save(question);
     }
 
-    @SuppressWarnings("Duplicates")
     @Transactional
-    public void createReadingComprehensionQuestion(Integer number) {
+    private void createReadingComprehensionQuestion(int number) {
+        QuestionTemplate template = dataInterpretationTemplates.get(random.nextInt(dataInterpretationTemplates.size()));
         ReadingComprehensionQuestion question = new ReadingComprehensionQuestion();
         question.setText("This is a sample Reading Comprehension question " + number);
-        question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
-        Integer count = random.nextInt(3);
-        Integer difficultyWeight = 0;
-        Integer n = 1;
-        for (int i=0; i< count; i++) {
-            ReadingComprehensionSingleAnswerQuestion readingComprehensionSingleAnswerQuestion = new ReadingComprehensionSingleAnswerQuestion();
-            readingComprehensionSingleAnswerQuestion.setText("This is a sample Reading Comprehension Single Answer question " + (i + 1));
-            readingComprehensionSingleAnswerQuestion.setDifficulty(question.getDifficulty());
-            int difficultyLevel = random.nextInt(5);
-            readingComprehensionSingleAnswerQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
-            difficultyWeight += difficultyLevel;
-            createSingleAnswerChoices(readingComprehensionSingleAnswerQuestion.getChoices(), 5);
-            readingComprehensionSingleAnswerQuestion.setNumber(n++);
-            question.getSingleAnswerQuestions().add(readingComprehensionSingleAnswerQuestion);
+        question.setDifficulty(template.getDifficulty());
+        int n = 1;
+        int difficultyWeight = 0;
+        for (QuestionTemplateItem item : template.getQuestionTemplateItems()) {
+            for (int i=0; i< item.getCount(); i++) {
+                switch (random.nextInt(3)) {
+                    case 0:
+                        ReadingComprehensionSingleAnswerQuestion readingComprehensionSingleAnswerQuestion = new ReadingComprehensionSingleAnswerQuestion();
+                        readingComprehensionSingleAnswerQuestion.setText("This is a sample Reading Comprehension Single Answer question " + (i + 1));
+                        readingComprehensionSingleAnswerQuestion.setDifficulty(template.getDifficulty());
+                        readingComprehensionSingleAnswerQuestion.setDifficultyLevel(item.getDifficultyLevel());
+                        difficultyWeight += item.getDifficultyLevel().ordinal();
+                        createSingleAnswerChoices(readingComprehensionSingleAnswerQuestion.getChoices(), 5);
+                        readingComprehensionSingleAnswerQuestion.setNumber(n++);
+                        question.getSingleAnswerQuestions().add(readingComprehensionSingleAnswerQuestion);
+                        break;
+                    case 1:
+                        ReadingComprehensionMultipleAnswerQuestion readingComprehensionMultipleAnswerQuestion = new ReadingComprehensionMultipleAnswerQuestion();
+                        readingComprehensionMultipleAnswerQuestion.setText("This is a sample Reading Comprehension Multiple Answer question " + (i + 1));
+                        readingComprehensionMultipleAnswerQuestion.setDifficulty(template.getDifficulty());
+                        readingComprehensionMultipleAnswerQuestion.setDifficultyLevel(item.getDifficultyLevel());
+                        difficultyWeight += item.getDifficultyLevel().ordinal();
+                        createMultipleAnswerChoices(readingComprehensionMultipleAnswerQuestion.getChoices(), 3, 3, 1);
+                        readingComprehensionMultipleAnswerQuestion.setNumber(n++);
+                        question.getMultipleAnswerQuestions().add(readingComprehensionMultipleAnswerQuestion);
+                        break;
+                    case 2:
+                        SelectInPassageQuestion selectInPassageQuestion = new SelectInPassageQuestion();
+                        selectInPassageQuestion.setText("<p><u>This</u> is a <u>sample</u> <u>Select</u> In <u>Passage Question</u>.</p>");
+                        selectInPassageQuestion.setNumber(n++);
+                        selectInPassageQuestion.setAnswer(random.nextInt(4));
+                        selectInPassageQuestion.setDifficulty(template.getDifficulty());
+                        selectInPassageQuestion.setDifficultyLevel(item.getDifficultyLevel());
+                        difficultyWeight += item.getDifficultyLevel().ordinal();
+                        question.getSelectInPassageQuestions().add(selectInPassageQuestion);
+                }
+            }
         }
-        count = random.nextInt(3);
-        for (int i=0; i< count; i++) {
-            ReadingComprehensionMultipleAnswerQuestion readingComprehensionMultipleAnswerQuestion = new ReadingComprehensionMultipleAnswerQuestion();
-            readingComprehensionMultipleAnswerQuestion.setText("This is a sample Reading Comprehension Multiple Answer question " + (i + 1));
-            readingComprehensionMultipleAnswerQuestion.setDifficulty(question.getDifficulty());
-            int difficultyLevel = random.nextInt(5);
-            readingComprehensionMultipleAnswerQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
-            difficultyWeight += difficultyLevel;
-            createMultipleAnswerChoices(readingComprehensionMultipleAnswerQuestion.getChoices(), 3, 3, 1);
-            readingComprehensionMultipleAnswerQuestion.setNumber(n++);
-            question.getMultipleAnswerQuestions().add(readingComprehensionMultipleAnswerQuestion);
-        }
-        count = random.nextInt(2);
-        for (int i=0; i< count; i++) {
-            SelectInPassageQuestion selectInPassageQuestion = new SelectInPassageQuestion();
-            selectInPassageQuestion.setText("<p><u>This</u> is a <u>sample</u> <u>Select</u> In <u>Passage Question</u>.</p>");
-            selectInPassageQuestion.setNumber(n++);
-            selectInPassageQuestion.setAnswer(random.nextInt(4));
-            selectInPassageQuestion.setDifficulty(question.getDifficulty());
-            int difficultyLevel = random.nextInt(5);
-            selectInPassageQuestion.setDifficultyLevel(DifficultyLevel.values()[difficultyLevel]);
-            difficultyWeight += difficultyLevel;
-            question.getSelectInPassageQuestions().add(selectInPassageQuestion);
-        }
-        question.setDifficultyLevel(DifficultyLevel.values()[difficultyWeight / (question.getMultipleAnswerQuestions().size() + question.getSingleAnswerQuestions().size() + question.getSelectInPassageQuestions().size())]);
+        int questionsCount = question.getMultipleAnswerQuestions().size() + question.getSingleAnswerQuestions().size() + question.getSelectInPassageQuestions().size();
+        if (questionsCount == 0)
+            return ;
+        question.setDifficultyLevel(DifficultyLevel.values()[Math.round((float) difficultyWeight / questionsCount)]);
         question.prepare();
         questionRepository.save(question);
     }

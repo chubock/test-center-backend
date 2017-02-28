@@ -1,4 +1,4 @@
-package com.ztc.testcenter.questionsgenerator;
+package com.ztc.testcenter.generator;
 
 import com.ztc.testcenter.domain.User;
 import com.ztc.testcenter.repository.UserRepository;

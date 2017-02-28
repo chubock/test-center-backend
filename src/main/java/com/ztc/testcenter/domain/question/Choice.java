@@ -9,8 +9,8 @@ import java.io.Serializable;
 public class Choice implements Serializable {
 
     private String text;
-    private Boolean answer;
-    private Boolean selected;
+    private Boolean answer = false;
+    private Boolean selected = false;
 
     public Choice() {
     }

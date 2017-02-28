@@ -10,7 +10,7 @@ import javax.persistence.*;
 public abstract class AbstractNumericQuestion extends Question {
 
     private Long nominatorAnswer;
-    private Boolean fraction;
+    private Boolean fraction = false;
     private Long denominatorAnswer;
 
     @Transient

@@ -9,7 +9,7 @@ import com.ztc.testcenter.domain.question.NumericQuestion;
 public abstract class AbstractNumericQuestionDTO extends QuestionDTO {
 
     private Long nominatorAnswer;
-    private Boolean fraction;
+    private Boolean fraction = false;
     private Long denominatorAnswer;
 
     public Long getNominatorAnswer() {

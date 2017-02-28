@@ -22,6 +22,22 @@ public class SectionTemplateItem implements Serializable {
     private DifficultyLevel difficulty;
     private QuestionTemplate questionTemplate;
 
+    public SectionTemplateItem() {
+    }
+
+    public SectionTemplateItem(Integer number, QuestionType questionType, DifficultyLevel difficulty) {
+        this.number = number;
+        this.questionType = questionType;
+        this.difficulty = difficulty;
+    }
+
+    public SectionTemplateItem(Integer number, QuestionType questionType, DifficultyLevel difficulty, QuestionTemplate questionTemplate) {
+        this.number = number;
+        this.questionType = questionType;
+        this.difficulty = difficulty;
+        this.questionTemplate = questionTemplate;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
