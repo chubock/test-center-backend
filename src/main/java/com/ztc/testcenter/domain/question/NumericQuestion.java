@@ -13,6 +13,8 @@ public class NumericQuestion extends AbstractNumericQuestion {
 
     @Override
     QuestionType getQuestionType() {
+        if (isFraction())
+            return QuestionType.GRE_NUMERIC_FRACTION;
         return QuestionType.GRE_NUMERIC;
     }
 }

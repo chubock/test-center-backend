@@ -1,7 +1,6 @@
 package com.ztc.testcenter.domain.question;
 
 import com.ztc.testcenter.domain.File;
-import com.ztc.testcenter.domain.test.Section;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,7 +20,6 @@ public abstract class Question implements Serializable {
     private Difficulty difficulty = Difficulty.MEDIUM;
     private DifficultyLevel difficultyLevel = DifficultyLevel.LEVEL3;
     private String answers;
-    private Section section;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,15 +80,6 @@ public abstract class Question implements Serializable {
     abstract QuestionType getQuestionType();
 
     private void setQuestionType(QuestionType questionType) {}
-
-    public void setSection(Section section) {
-        this.section = section;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    public Section getSection() {
-        return section;
-    }
 
     public void prepare() {
 

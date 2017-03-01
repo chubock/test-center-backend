@@ -7,19 +7,19 @@ import com.ztc.testcenter.domain.question.WritingQuestion;
  */
 public class WritingQuestionDTO extends QuestionDTO {
 
-    private WritingQuestion.TaskType taskType;
+    private WritingQuestion.Type type;
 
-    public WritingQuestion.TaskType getTaskType() {
-        return taskType;
+    public WritingQuestion.Type getType() {
+        return type;
     }
 
-    public void setTaskType(WritingQuestion.TaskType taskType) {
-        this.taskType = taskType;
+    public void setType(WritingQuestion.Type type) {
+        this.type = type;
     }
 
     public WritingQuestion convert(WritingQuestion question) {
         super.convert(question);
-        question.setTaskType(getTaskType());
+        question.setType(getType());
         return question;
     }
 
@@ -32,7 +32,7 @@ public class WritingQuestionDTO extends QuestionDTO {
 
     public void copy(WritingQuestion question) {
         super.copy(question);
-        setTaskType(question.getTaskType());
+        setType(question.getType());
     }
 
     public static WritingQuestionDTO valueOf(WritingQuestion question) {

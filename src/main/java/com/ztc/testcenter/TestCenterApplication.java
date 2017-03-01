@@ -18,13 +18,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * Created by Yubar on 1/15/2017.
  */
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication
 public class TestCenterApplication implements CommandLineRunner {
 
     private static final Boolean GENERATE_QUESTIONS = false;
     private static final Boolean GENERATE_USERS = false;
     private static final Boolean GENERATE_QUESTION_TEMPLATES = false;
-    private static final Boolean GENERATE_SECTION_TEMPLATES = true;
+    private static final Boolean GENERATE_SECTION_TEMPLATES = false;
 
     @Autowired
     QuestionsGenerator questionsGenerator;
@@ -40,16 +40,6 @@ public class TestCenterApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(TestCenterApplication.class, args);
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedMethods("*");
-            }
-        };
     }
 
     @Override

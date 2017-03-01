@@ -59,7 +59,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createMediumReadingComprehensionTemplate1() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_MEDIUM);
         template.setDifficulty(Difficulty.MEDIUM);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL2, 1));
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL3, 1));
@@ -72,7 +72,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createMediumReadingComprehensionTemplate2() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT);
         template.setDifficulty(Difficulty.MEDIUM);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL3, 1));
         template.prepare();
@@ -82,7 +82,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createMediumReadingComprehensionTemplate3() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_SHORT);
         template.setDifficulty(Difficulty.MEDIUM);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL3, 1));
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL5, 1));
@@ -93,7 +93,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createEasyReadingComprehensionTemplate1() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_MEDIUM);
         template.setDifficulty(Difficulty.EASY);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL2, 2));
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL3, 1));
@@ -105,7 +105,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createEasyReadingComprehensionTemplate2() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT);
         template.setDifficulty(Difficulty.EASY);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL3, 1));
         template.prepare();
@@ -115,7 +115,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createEasyReadingComprehensionTemplate3() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_LONG);
         template.setDifficulty(Difficulty.EASY);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL2, 1));
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL3, 1));
@@ -126,7 +126,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createEasyReadingComprehensionTemplate4() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_SHORT);
         template.setDifficulty(Difficulty.EASY);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL3, 1));
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL5, 1));
@@ -137,7 +137,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createEasyReadingComprehensionTemplate5() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT);
         template.setDifficulty(Difficulty.EASY);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL2, 1));
         template.prepare();
@@ -147,7 +147,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createHardReadingComprehensionTemplate1() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_MEDIUM);
         template.setDifficulty(Difficulty.HARD);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL2, 1));
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL4, 2));
@@ -159,7 +159,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createHardReadingComprehensionTemplate2() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT);
         template.setDifficulty(Difficulty.HARD);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL5, 1));
         template.prepare();
@@ -169,7 +169,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createHardReadingComprehensionTemplate3() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_SHORT);
         template.setDifficulty(Difficulty.HARD);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL4, 1));
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL5, 1));
@@ -180,7 +180,7 @@ public class QuestionTemplatesGenerator {
     @Transactional
     public void createHardReadingComprehensionTemplate4() {
         QuestionTemplate template = new QuestionTemplate();
-        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        template.setQuestionType(QuestionType.GRE_READING_COMPREHENSION_SHORT);
         template.setDifficulty(Difficulty.HARD);
         template.getQuestionTemplateItems().add(new QuestionTemplateItem(DifficultyLevel.LEVEL5, 2));
         template.prepare();

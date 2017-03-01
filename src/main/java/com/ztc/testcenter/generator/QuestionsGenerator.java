@@ -35,7 +35,10 @@ public class QuestionsGenerator {
     @PostConstruct
     private void init() {
         dataInterpretationTemplates = questionTemplateRepository.findByQuestionType(QuestionType.GRE_DATA_INTERPRETATION_SET);
-        readingComprehensionTemplates = questionTemplateRepository.findByQuestionType(QuestionType.GRE_READING_COMPREHENSION);
+        readingComprehensionTemplates = questionTemplateRepository.findByQuestionType(QuestionType.GRE_READING_COMPREHENSION_SHORT);
+        readingComprehensionTemplates.addAll(questionTemplateRepository.findByQuestionType(QuestionType.GRE_READING_COMPREHENSION_MEDIUM));
+        readingComprehensionTemplates.addAll(questionTemplateRepository.findByQuestionType(QuestionType.GRE_READING_COMPREHENSION_LONG));
+        readingComprehensionTemplates.addAll(questionTemplateRepository.findByQuestionType(QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT));
     }
 
     private void createSingleAnswerChoices(List<Choice> choices, Integer number) {
@@ -171,7 +174,7 @@ public class QuestionsGenerator {
     public void createWritingQuestion(Integer number) {
         WritingQuestion question = new WritingQuestion();
         question.setText("This is a sample Writing question " + number);
-        question.setTaskType(WritingQuestion.TaskType.values()[random.nextInt(2)]);
+        question.setType(WritingQuestion.Type.values()[random.nextInt(2)]);
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
         question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
         question.prepare();
@@ -231,6 +234,7 @@ public class QuestionsGenerator {
     private void createReadingComprehensionQuestion(int number) {
         QuestionTemplate template = dataInterpretationTemplates.get(random.nextInt(dataInterpretationTemplates.size()));
         ReadingComprehensionQuestion question = new ReadingComprehensionQuestion();
+        question.setType(ReadingComprehensionQuestion.Type.values()[random.nextInt(4)]);
         question.setTemplate(template);
         question.setText("This is a sample Reading Comprehension question " + number);
         question.setDifficulty(template.getDifficulty());

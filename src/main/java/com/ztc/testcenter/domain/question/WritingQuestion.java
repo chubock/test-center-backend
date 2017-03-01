@@ -1,7 +1,6 @@
 package com.ztc.testcenter.domain.question;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
@@ -13,25 +12,29 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class WritingQuestion extends Question {
 
-    private TaskType taskType;
+    private Type type;
 
     @Enumerated
     @NotNull
     @Column(nullable = false)
-    public TaskType getTaskType() {
-        return taskType;
+    public Type getType() {
+        return type;
     }
 
-    public void setTaskType(TaskType taskType) {
-        this.taskType = taskType;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
     QuestionType getQuestionType() {
-        return QuestionType.GRE_WRITING;
+        if (type == Type.ANALYZE_AND_ISSUE)
+            return QuestionType.GRE_WRITING_ISSUE;
+        else if (type == Type.ANALYZE_AND_ARGUMENT)
+            return QuestionType.GRE_WRITING_ARGUMENT;
+        return null;
     }
 
-    public static enum TaskType {
+    public enum Type {
         ANALYZE_AND_ISSUE,
         ANALYZE_AND_ARGUMENT
     }

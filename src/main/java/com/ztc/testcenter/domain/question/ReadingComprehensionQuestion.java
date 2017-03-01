@@ -12,10 +12,21 @@ import java.util.List;
 @Entity
 public class ReadingComprehensionQuestion extends Question {
 
+    private Type type = Type.MEDIUM;
     private QuestionTemplate template;
     private List<ReadingComprehensionSingleAnswerQuestion> singleAnswerQuestions = new ArrayList<>();
     private List<ReadingComprehensionMultipleAnswerQuestion> multipleAnswerQuestions = new ArrayList<>();
     private List<SelectInPassageQuestion> selectInPassageQuestions = new ArrayList<>();
+
+    @Enumerated
+    @Column(nullable = false)
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -59,7 +70,17 @@ public class ReadingComprehensionQuestion extends Question {
 
     @Override
     QuestionType getQuestionType() {
-        return QuestionType.GRE_READING_COMPREHENSION;
+        switch (type) {
+            case SHORT:
+                return QuestionType.GRE_READING_COMPREHENSION_SHORT;
+            case MEDIUM:
+                return QuestionType.GRE_READING_COMPREHENSION_MEDIUM;
+            case LONG:
+                return QuestionType.GRE_READING_COMPREHENSION_LONG;
+            case PARAGRAPH_ARGUMENT:
+                return QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT;
+        }
+        return null;
     }
 
     @Override
@@ -67,5 +88,12 @@ public class ReadingComprehensionQuestion extends Question {
         getSelectInPassageQuestions().forEach(question -> question.prepare());
         getMultipleAnswerQuestions().forEach(question -> question.prepare());
         getSingleAnswerQuestions().forEach(question -> question.prepare());
+    }
+
+    public enum Type {
+        SHORT,
+        MEDIUM,
+        LONG,
+        PARAGRAPH_ARGUMENT
     }
 }
