@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 public class QuantitativeMultipleAnswerQuestion extends AbstractQuantitativeMultipleAnswerQuestion {
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER;
     }
 }

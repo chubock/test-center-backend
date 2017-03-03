@@ -2,6 +2,7 @@ package com.ztc.testcenter.rest.question;
 
 import com.ztc.testcenter.domain.question.DataInterpretationMultipleAnswerQuestion;
 import com.ztc.testcenter.domain.question.DataInterpretationSetQuestion;
+import com.ztc.testcenter.domain.question.QuestionsContainer;
 import com.ztc.testcenter.dto.question.DataInterpretationMultipleAnswerQuestionDTO;
 import com.ztc.testcenter.dto.question.DataInterpretationNumericQuestionDTO;
 import com.ztc.testcenter.dto.question.DataInterpretationSetQuestionDTO;

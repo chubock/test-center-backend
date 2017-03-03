@@ -32,7 +32,7 @@ public class QuantitativeComparisonQuestion extends Question {
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_QUANTITATIVE_COMPARISON;
     }
 }

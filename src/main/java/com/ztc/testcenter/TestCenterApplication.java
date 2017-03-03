@@ -1,18 +1,10 @@
 package com.ztc.testcenter;
 
-import com.ztc.testcenter.generator.QuestionTemplatesGenerator;
-import com.ztc.testcenter.generator.QuestionsGenerator;
-import com.ztc.testcenter.generator.SectionTemplatesGenerator;
-import com.ztc.testcenter.generator.UsersGenerator;
+import com.ztc.testcenter.generator.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * Created by Yubar on 1/15/2017.
@@ -25,18 +17,22 @@ public class TestCenterApplication implements CommandLineRunner {
     private static final Boolean GENERATE_USERS = false;
     private static final Boolean GENERATE_QUESTION_TEMPLATES = false;
     private static final Boolean GENERATE_SECTION_TEMPLATES = false;
+    private static final Boolean GENERATE_TEST_TEMPLATES = false;
+
+    private final QuestionsGenerator questionsGenerator;
+    private final UsersGenerator usersGenerator;
+    private final QuestionTemplatesGenerator questionTemplatesGenerator;
+    private final SectionTemplatesGenerator sectionTemplatesGenerator;
+    private final TestTemplatesGenerator testTemplatesGenerator;
 
     @Autowired
-    QuestionsGenerator questionsGenerator;
-
-    @Autowired
-    UsersGenerator usersGenerator;
-
-    @Autowired
-    QuestionTemplatesGenerator questionTemplatesGenerator;
-
-    @Autowired
-    SectionTemplatesGenerator sectionTemplatesGenerator;
+    public TestCenterApplication(QuestionsGenerator questionsGenerator, UsersGenerator usersGenerator, QuestionTemplatesGenerator questionTemplatesGenerator, SectionTemplatesGenerator sectionTemplatesGenerator, TestTemplatesGenerator testTemplatesGenerator) {
+        this.questionsGenerator = questionsGenerator;
+        this.usersGenerator = usersGenerator;
+        this.questionTemplatesGenerator = questionTemplatesGenerator;
+        this.sectionTemplatesGenerator = sectionTemplatesGenerator;
+        this.testTemplatesGenerator = testTemplatesGenerator;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(TestCenterApplication.class, args);
@@ -52,5 +48,7 @@ public class TestCenterApplication implements CommandLineRunner {
             usersGenerator.generateUsers(1000);
         if (GENERATE_SECTION_TEMPLATES)
             sectionTemplatesGenerator.createAll();
+        if (GENERATE_TEST_TEMPLATES)
+            testTemplatesGenerator.createAll();
     }
 }

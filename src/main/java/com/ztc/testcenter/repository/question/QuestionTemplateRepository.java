@@ -1,4 +1,4 @@
-package com.ztc.testcenter.repository.test;
+package com.ztc.testcenter.repository.question;
 
 import com.ztc.testcenter.domain.question.QuestionType;
 import com.ztc.testcenter.domain.question.QuestionTemplate;

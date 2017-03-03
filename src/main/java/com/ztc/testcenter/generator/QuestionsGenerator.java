@@ -4,7 +4,8 @@ import com.ztc.testcenter.domain.question.*;
 import com.ztc.testcenter.domain.question.QuestionTemplate;
 import com.ztc.testcenter.domain.question.QuestionTemplateItem;
 import com.ztc.testcenter.repository.question.QuestionRepository;
-import com.ztc.testcenter.repository.test.QuestionTemplateRepository;
+import com.ztc.testcenter.repository.question.QuestionTemplateRepository;
+import com.ztc.testcenter.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.util.*;
 @Service
 public class QuestionsGenerator {
 
+    private final ManagerService managerService;
     private final QuestionRepository questionRepository;
     private final Random random = new Random(1);
     private final QuestionTemplateRepository questionTemplateRepository;
@@ -27,13 +29,11 @@ public class QuestionsGenerator {
     private List<QuestionTemplate> readingComprehensionTemplates;
 
     @Autowired
-    public QuestionsGenerator(QuestionRepository questionRepository, QuestionTemplateRepository questionTemplateRepository) {
+    public QuestionsGenerator(ManagerService managerService, QuestionRepository questionRepository, QuestionTemplateRepository questionTemplateRepository) {
+        this.managerService = managerService;
         this.questionRepository = questionRepository;
         this.questionTemplateRepository = questionTemplateRepository;
-    }
 
-    @PostConstruct
-    private void init() {
         dataInterpretationTemplates = questionTemplateRepository.findByQuestionType(QuestionType.GRE_DATA_INTERPRETATION_SET);
         readingComprehensionTemplates = questionTemplateRepository.findByQuestionType(QuestionType.GRE_READING_COMPREHENSION_SHORT);
         readingComprehensionTemplates.addAll(questionTemplateRepository.findByQuestionType(QuestionType.GRE_READING_COMPREHENSION_MEDIUM));
@@ -101,8 +101,7 @@ public class QuestionsGenerator {
     public void createNumericQuestion(Integer number) {
         NumericQuestion question = new NumericQuestion();
         createNumericQuestion(number, question);
-        question.prepare();
-        questionRepository.save(question);
+        managerService.save(question);
     }
 
     @Transactional
@@ -113,24 +112,21 @@ public class QuestionsGenerator {
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
         question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
         question.setAnswer(random.nextInt(4));
-        question.prepare();
-        questionRepository.save(question);
+        managerService.save(question);
     }
 
     @Transactional
     public void createQuantitativeMultipleAnswerQuestion(Integer number) {
         QuantitativeMultipleAnswerQuestion question = new QuantitativeMultipleAnswerQuestion();
         createQuantitativeMultipleAnswerQuestion(number, question);
-        question.prepare();
-        questionRepository.save(question);
+        managerService.save(question);
     }
 
     @Transactional
     public void createQuantitativeSingleAnswerQuestion(Integer number) {
         QuantitativeSingleAnswerQuestion question = new QuantitativeSingleAnswerQuestion();
         createQuantitativeSingleAnswerQuestion(number, question);
-        question.prepare();
-        questionRepository.save(question);
+        managerService.save(question);
     }
 
     @Transactional
@@ -140,8 +136,7 @@ public class QuestionsGenerator {
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
         question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
         createMultipleAnswerChoices(question.getChoices(), 6, 2, 2);
-        question.prepare();
-        questionRepository.save(question);
+        managerService.save(question);
     }
 
     @Transactional
@@ -166,8 +161,7 @@ public class QuestionsGenerator {
                 question.getItems().add(item);
             }
         }
-        question.prepare();
-        questionRepository.save(question);
+        managerService.save(question);
     }
 
     @Transactional
@@ -177,8 +171,7 @@ public class QuestionsGenerator {
         question.setType(WritingQuestion.Type.values()[random.nextInt(2)]);
         question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
         question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
-        question.prepare();
-        questionRepository.save(question);
+        managerService.save(question);
     }
 
     @Transactional
@@ -226,13 +219,12 @@ public class QuestionsGenerator {
         if (questionsCount == 0)
             return ;
         question.setDifficultyLevel(DifficultyLevel.values()[Math.round((float)difficultyWeight / questionsCount)]);
-        question.prepare();
-        questionRepository.save(question);
+        managerService.save(question);
     }
 
     @Transactional
     private void createReadingComprehensionQuestion(int number) {
-        QuestionTemplate template = dataInterpretationTemplates.get(random.nextInt(dataInterpretationTemplates.size()));
+        QuestionTemplate template = readingComprehensionTemplates.get(random.nextInt(readingComprehensionTemplates.size()));
         ReadingComprehensionQuestion question = new ReadingComprehensionQuestion();
         question.setType(ReadingComprehensionQuestion.Type.values()[random.nextInt(4)]);
         question.setTemplate(template);
@@ -279,8 +271,7 @@ public class QuestionsGenerator {
         if (questionsCount == 0)
             return ;
         question.setDifficultyLevel(DifficultyLevel.values()[Math.round((float) difficultyWeight / questionsCount)]);
-        question.prepare();
-        questionRepository.save(question);
+        managerService.save(question);
     }
 
     public void generateAll(Integer count) {

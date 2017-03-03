@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 public class NumericQuestion extends AbstractNumericQuestion {
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         if (isFraction())
             return QuestionType.GRE_NUMERIC_FRACTION;
         return QuestionType.GRE_NUMERIC;

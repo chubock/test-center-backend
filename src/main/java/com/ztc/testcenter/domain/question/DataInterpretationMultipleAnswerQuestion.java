@@ -22,7 +22,7 @@ public class DataInterpretationMultipleAnswerQuestion extends AbstractQuantitati
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_DATA_INTERPRETATION_SET_MULTIPLE_ANSWER;
     }
 }

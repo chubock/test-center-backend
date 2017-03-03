@@ -21,7 +21,7 @@ public class ReadingComprehensionSingleAnswerQuestion extends FiveChoiceQuestion
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_READING_COMPREHENSION_SINGLE_ANSWER;
     }
 }

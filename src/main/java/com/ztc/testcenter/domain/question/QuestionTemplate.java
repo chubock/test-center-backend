@@ -3,9 +3,7 @@ package com.ztc.testcenter.domain.question;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Yubar on 2/23/2017.
@@ -20,6 +18,7 @@ public class QuestionTemplate implements Serializable {
     private Difficulty difficulty;
     private List<QuestionTemplateItem> questionTemplateItems = new ArrayList<>();
     private String label;
+    private Integer count = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,6 +71,16 @@ public class QuestionTemplate implements Serializable {
         this.label = label;
     }
 
+    @NotNull
+    @Column(nullable = false)
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     public void prepare() {
         StringBuilder builder = new StringBuilder();
         builder.append(getQuestionType().name());
@@ -87,5 +96,23 @@ public class QuestionTemplate implements Serializable {
                 builder.append('-');
         }
         setLabel(builder.toString());
+    }
+
+    public static QuestionTemplate templateOf(QuestionsContainer questionsContainer) {
+        Question question = (Question) questionsContainer;
+        QuestionTemplate questionTemplate = new QuestionTemplate();
+        questionTemplate.setDifficulty(question.getDifficulty());
+        questionTemplate.setQuestionType(question.getQuestionType());
+        Map<DifficultyLevel, Integer> difficultyLevelsCount = new HashMap<>();
+        for (DifficultyLevel difficultyLevel: DifficultyLevel.values())
+            difficultyLevelsCount.put(difficultyLevel, 0);
+        questionsContainer.innerQuestions().forEach(q -> difficultyLevelsCount.put(q.getDifficultyLevel(), difficultyLevelsCount.get(q.getDifficultyLevel()) + 1));
+        for (DifficultyLevel difficultyLevel: DifficultyLevel.values()) {
+            int count = difficultyLevelsCount.get(difficultyLevel);
+            if (count != 0)
+                questionTemplate.getQuestionTemplateItems().add(new QuestionTemplateItem(difficultyLevel, count));
+        }
+        questionTemplate.prepare();
+        return questionTemplate;
     }
 }

@@ -2,6 +2,7 @@ package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.File;
 import com.ztc.testcenter.domain.question.Difficulty;
+import com.ztc.testcenter.domain.question.DifficultyLevel;
 import com.ztc.testcenter.domain.question.Question;
 import com.ztc.testcenter.dto.AbstractDTO;
 import com.ztc.testcenter.dto.FileDTO;
@@ -15,6 +16,7 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
     private String text;
     private Long image;
     private Difficulty difficulty = Difficulty.MEDIUM;
+    private DifficultyLevel difficultyLevel = DifficultyLevel.LEVEL3;
     private String answers;
 
     public Long getId() {
@@ -49,6 +51,14 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
         this.difficulty = difficulty;
     }
 
+    public DifficultyLevel getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
+    }
+
     public String getAnswers() {
         return answers;
     }
@@ -61,7 +71,8 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
         question.setId(getId());
         question.setText(getText());
         question.setDifficulty(getDifficulty());
-        if (getImage() != 0) {
+        question.setDifficultyLevel(getDifficultyLevel());
+        if (getImage() != null && getImage() != 0) {
             File file = new File();
             file.setId(getImage());
             question.setImage(file);
@@ -72,6 +83,7 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
         setId(question.getId());
         setText(question.getText());
         setDifficulty(question.getDifficulty());
+        setDifficultyLevel(question.getDifficultyLevel());
         if (question.getImage() != null)
             setImage(question.getImage().getId());
     }

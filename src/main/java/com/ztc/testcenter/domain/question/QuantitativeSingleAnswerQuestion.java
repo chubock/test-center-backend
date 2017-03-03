@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 @Entity
 public class QuantitativeSingleAnswerQuestion extends AbstractQuantitativeSingleAnswerQuestion {
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER;
     }
 }

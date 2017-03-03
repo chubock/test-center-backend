@@ -20,6 +20,7 @@ public abstract class Question implements Serializable {
     private Difficulty difficulty = Difficulty.MEDIUM;
     private DifficultyLevel difficultyLevel = DifficultyLevel.LEVEL3;
     private String answers;
+    private QuestionTemplate template;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,9 +76,18 @@ public abstract class Question implements Serializable {
         this.answers = answers;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    public QuestionTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(QuestionTemplate template) {
+        this.template = template;
+    }
+
     @Enumerated
     @Column(nullable = false)
-    abstract QuestionType getQuestionType();
+    public abstract QuestionType getQuestionType();
 
     private void setQuestionType(QuestionType questionType) {}
 

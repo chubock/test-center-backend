@@ -24,7 +24,7 @@ public class TextCompletionQuestion extends Question {
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         switch (items.size()) {
             case 1:
                 return QuestionType.GRE_TEXT_COMPLETION_ONE_BLANK;

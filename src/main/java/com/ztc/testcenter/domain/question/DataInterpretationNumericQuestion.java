@@ -22,7 +22,7 @@ public class DataInterpretationNumericQuestion extends AbstractNumericQuestion {
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_DATA_INTERPRETATION_SET_NUMERIC;
     }
 }

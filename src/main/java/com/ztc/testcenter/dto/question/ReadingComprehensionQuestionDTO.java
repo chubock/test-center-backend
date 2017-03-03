@@ -10,9 +10,18 @@ import java.util.List;
  */
 public class ReadingComprehensionQuestionDTO extends QuestionDTO {
 
+    private ReadingComprehensionQuestion.Type type = ReadingComprehensionQuestion.Type.MEDIUM;
     List<ReadingComprehensionSingleAnswerQuestionDTO> singleAnswerQuestions = new ArrayList<>();
     List<ReadingComprehensionMultipleAnswerQuestionDTO> multipleAnswerQuestions = new ArrayList<>();
     List<SelectInPassageQuestionDTO> selectInPassageQuestions = new ArrayList<>();
+
+    public ReadingComprehensionQuestion.Type getType() {
+        return type;
+    }
+
+    public void setType(ReadingComprehensionQuestion.Type type) {
+        this.type = type;
+    }
 
     public List<ReadingComprehensionSingleAnswerQuestionDTO> getSingleAnswerQuestions() {
         return singleAnswerQuestions;
@@ -40,6 +49,7 @@ public class ReadingComprehensionQuestionDTO extends QuestionDTO {
 
     void convert(ReadingComprehensionQuestion question) {
         super.convert(question);
+        question.setType(getType());
         getSingleAnswerQuestions().forEach(numericQuestion -> question.getSingleAnswerQuestions().add(numericQuestion.convert()));
         getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> question.getMultipleAnswerQuestions().add(multipleAnswerQuestion.convert()));
         getSelectInPassageQuestions().forEach(singleAnswerQuestion -> question.getSelectInPassageQuestions().add(singleAnswerQuestion.convert()));
@@ -47,6 +57,7 @@ public class ReadingComprehensionQuestionDTO extends QuestionDTO {
 
     void copy(ReadingComprehensionQuestion question) {
         super.copy(question);
+        setType(question.getType());
         question.getSingleAnswerQuestions().forEach(singleAnswerQuestion -> getSingleAnswerQuestions().add(ReadingComprehensionSingleAnswerQuestionDTO.valueOf(singleAnswerQuestion)));
         question.getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> getMultipleAnswerQuestions().add(ReadingComprehensionMultipleAnswerQuestionDTO.valueOf(multipleAnswerQuestion)));
         question.getSelectInPassageQuestions().forEach(selectInPassageQuestion -> getSelectInPassageQuestions().add(SelectInPassageQuestionDTO.valueOf(selectInPassageQuestion)));

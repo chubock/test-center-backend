@@ -20,7 +20,7 @@ public class ReadingComprehensionMultipleAnswerQuestion extends ThreeChoiceQuest
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_READING_COMPREHENSION_MULTIPLE_ANSWER;
     }
 }

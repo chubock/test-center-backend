@@ -1,7 +1,7 @@
 package com.ztc.testcenter.domain.test;
 
 import com.ztc.testcenter.domain.User;
-import com.ztc.testcenter.domain.question.Question;
+import com.ztc.testcenter.domain.question.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,7 +20,21 @@ public class AnsweredQuestion implements Serializable {
     private TestSection testSection;
     private User user;
     private Question question;
+    private Difficulty difficulty;
+    private DifficultyLevel difficultyLevel;
+    private QuestionType questionType;
+    private QuestionTemplate questionTemplate;
     private String userAnswer;
+
+    public AnsweredQuestion() {
+    }
+
+    public AnsweredQuestion(Question question) {
+        this.question = question;
+        this.difficulty = question.getDifficulty();
+        this.difficultyLevel = question.getDifficultyLevel();
+        this.questionType = question.getQuestionType();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,6 +82,48 @@ public class AnsweredQuestion implements Serializable {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    @NotNull
+    @Enumerated
+    @Column(nullable = false)
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    @NotNull
+    @Enumerated
+    @Column(nullable = false)
+    public DifficultyLevel getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
+    }
+
+    @NotNull
+    @Enumerated
+    @Column(nullable = false)
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public QuestionTemplate getQuestionTemplate() {
+        return questionTemplate;
+    }
+
+    public void setQuestionTemplate(QuestionTemplate questionTemplate) {
+        this.questionTemplate = questionTemplate;
     }
 
     public String getUserAnswer() {

@@ -1,19 +1,16 @@
 package com.ztc.testcenter.domain.question;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Yubar on 2/9/2017.
  */
 
 @Entity
-public class ReadingComprehensionQuestion extends Question {
+public class ReadingComprehensionQuestion extends Question implements QuestionsContainer {
 
     private Type type = Type.MEDIUM;
-    private QuestionTemplate template;
     private List<ReadingComprehensionSingleAnswerQuestion> singleAnswerQuestions = new ArrayList<>();
     private List<ReadingComprehensionMultipleAnswerQuestion> multipleAnswerQuestions = new ArrayList<>();
     private List<SelectInPassageQuestion> selectInPassageQuestions = new ArrayList<>();
@@ -26,16 +23,6 @@ public class ReadingComprehensionQuestion extends Question {
 
     public void setType(Type type) {
         this.type = type;
-    }
-
-    @NotNull
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    public QuestionTemplate getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(QuestionTemplate template) {
-        this.template = template;
     }
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
@@ -69,7 +56,15 @@ public class ReadingComprehensionQuestion extends Question {
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public List<Question> innerQuestions() {
+        List<Question> ret = new ArrayList<>(getMultipleAnswerQuestions());
+        ret.addAll(getSingleAnswerQuestions());
+        ret.addAll(getSelectInPassageQuestions());
+        return ret;
+    }
+
+    @Override
+    public QuestionType getQuestionType() {
         switch (type) {
             case SHORT:
                 return QuestionType.GRE_READING_COMPREHENSION_SHORT;

@@ -31,7 +31,7 @@ public class SelectInPassageQuestion extends Question {
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_READING_COMPREHENSION_SELECT_IN_PASSAGE;
     }
 }

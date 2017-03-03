@@ -20,11 +20,12 @@ import java.util.List;
 public class Test implements Serializable {
 
     private Long id;
-    private Date date;
+    private Date date = new Date();
     private Difficulty difficulty;
     private TestIntelligentType intelligentType = TestIntelligentType.INTELLIGENT;
     private User user;
     private List<TestSection> testSections = new ArrayList<>();
+    private TestTemplate template;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,6 +88,16 @@ public class Test implements Serializable {
 
     public void setTestSections(List<TestSection> testSections) {
         this.testSections = testSections;
+    }
+
+    @NotNull
+    @ManyToOne(optional = false)
+    public TestTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(TestTemplate template) {
+        this.template = template;
     }
 
     public static enum TestIntelligentType {

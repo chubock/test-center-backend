@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 public class SentenceEquivalenceQuestion extends SixChoiceQuestion {
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_SENTENCE_EQUIVALENCE;
     }
 }

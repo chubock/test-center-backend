@@ -11,22 +11,11 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("DATA_INTERPRETATION_SET")
-public class DataInterpretationSetQuestion extends Question {
+public class DataInterpretationSetQuestion extends Question implements QuestionsContainer {
 
-    private QuestionTemplate template;
     private List<DataInterpretationNumericQuestion> numericQuestions = new ArrayList<>();
     private List<DataInterpretationMultipleAnswerQuestion> multipleAnswerQuestions = new ArrayList<>();
     private List<DataInterpretationSingleAnswerQuestion> singleAnswerQuestions = new ArrayList<>();
-
-    @NotNull
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    public QuestionTemplate getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(QuestionTemplate template) {
-        this.template = template;
-    }
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "question")
@@ -59,7 +48,15 @@ public class DataInterpretationSetQuestion extends Question {
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public List<Question> innerQuestions() {
+        List<Question> ret = new ArrayList<>(getNumericQuestions());
+        ret.addAll(getMultipleAnswerQuestions());
+        ret.addAll(getSingleAnswerQuestions());
+        return ret;
+    }
+
+    @Override
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_DATA_INTERPRETATION_SET;
     }
 

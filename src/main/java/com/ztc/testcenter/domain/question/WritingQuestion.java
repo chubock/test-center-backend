@@ -26,7 +26,7 @@ public class WritingQuestion extends Question {
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         if (type == Type.ANALYZE_AND_ISSUE)
             return QuestionType.GRE_WRITING_ISSUE;
         else if (type == Type.ANALYZE_AND_ARGUMENT)

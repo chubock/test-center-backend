@@ -20,7 +20,7 @@ public class SectionTemplate implements Serializable {
     private String name;
     private SectionType sectionType;
     private Difficulty difficulty;
-    private List<SectionTemplateItem> sectionTemplateItems = new ArrayList<>();
+    private List<SectionTemplateItem> items = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,11 +67,11 @@ public class SectionTemplate implements Serializable {
     @OrderBy("number")
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "SECTION_TEMPLATE")
-    public List<SectionTemplateItem> getSectionTemplateItems() {
-        return sectionTemplateItems;
+    public List<SectionTemplateItem> getItems() {
+        return items;
     }
 
-    public void setSectionTemplateItems(List<SectionTemplateItem> sectionTemplateItems) {
-        this.sectionTemplateItems = sectionTemplateItems;
+    public void setItems(List<SectionTemplateItem> items) {
+        this.items = items;
     }
 }

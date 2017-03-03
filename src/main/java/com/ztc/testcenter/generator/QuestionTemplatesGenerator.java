@@ -5,7 +5,7 @@ import com.ztc.testcenter.domain.question.DifficultyLevel;
 import com.ztc.testcenter.domain.question.QuestionType;
 import com.ztc.testcenter.domain.question.QuestionTemplate;
 import com.ztc.testcenter.domain.question.QuestionTemplateItem;
-import com.ztc.testcenter.repository.test.QuestionTemplateRepository;
+import com.ztc.testcenter.repository.question.QuestionTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

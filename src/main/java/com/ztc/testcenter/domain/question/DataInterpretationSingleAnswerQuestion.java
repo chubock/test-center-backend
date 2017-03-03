@@ -22,7 +22,7 @@ public class DataInterpretationSingleAnswerQuestion extends AbstractQuantitative
     }
 
     @Override
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return QuestionType.GRE_DATA_INTERPRETATION_SET_SINGLE_ANSWER;
     }
 }
