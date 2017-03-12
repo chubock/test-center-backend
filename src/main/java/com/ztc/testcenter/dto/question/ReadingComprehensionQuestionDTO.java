@@ -1,6 +1,7 @@
 package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.*;
+import com.ztc.testcenter.domain.test.AnsweredQuestion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,5 +77,10 @@ public class ReadingComprehensionQuestionDTO extends QuestionDTO {
         ReadingComprehensionQuestionDTO questionDTO = new ReadingComprehensionQuestionDTO();
         questionDTO.copy(question);
         return questionDTO;
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        //Operation Not Supported For Question Groups
     }
 }

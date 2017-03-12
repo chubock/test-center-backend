@@ -20,7 +20,7 @@ import java.util.Random;
 
 @Service
 @Transactional
-public class GreTestService {
+public class GRETestService implements TestService {
 
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
@@ -32,7 +32,7 @@ public class GreTestService {
     private final Random random = new Random();
 
     @Autowired
-    public GreTestService(UserRepository userRepository, QuestionRepository questionRepository, TestRepository testRepository, TestTemplateRepository testTemplateRepository, SectionTemplateRepository sectionTemplateRepository, TestSectionRepository testSectionRepository, AnsweredQuestionRepository answeredQuestionRepository) {
+    public GRETestService(UserRepository userRepository, QuestionRepository questionRepository, TestRepository testRepository, TestTemplateRepository testTemplateRepository, SectionTemplateRepository sectionTemplateRepository, TestSectionRepository testSectionRepository, AnsweredQuestionRepository answeredQuestionRepository) {
         this.userRepository = userRepository;
         this.questionRepository = questionRepository;
         this.testRepository = testRepository;
@@ -44,6 +44,7 @@ public class GreTestService {
 
     public Test createTest(User user) {
         Test test = new Test();
+        test.setType(Test.Type.GRE);
         test.setUser(user);
         test.setDate(new Date());
         test.setDifficulty(Difficulty.MEDIUM);

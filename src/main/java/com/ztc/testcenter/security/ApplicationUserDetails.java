@@ -44,22 +44,22 @@ public class ApplicationUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return !user.isAccountExpired();
+        return !user.getAccountExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return !user.isLocked();
+        return !user.getLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return !user.isCredentialExpired();
+        return !user.getCredentialExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return user.isEnabled();
+        return user.getEnabled();
     }
 
 

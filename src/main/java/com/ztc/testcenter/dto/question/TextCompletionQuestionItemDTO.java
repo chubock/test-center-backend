@@ -2,6 +2,7 @@ package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.Choice;
 import com.ztc.testcenter.domain.question.TextCompletionQuestionItem;
+import com.ztc.testcenter.domain.test.AnsweredQuestion;
 import com.ztc.testcenter.dto.AbstractDTO;
 
 import java.util.ArrayList;

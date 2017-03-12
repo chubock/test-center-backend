@@ -8,6 +8,7 @@ import com.ztc.testcenter.domain.question.WritingQuestion;
 public class WritingQuestionDTO extends QuestionDTO {
 
     private WritingQuestion.Type type;
+    private String answer;
 
     public WritingQuestion.Type getType() {
         return type;
@@ -15,6 +16,14 @@ public class WritingQuestionDTO extends QuestionDTO {
 
     public void setType(WritingQuestion.Type type) {
         this.type = type;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public WritingQuestion convert(WritingQuestion question) {

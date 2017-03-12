@@ -2,6 +2,7 @@ package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.AbstractNumericQuestion;
 import com.ztc.testcenter.domain.question.NumericQuestion;
+import com.ztc.testcenter.domain.test.AnsweredQuestion;
 
 /**
  * Created by Yubar on 1/20/2017.
@@ -11,6 +12,9 @@ public abstract class AbstractNumericQuestionDTO extends QuestionDTO {
     private Long nominatorAnswer;
     private Boolean fraction = false;
     private Long denominatorAnswer;
+
+    private Long nominator;
+    private Long denominator;
 
     public Long getNominatorAnswer() {
         return nominatorAnswer;
@@ -36,6 +40,22 @@ public abstract class AbstractNumericQuestionDTO extends QuestionDTO {
         this.denominatorAnswer = denominatorAnswer;
     }
 
+    public Long getNominator() {
+        return nominator;
+    }
+
+    public void setNominator(Long nominator) {
+        this.nominator = nominator;
+    }
+
+    public Long getDenominator() {
+        return denominator;
+    }
+
+    public void setDenominator(Long denominator) {
+        this.denominator = denominator;
+    }
+
     void convert(AbstractNumericQuestion question) {
         super.convert(question);
         question.setNominatorAnswer(getNominatorAnswer());
@@ -48,5 +68,18 @@ public abstract class AbstractNumericQuestionDTO extends QuestionDTO {
         setNominatorAnswer(question.getNominatorAnswer());
         setFraction(question.isFraction());
         setDenominatorAnswer(question.getDenominatorAnswer());
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        if (answer == null)
+            return ;
+        String[] answers = answer.split("-");
+        if (answers.length == 1) {
+            this.nominator = Long.valueOf(answers[0]);
+        } else {
+            this.nominator = Long.valueOf(answers[0]);
+            this.denominator = Long.valueOf(answers[1]);
+        }
     }
 }

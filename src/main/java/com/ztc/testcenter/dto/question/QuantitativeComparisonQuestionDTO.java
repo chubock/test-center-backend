@@ -2,6 +2,7 @@ package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.Choice;
 import com.ztc.testcenter.domain.question.QuantitativeComparisonQuestion;
+import com.ztc.testcenter.domain.test.AnsweredQuestion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
 
     private String quantityB;
     private Integer answer;
+    private Integer selected;
 
     public String getQuantityB() {
         return quantityB;
@@ -28,6 +30,14 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
 
     public void setAnswer(Integer answer) {
         this.answer = answer;
+    }
+
+    public Integer getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Integer selected) {
+        this.selected = selected;
     }
 
     void convert(QuantitativeComparisonQuestion question) {
@@ -47,6 +57,13 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
         super.copy(question);
         setQuantityB(question.getQuantityB());
         setAnswer(question.getAnswer());
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        if (answer == null)
+            return ;
+        setSelected(Integer.valueOf(answer));
     }
 
     public static QuantitativeComparisonQuestionDTO valueOf(QuantitativeComparisonQuestion question) {

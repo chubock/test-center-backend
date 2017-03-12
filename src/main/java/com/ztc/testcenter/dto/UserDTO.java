@@ -1,33 +1,27 @@
-package com.ztc.testcenter.domain;
+package com.ztc.testcenter.dto;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import com.ztc.testcenter.domain.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Yubar on 2/10/2017.
+ * Created by Yubar on 3/4/2017.
  */
-
-@Entity
-@Table(name = "users")
-public class User implements Serializable {
+public class UserDTO extends AbstractDTO<User> {
 
     private Long id;
     private String username;
     private String password;
     private String lastName;
     private String firstName;
-    private Gender gender;
+    private User.Gender gender;
     private Boolean enabled = true;
     private Boolean accountExpired = false;
     private Boolean credentialExpired = false;
     private Boolean locked = false;
-    private List<Role> roles = new ArrayList<>();
+    private List<RoleDTO> roles = new ArrayList<>();
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -36,8 +30,6 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    @NotNull
-    @Column(nullable = false, unique = true)
     public String getUsername() {
         return username;
     }
@@ -54,8 +46,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    @NotNull
-    @Column(nullable = false)
     public String getLastName() {
         return lastName;
     }
@@ -64,8 +54,6 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    @NotNull
-    @Column(nullable = false)
     public String getFirstName() {
         return firstName;
     }
@@ -74,14 +62,11 @@ public class User implements Serializable {
         this.firstName = firstName;
     }
 
-    @NotNull
-    @Enumerated
-    @Column(nullable = false)
-    public Gender getGender() {
+    public User.Gender getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(User.Gender gender) {
         this.gender = gender;
     }
 
@@ -117,19 +102,42 @@ public class User implements Serializable {
         this.locked = locked;
     }
 
-    @ManyToMany
-    @JoinTable(name = "USER_ROLES")
-    public List<Role> getRoles() {
+    public List<RoleDTO> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<RoleDTO> roles) {
         this.roles = roles;
     }
 
-    public static enum Gender {
-        MALE,
-        FEMALE
+    @Override
+    public User convert() {
+        User user = new User();
+        user.setId(getId());
+        user.setFirstName(getFirstName());
+        user.setLastName(getLastName());
+        user.setUsername(getUsername());
+        user.setGender(getGender());
+        user.setAccountExpired(getAccountExpired());
+        user.setCredentialExpired(getCredentialExpired());
+        user.setEnabled(getEnabled());
+        user.setLocked(getLocked());
+        return user;
     }
 
+    public static UserDTO valueOf(User user) {
+        if (user == null)
+            return null;
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setGender(user.getGender());
+        userDTO.setAccountExpired(user.getAccountExpired());
+        userDTO.setCredentialExpired(user.getCredentialExpired());
+        userDTO.setEnabled(user.getEnabled());
+        userDTO.setLocked(user.getLocked());
+        return userDTO;
+    }
 }

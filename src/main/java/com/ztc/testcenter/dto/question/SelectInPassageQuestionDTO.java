@@ -1,6 +1,7 @@
 package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.SelectInPassageQuestion;
+import com.ztc.testcenter.domain.test.AnsweredQuestion;
 
 /**
  * Created by Yubar on 1/20/2017.
@@ -9,6 +10,7 @@ public class SelectInPassageQuestionDTO extends QuestionDTO {
 
     private Integer number;
     private Integer answer;
+    private Integer selected;
 
     public Integer getNumber() {
         return number;
@@ -24,6 +26,14 @@ public class SelectInPassageQuestionDTO extends QuestionDTO {
 
     public void setAnswer(Integer answer) {
         this.answer = answer;
+    }
+
+    public Integer getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Integer selected) {
+        this.selected = selected;
     }
 
     void convert(SelectInPassageQuestion question) {
@@ -43,6 +53,13 @@ public class SelectInPassageQuestionDTO extends QuestionDTO {
         super.copy(question);
         setAnswer(question.getAnswer());
         setNumber(question.getNumber());
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        if (answer == null)
+            return ;
+        setSelected(Integer.valueOf(answer));
     }
 
     public static SelectInPassageQuestionDTO valueOf(SelectInPassageQuestion question) {

@@ -1,11 +1,12 @@
 package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.File;
-import com.ztc.testcenter.domain.question.Difficulty;
-import com.ztc.testcenter.domain.question.DifficultyLevel;
-import com.ztc.testcenter.domain.question.Question;
+import com.ztc.testcenter.domain.question.*;
+import com.ztc.testcenter.domain.test.AnsweredQuestion;
 import com.ztc.testcenter.dto.AbstractDTO;
 import com.ztc.testcenter.dto.FileDTO;
+
+import java.util.function.Function;
 
 /**
  * Created by Yubar on 1/19/2017.
@@ -17,7 +18,6 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
     private Long image;
     private Difficulty difficulty = Difficulty.MEDIUM;
     private DifficultyLevel difficultyLevel = DifficultyLevel.LEVEL3;
-    private String answers;
 
     public Long getId() {
         return id;
@@ -59,14 +59,6 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
         this.difficultyLevel = difficultyLevel;
     }
 
-    public String getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(String answers) {
-        this.answers = answers;
-    }
-
     void convert(Question question) {
         question.setId(getId());
         question.setText(getText());
@@ -86,5 +78,50 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
         setDifficultyLevel(question.getDifficultyLevel());
         if (question.getImage() != null)
             setImage(question.getImage().getId());
+    }
+
+    abstract void setAnswer(String answer);
+
+    public static QuestionDTO valueOf(AnsweredQuestion answeredQuestion) {
+        switch (answeredQuestion.getQuestionType()) {
+            case GRE_DATA_INTERPRETATION_SET:
+                return DataInterpretationSetQuestionDTO.valueOf(answeredQuestion);
+            case GRE_DATA_INTERPRETATION_SET_SINGLE_ANSWER:
+                return DataInterpretationSingleAnswerQuestionDTO.valueOf(answeredQuestion);
+            case GRE_DATA_INTERPRETATION_SET_MULTIPLE_ANSWER:
+                return DataInterpretationMultipleAnswerQuestionDTO.valueOf(answeredQuestion);
+            case GRE_DATA_INTERPRETATION_SET_NUMERIC:
+                return DataInterpretationNumericQuestionDTO.valueOf(answeredQuestion);
+            case GRE_NUMERIC:
+            case GRE_NUMERIC_FRACTION:
+                return NumericQuestionDTO.valueOf(answeredQuestion);
+            case GRE_QUANTITATIVE_COMPARISON:
+                return QuantitativeComparisonQuestionDTO.valueOf(answeredQuestion);
+            case GRE_QUANTITATIVE_SINGLE_ANSWER:
+                return QuantitativeSingleAnswerQuestionDTO.valueOf(answeredQuestion);
+            case GRE_QUANTITATIVE_MULTIPLE_ANSWER:
+                return QuantitativeMultipleAnswerQuestionDTO.valueOf(answeredQuestion);
+            case GRE_READING_COMPREHENSION_SHORT:
+            case GRE_READING_COMPREHENSION_MEDIUM:
+            case GRE_READING_COMPREHENSION_LONG:
+            case GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT:
+                return NumericQuestionDTO.valueOf(answeredQuestion);
+            case GRE_READING_COMPREHENSION_SINGLE_ANSWER:
+                return ReadingComprehensionSingleAnswerQuestionDTO.valueOf(answeredQuestion);
+            case GRE_READING_COMPREHENSION_MULTIPLE_ANSWER:
+                return ReadingComprehensionMultipleAnswerQuestionDTO.valueOf(answeredQuestion);
+            case GRE_READING_COMPREHENSION_SELECT_IN_PASSAGE:
+                return SelectInPassageQuestionDTO.valueOf(answeredQuestion);
+            case GRE_SENTENCE_EQUIVALENCE:
+                return SentenceEquivalenceQuestionDTO.valueOf(answeredQuestion);
+            case GRE_TEXT_COMPLETION_ONE_BLANK:
+            case GRE_TEXT_COMPLETION_TWO_BLANK:
+            case GRE_TEXT_COMPLETION_THREE_BLANK:
+                return TextCompletionQuestionDTO.valueOf(answeredQuestion);
+            case GRE_WRITING_ARGUMENT:
+            case GRE_WRITING_ISSUE:
+                return SelectInPassageQuestionDTO.valueOf(answeredQuestion);
+        }
+        throw new IllegalArgumentException("Can't find Static Factory for type of Question");
     }
 }

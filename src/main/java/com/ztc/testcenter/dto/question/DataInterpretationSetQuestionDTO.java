@@ -1,6 +1,8 @@
 package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.DataInterpretationSetQuestion;
+import com.ztc.testcenter.domain.question.Question;
+import com.ztc.testcenter.domain.test.AnsweredQuestion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,5 +68,17 @@ public class DataInterpretationSetQuestionDTO extends QuestionDTO {
         DataInterpretationSetQuestionDTO questionDTO = new DataInterpretationSetQuestionDTO();
         questionDTO.copy(question);
         return questionDTO;
+    }
+
+    public static DataInterpretationSetQuestionDTO valueOf(AnsweredQuestion answeredQuestion) {
+        if (answeredQuestion == null)
+            return null;
+        DataInterpretationSetQuestionDTO questionDTO = valueOf((DataInterpretationSetQuestion) answeredQuestion.getQuestion());
+        return questionDTO;
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        //Operation Not Supported For Question Groups
     }
 }

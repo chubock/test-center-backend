@@ -16,7 +16,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "TESTS")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Test implements Serializable {
 
     private Long id;
@@ -26,6 +25,8 @@ public class Test implements Serializable {
     private User user;
     private List<TestSection> testSections = new ArrayList<>();
     private TestTemplate template;
+    private Type type;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,8 +101,23 @@ public class Test implements Serializable {
         this.template = template;
     }
 
-    public static enum TestIntelligentType {
+    @NotNull
+    @Enumerated
+    @Column(nullable = false)
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public enum TestIntelligentType {
         NORMAL,
         INTELLIGENT;
+    }
+
+    public enum Type {
+        GRE
     }
 }

@@ -2,6 +2,7 @@ package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.TextCompletionQuestion;
 import com.ztc.testcenter.domain.question.TextCompletionQuestionItem;
+import com.ztc.testcenter.domain.test.AnsweredQuestion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,18 @@ public class TextCompletionQuestionDTO extends QuestionDTO {
     void copy(TextCompletionQuestion question) {
         super.copy(question);
         question.getItems().forEach(item -> getItems().add(TextCompletionQuestionItemDTO.valueOf(item)));
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        if (answer == null)
+            return ;
+        int i = 0;
+        for (Character character: answer.toCharArray()) {
+            if (Character.isDigit(character))
+                getItems().get(i).getChoices().get(Character.digit(character, 10)).setSelected(true);
+            i++;
+        }
     }
 
     public static TextCompletionQuestionDTO valueOf(TextCompletionQuestion question) {
