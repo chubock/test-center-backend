@@ -25,8 +25,7 @@ public class ReadingComprehensionQuestion extends Question implements QuestionsC
         this.type = type;
     }
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JoinColumn(name = "question")
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     public List<ReadingComprehensionSingleAnswerQuestion> getSingleAnswerQuestions() {
         return singleAnswerQuestions;
     }
@@ -35,8 +34,7 @@ public class ReadingComprehensionQuestion extends Question implements QuestionsC
         this.singleAnswerQuestions = singleAnswerQuestions;
     }
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JoinColumn(name = "question")
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     public List<ReadingComprehensionMultipleAnswerQuestion> getMultipleAnswerQuestions() {
         return multipleAnswerQuestions;
     }
@@ -45,8 +43,7 @@ public class ReadingComprehensionQuestion extends Question implements QuestionsC
         this.multipleAnswerQuestions = multipleAnswerQuestions;
     }
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JoinColumn(name = "question")
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     public List<SelectInPassageQuestion> getSelectInPassageQuestions() {
         return selectInPassageQuestions;
     }

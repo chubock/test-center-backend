@@ -187,30 +187,27 @@ public class QuestionsGenerator {
             for (int i=0; i< item.getCount(); i++) {
                 switch (random.nextInt(3)) {
                     case 0:
-                        DataInterpretationNumericQuestion dataInterpretationNumericQuestion = new DataInterpretationNumericQuestion();
+                        DataInterpretationNumericQuestion dataInterpretationNumericQuestion = new DataInterpretationNumericQuestion(question, n++);
                         createNumericQuestion(i + 1, dataInterpretationNumericQuestion);
                         dataInterpretationNumericQuestion.setDifficulty(template.getDifficulty());
                         dataInterpretationNumericQuestion.setDifficultyLevel(item.getDifficultyLevel());
                         difficultyWeight += item.getDifficultyLevel().ordinal();
-                        dataInterpretationNumericQuestion.setNumber(n++);
                         question.getNumericQuestions().add(dataInterpretationNumericQuestion);
                         break;
                     case 1:
-                        DataInterpretationMultipleAnswerQuestion dataInterpretationMultipleAnswerQuestion = new DataInterpretationMultipleAnswerQuestion();
+                        DataInterpretationMultipleAnswerQuestion dataInterpretationMultipleAnswerQuestion = new DataInterpretationMultipleAnswerQuestion(question, n++);
                         createQuantitativeMultipleAnswerQuestion(i + 1, dataInterpretationMultipleAnswerQuestion);
                         dataInterpretationMultipleAnswerQuestion.setDifficulty(template.getDifficulty());
                         dataInterpretationMultipleAnswerQuestion.setDifficultyLevel(item.getDifficultyLevel());
                         difficultyWeight += item.getDifficultyLevel().ordinal();
-                        dataInterpretationMultipleAnswerQuestion.setNumber(n++);
                         question.getMultipleAnswerQuestions().add(dataInterpretationMultipleAnswerQuestion);
                         break;
                     case 2:
-                        DataInterpretationSingleAnswerQuestion dataInterpretationSingleAnswerQuestion = new DataInterpretationSingleAnswerQuestion();
+                        DataInterpretationSingleAnswerQuestion dataInterpretationSingleAnswerQuestion = new DataInterpretationSingleAnswerQuestion(question, n++);
                         createQuantitativeSingleAnswerQuestion(i + 1, dataInterpretationSingleAnswerQuestion);
                         dataInterpretationSingleAnswerQuestion.setDifficulty(template.getDifficulty());
                         dataInterpretationSingleAnswerQuestion.setDifficultyLevel(item.getDifficultyLevel());
                         difficultyWeight += item.getDifficultyLevel().ordinal();
-                        dataInterpretationSingleAnswerQuestion.setNumber(n++);
                         question.getSingleAnswerQuestions().add(dataInterpretationSingleAnswerQuestion);
                 }
             }
@@ -236,29 +233,26 @@ public class QuestionsGenerator {
             for (int i=0; i< item.getCount(); i++) {
                 switch (random.nextInt(3)) {
                     case 0:
-                        ReadingComprehensionSingleAnswerQuestion readingComprehensionSingleAnswerQuestion = new ReadingComprehensionSingleAnswerQuestion();
+                        ReadingComprehensionSingleAnswerQuestion readingComprehensionSingleAnswerQuestion = new ReadingComprehensionSingleAnswerQuestion(question, n++);
                         readingComprehensionSingleAnswerQuestion.setText("This is a sample Reading Comprehension Single Answer question " + (i + 1));
                         readingComprehensionSingleAnswerQuestion.setDifficulty(template.getDifficulty());
                         readingComprehensionSingleAnswerQuestion.setDifficultyLevel(item.getDifficultyLevel());
                         difficultyWeight += item.getDifficultyLevel().ordinal();
                         createSingleAnswerChoices(readingComprehensionSingleAnswerQuestion.getChoices(), 5);
-                        readingComprehensionSingleAnswerQuestion.setNumber(n++);
                         question.getSingleAnswerQuestions().add(readingComprehensionSingleAnswerQuestion);
                         break;
                     case 1:
-                        ReadingComprehensionMultipleAnswerQuestion readingComprehensionMultipleAnswerQuestion = new ReadingComprehensionMultipleAnswerQuestion();
+                        ReadingComprehensionMultipleAnswerQuestion readingComprehensionMultipleAnswerQuestion = new ReadingComprehensionMultipleAnswerQuestion(question, n++);
                         readingComprehensionMultipleAnswerQuestion.setText("This is a sample Reading Comprehension Multiple Answer question " + (i + 1));
                         readingComprehensionMultipleAnswerQuestion.setDifficulty(template.getDifficulty());
                         readingComprehensionMultipleAnswerQuestion.setDifficultyLevel(item.getDifficultyLevel());
                         difficultyWeight += item.getDifficultyLevel().ordinal();
                         createMultipleAnswerChoices(readingComprehensionMultipleAnswerQuestion.getChoices(), 3, 3, 1);
-                        readingComprehensionMultipleAnswerQuestion.setNumber(n++);
                         question.getMultipleAnswerQuestions().add(readingComprehensionMultipleAnswerQuestion);
                         break;
                     case 2:
-                        SelectInPassageQuestion selectInPassageQuestion = new SelectInPassageQuestion();
+                        SelectInPassageQuestion selectInPassageQuestion = new SelectInPassageQuestion(question, n++);
                         selectInPassageQuestion.setText("<p><u>This</u> is a <u>sample</u> <u>Select</u> In <u>Passage Question</u>.</p>");
-                        selectInPassageQuestion.setNumber(n++);
                         selectInPassageQuestion.setAnswer(random.nextInt(4));
                         selectInPassageQuestion.setDifficulty(template.getDifficulty());
                         selectInPassageQuestion.setDifficultyLevel(item.getDifficultyLevel());

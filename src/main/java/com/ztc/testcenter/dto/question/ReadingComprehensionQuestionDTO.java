@@ -51,9 +51,21 @@ public class ReadingComprehensionQuestionDTO extends QuestionDTO {
     void convert(ReadingComprehensionQuestion question) {
         super.convert(question);
         question.setType(getType());
-        getSingleAnswerQuestions().forEach(numericQuestion -> question.getSingleAnswerQuestions().add(numericQuestion.convert()));
-        getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> question.getMultipleAnswerQuestions().add(multipleAnswerQuestion.convert()));
-        getSelectInPassageQuestions().forEach(singleAnswerQuestion -> question.getSelectInPassageQuestions().add(singleAnswerQuestion.convert()));
+        getSingleAnswerQuestions().forEach(singleAnswerQuestionDTO -> {
+            ReadingComprehensionSingleAnswerQuestion singleAnswerQuestion = singleAnswerQuestionDTO.convert();
+            singleAnswerQuestion.setParent(question);
+            question.getSingleAnswerQuestions().add(singleAnswerQuestion);
+        });
+        getMultipleAnswerQuestions().forEach(multipleAnswerQuestionDTO -> {
+            ReadingComprehensionMultipleAnswerQuestion multipleAnswerQuestion = multipleAnswerQuestionDTO.convert();
+            multipleAnswerQuestion.setParent(question);
+            question.getMultipleAnswerQuestions().add(multipleAnswerQuestion);
+        });
+        getSelectInPassageQuestions().forEach(selectInPassageQuestionDTO -> {
+            SelectInPassageQuestion selectInPassageQuestion = selectInPassageQuestionDTO.convert();
+            selectInPassageQuestion.setParent(question);
+            question.getSelectInPassageQuestions().add(selectInPassageQuestion);
+        });
     }
 
     void copy(ReadingComprehensionQuestion question) {

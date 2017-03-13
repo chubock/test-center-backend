@@ -17,8 +17,7 @@ public class DataInterpretationSetQuestion extends Question implements Questions
     private List<DataInterpretationMultipleAnswerQuestion> multipleAnswerQuestions = new ArrayList<>();
     private List<DataInterpretationSingleAnswerQuestion> singleAnswerQuestions = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JoinColumn(name = "question")
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     public List<DataInterpretationNumericQuestion> getNumericQuestions() {
         return numericQuestions;
     }
@@ -27,8 +26,7 @@ public class DataInterpretationSetQuestion extends Question implements Questions
         this.numericQuestions = numericQuestions;
     }
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JoinColumn(name = "question")
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     public List<DataInterpretationMultipleAnswerQuestion> getMultipleAnswerQuestions() {
         return multipleAnswerQuestions;
     }
@@ -37,8 +35,7 @@ public class DataInterpretationSetQuestion extends Question implements Questions
         this.multipleAnswerQuestions = multipleAnswerQuestions;
     }
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JoinColumn(name = "question")
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     public List<DataInterpretationSingleAnswerQuestion> getSingleAnswerQuestions() {
         return singleAnswerQuestions;
     }

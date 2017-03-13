@@ -1,7 +1,6 @@
 package com.ztc.testcenter.dto.question;
 
-import com.ztc.testcenter.domain.question.DataInterpretationSetQuestion;
-import com.ztc.testcenter.domain.question.Question;
+import com.ztc.testcenter.domain.question.*;
 import com.ztc.testcenter.domain.test.AnsweredQuestion;
 
 import java.util.ArrayList;
@@ -43,9 +42,21 @@ public class DataInterpretationSetQuestionDTO extends QuestionDTO {
 
     void convert(DataInterpretationSetQuestion question) {
         super.convert(question);
-        getNumericQuestions().forEach(numericQuestion -> question.getNumericQuestions().add(numericQuestion.convert()));
-        getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> question.getMultipleAnswerQuestions().add(multipleAnswerQuestion.convert()));
-        getSingleAnswerQuestions().forEach(singleAnswerQuestion -> question.getSingleAnswerQuestions().add(singleAnswerQuestion.convert()));
+        getNumericQuestions().forEach(numericQuestionDTO -> {
+            DataInterpretationNumericQuestion numericQuestion = numericQuestionDTO.convert();
+            numericQuestion.setParent(question);
+            question.getNumericQuestions().add(numericQuestion);
+        });
+        getMultipleAnswerQuestions().forEach(multipleAnswerQuestionDTO -> {
+            DataInterpretationMultipleAnswerQuestion multipleAnswerQuestion = multipleAnswerQuestionDTO.convert();
+            multipleAnswerQuestion.setParent(question);
+            question.getMultipleAnswerQuestions().add(multipleAnswerQuestion);
+        });
+        getSingleAnswerQuestions().forEach(singleAnswerQuestionDTO -> {
+            DataInterpretationSingleAnswerQuestion singleAnswerQuestion = singleAnswerQuestionDTO.convert();
+            singleAnswerQuestion.setParent(question);
+            question.getSingleAnswerQuestions().add(singleAnswerQuestion);
+        });
     }
 
     void copy(DataInterpretationSetQuestion question) {

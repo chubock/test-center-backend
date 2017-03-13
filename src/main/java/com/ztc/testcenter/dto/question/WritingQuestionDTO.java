@@ -22,6 +22,7 @@ public class WritingQuestionDTO extends QuestionDTO {
         return answer;
     }
 
+    @Override
     public void setAnswer(String answer) {
         this.answer = answer;
     }

@@ -2,6 +2,8 @@ package com.ztc.testcenter.domain.question;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by Yubar on 1/27/2017.
@@ -12,6 +14,19 @@ import javax.persistence.Entity;
 public class DataInterpretationMultipleAnswerQuestion extends AbstractQuantitativeMultipleAnswerQuestion {
 
     private Integer number;
+    private DataInterpretationSetQuestion parent;
+
+    public DataInterpretationMultipleAnswerQuestion() {
+    }
+
+    public DataInterpretationMultipleAnswerQuestion(DataInterpretationSetQuestion parent) {
+        this.parent = parent;
+    }
+
+    public DataInterpretationMultipleAnswerQuestion(DataInterpretationSetQuestion parent, Integer number) {
+        this.number = number;
+        this.parent = parent;
+    }
 
     public Integer getNumber() {
         return number;
@@ -19,6 +34,15 @@ public class DataInterpretationMultipleAnswerQuestion extends AbstractQuantitati
 
     public void setNumber(Integer number) {
         this.number = number;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    public DataInterpretationSetQuestion getParent() {
+        return parent;
+    }
+
+    public void setParent(DataInterpretationSetQuestion parent) {
+        this.parent = parent;
     }
 
     @Override
