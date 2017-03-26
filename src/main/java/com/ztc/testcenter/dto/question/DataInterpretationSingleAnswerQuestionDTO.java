@@ -8,6 +8,7 @@ import com.ztc.testcenter.domain.question.DataInterpretationSingleAnswerQuestion
 public class DataInterpretationSingleAnswerQuestionDTO extends AbstractQuantitativeSingleAnswerQuestionDTO {
 
     private Integer number;
+    private DataInterpretationSetQuestionDTO parent;
 
     public Integer getNumber() {
         return number;
@@ -17,9 +18,18 @@ public class DataInterpretationSingleAnswerQuestionDTO extends AbstractQuantitat
         this.number = number;
     }
 
+    public DataInterpretationSetQuestionDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(DataInterpretationSetQuestionDTO parent) {
+        this.parent = parent;
+    }
     public void convert(DataInterpretationSingleAnswerQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
+        if (getParent() != null)
+            question.setParent(getParent().convert());
     }
 
     public void copy(DataInterpretationSingleAnswerQuestion question) {

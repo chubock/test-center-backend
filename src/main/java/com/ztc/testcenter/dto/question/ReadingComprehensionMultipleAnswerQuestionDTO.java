@@ -7,6 +7,7 @@ import com.ztc.testcenter.domain.question.ReadingComprehensionMultipleAnswerQues
  */
 public class ReadingComprehensionMultipleAnswerQuestionDTO extends ChoicesQuestionDTO {
     private Integer number;
+    private ReadingComprehensionQuestionDTO parent;
 
     public Integer getNumber() {
         return number;
@@ -16,9 +17,18 @@ public class ReadingComprehensionMultipleAnswerQuestionDTO extends ChoicesQuesti
         this.number = number;
     }
 
+    public ReadingComprehensionQuestionDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(ReadingComprehensionQuestionDTO parent) {
+        this.parent = parent;
+    }
     public void convert(ReadingComprehensionMultipleAnswerQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
+        if (getParent() != null)
+            question.setParent(getParent().convert());
     }
 
     public void copy(ReadingComprehensionMultipleAnswerQuestion question) {

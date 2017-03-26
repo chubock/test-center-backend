@@ -16,7 +16,6 @@ public class TestSectionDTO extends AbstractDTO<TestSection> {
     private Long id;
     private Integer number;
     private TestDTO test;
-    private SectionTemplateDTO template;
     private List<QuestionDTO> answeredQuestions = new ArrayList<>();
 
     public Long getId() {
@@ -43,14 +42,6 @@ public class TestSectionDTO extends AbstractDTO<TestSection> {
         this.test = test;
     }
 
-    public SectionTemplateDTO getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(SectionTemplateDTO template) {
-        this.template = template;
-    }
-
     public List<QuestionDTO> getAnsweredQuestions() {
         return answeredQuestions;
     }
@@ -65,8 +56,6 @@ public class TestSectionDTO extends AbstractDTO<TestSection> {
         testSection.setId(getId());
         testSection.setNumber(getNumber());
         testSection.setTest(getTest().convert());
-        if (getTemplate() != null)
-            testSection.setTemplate(getTemplate().convert());
         return testSection;
     }
 

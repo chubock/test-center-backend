@@ -169,8 +169,8 @@ public class QuestionsGenerator {
         WritingQuestion question = new WritingQuestion();
         question.setText("This is a sample Writing question " + number);
         question.setType(WritingQuestion.Type.values()[random.nextInt(2)]);
-        question.setDifficulty(Difficulty.values()[random.nextInt(3)]);
-        question.setDifficultyLevel(DifficultyLevel.values()[random.nextInt(5)]);
+        question.setDifficulty(Difficulty.MEDIUM);
+        question.setDifficultyLevel(DifficultyLevel.LEVEL3);
         managerService.save(question);
     }
 

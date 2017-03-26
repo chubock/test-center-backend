@@ -115,4 +115,19 @@ public class QuestionTemplate implements Serializable {
         questionTemplate.prepare();
         return questionTemplate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof QuestionTemplate)) return false;
+
+        QuestionTemplate that = (QuestionTemplate) o;
+
+        return getLabel() != null ? getLabel().equals(that.getLabel()) : that.getLabel() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getLabel() != null ? getLabel().hashCode() : 0;
+    }
 }

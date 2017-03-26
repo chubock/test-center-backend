@@ -60,7 +60,7 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
     }
 
     @Override
-    public void setAnswer(String answer) {
+    public void setUserAnswer(String answer) {
         if (answer == null)
             return ;
         setSelected(Integer.valueOf(answer));

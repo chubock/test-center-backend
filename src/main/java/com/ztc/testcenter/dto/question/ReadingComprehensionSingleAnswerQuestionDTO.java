@@ -9,6 +9,7 @@ import com.ztc.testcenter.domain.question.ReadingComprehensionSingleAnswerQuesti
 public class ReadingComprehensionSingleAnswerQuestionDTO extends ChoicesQuestionDTO {
 
     private Integer number;
+    private ReadingComprehensionQuestionDTO parent;
 
     public Integer getNumber() {
         return number;
@@ -18,9 +19,18 @@ public class ReadingComprehensionSingleAnswerQuestionDTO extends ChoicesQuestion
         this.number = number;
     }
 
+    public ReadingComprehensionQuestionDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(ReadingComprehensionQuestionDTO parent) {
+        this.parent = parent;
+    }
     public void convert(ReadingComprehensionSingleAnswerQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
+        if (getParent() != null)
+            question.setParent(getParent().convert());
     }
 
     public void copy(ReadingComprehensionSingleAnswerQuestion question) {

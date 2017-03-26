@@ -33,7 +33,7 @@ abstract class ChoicesQuestionDTO extends QuestionDTO {
     }
 
     @Override
-    public void setAnswer(String answer) {
+    public void setUserAnswer(String answer) {
         if (answer == null)
             return ;
         for (Character character: answer.toCharArray()) {

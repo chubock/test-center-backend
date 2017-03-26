@@ -9,6 +9,7 @@ import com.ztc.testcenter.domain.question.QuantitativeMultipleAnswerQuestion;
 public class DataInterpretationMultipleAnswerQuestionDTO extends AbstractQuantitativeMultipleAnswerQuestionDTO {
 
     private Integer number;
+    private DataInterpretationSetQuestionDTO parent;
 
     public Integer getNumber() {
         return number;
@@ -18,9 +19,19 @@ public class DataInterpretationMultipleAnswerQuestionDTO extends AbstractQuantit
         this.number = number;
     }
 
+    public DataInterpretationSetQuestionDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(DataInterpretationSetQuestionDTO parent) {
+        this.parent = parent;
+    }
+
     public void convert(DataInterpretationMultipleAnswerQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
+        if (getParent() != null)
+            question.setParent(getParent().convert());
     }
 
     public void copy(DataInterpretationMultipleAnswerQuestion question) {

@@ -8,6 +8,6 @@ import com.ztc.testcenter.domain.test.TestSection;
  * Created by Yubar on 3/9/2017.
  */
 public interface TestService {
-    Test createTest(User user);
+    Test createTest(Test test);
     TestSection createTestSection(Test test);
 }

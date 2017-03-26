@@ -62,5 +62,7 @@ public class ApplicationUserDetails implements UserDetails {
         return user.getEnabled();
     }
 
-
+    public User getUser() {
+        return user;
+    }
 }

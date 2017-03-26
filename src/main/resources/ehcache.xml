@@ -1,0 +1,38 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd">
+
+    <cache name="test-templates"
+           maxEntriesLocalHeap="50"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="section_templates"
+           maxEntriesLocalHeap="200"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="candidate_questions"
+           maxEntriesLocalHeap="500"
+           timeToIdleSeconds="5">
+    </cache>
+    <cache name="candidate_questions_by_template"
+           maxEntriesLocalHeap="500"
+           timeToIdleSeconds="5">
+    </cache>
+    <cache name="questions_count"
+           maxEntriesLocalHeap="1000"
+           timeToLiveSeconds="3600">
+    </cache>
+    <cache name="questions_count_by_template"
+           maxEntriesLocalHeap="1000"
+           timeToLiveSeconds="3600">
+    </cache>
+    <cache name="user_questions_count"
+           maxEntriesLocalHeap="1000"
+           timeToIdleSeconds="5">
+    </cache>
+    <cache name="user_questions_count_by_template"
+           maxEntriesLocalHeap="1000"
+           timeToIdleSeconds="5">
+    </cache>
+</ehcache>

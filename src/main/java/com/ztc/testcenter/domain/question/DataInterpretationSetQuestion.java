@@ -1,8 +1,8 @@
 package com.ztc.testcenter.domain.question;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -49,6 +49,7 @@ public class DataInterpretationSetQuestion extends Question implements Questions
         List<Question> ret = new ArrayList<>(getNumericQuestions());
         ret.addAll(getMultipleAnswerQuestions());
         ret.addAll(getSingleAnswerQuestions());
+        ret.sort(Comparator.comparingInt(x -> ((InnerQuestion) x).getNumber()));
         return ret;
     }
 

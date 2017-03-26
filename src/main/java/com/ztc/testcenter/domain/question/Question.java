@@ -12,6 +12,10 @@ import java.io.Serializable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(indexes = {
+        @Index(columnList = "difficulty,difficultyLevel,questionType"),
+        @Index(columnList = "difficulty,template_id"),
+})
 public abstract class Question implements Serializable {
 
     private Long id;
@@ -40,7 +44,7 @@ public abstract class Question implements Serializable {
         this.text = text;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     public File getImage() {
         return image;
     }
@@ -93,5 +97,30 @@ public abstract class Question implements Serializable {
 
     public void prepare() {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Question)) return false;
+
+        Question question = (Question) o;
+
+        if (getId() != null ? !getId().equals(question.getId()) : question.getId() != null) return false;
+        if (getId() != null && getId().equals(question.getId()))
+            return true;
+        if (getText() != null ? !getText().equals(question.getText()) : question.getText() != null) return false;
+        if (getDifficulty() != question.getDifficulty()) return false;
+        if (getDifficultyLevel() != question.getDifficultyLevel()) return false;
+        return getAnswers() != null ? getAnswers().equals(question.getAnswers()) : question.getAnswers() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getText() != null ? getText().hashCode() : 0;
+        result = 31 * result + (getDifficulty() != null ? getDifficulty().hashCode() : 0);
+        result = 31 * result + (getDifficultyLevel() != null ? getDifficultyLevel().hashCode() : 0);
+        result = 31 * result + (getAnswers() != null ? getAnswers().hashCode() : 0);
+        return result;
     }
 }

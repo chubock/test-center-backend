@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @DiscriminatorValue("DI_NUMERIC")
-public class DataInterpretationNumericQuestion extends AbstractNumericQuestion {
+public class DataInterpretationNumericQuestion extends AbstractNumericQuestion implements InnerQuestion<DataInterpretationSetQuestion> {
 
     private Integer number;
     private DataInterpretationSetQuestion parent;
@@ -28,6 +28,7 @@ public class DataInterpretationNumericQuestion extends AbstractNumericQuestion {
         this.parent = parent;
     }
 
+    @Override
     public Integer getNumber() {
         return number;
     }
@@ -36,6 +37,7 @@ public class DataInterpretationNumericQuestion extends AbstractNumericQuestion {
         this.number = number;
     }
 
+    @Override
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     public DataInterpretationSetQuestion getParent() {
         return parent;

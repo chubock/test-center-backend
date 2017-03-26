@@ -41,7 +41,7 @@ public class TextCompletionQuestionDTO extends QuestionDTO {
     }
 
     @Override
-    public void setAnswer(String answer) {
+    public void setUserAnswer(String answer) {
         if (answer == null)
             return ;
         int i = 0;

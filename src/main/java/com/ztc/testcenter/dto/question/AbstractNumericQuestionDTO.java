@@ -71,7 +71,7 @@ public abstract class AbstractNumericQuestionDTO extends QuestionDTO {
     }
 
     @Override
-    public void setAnswer(String answer) {
+    public void setUserAnswer(String answer) {
         if (answer == null)
             return ;
         String[] answers = answer.split("-");

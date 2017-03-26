@@ -28,11 +28,7 @@ public class SectionTemplatesGenerator {
         this.questionTemplateRepository = questionTemplateRepository;
     }
 
-    public void createMediumVerbal1SectionTemplate() {
-        SectionTemplate sectionTemplate = new SectionTemplate();
-        sectionTemplate.setSectionType(SectionType.GRE_VERBAL_REASONING_1);
-        sectionTemplate.setDifficulty(Difficulty.MEDIUM);
-        sectionTemplate.setName("First Medium Verbal Template");
+    private void fillSectionTemplateItemsForMediumVerbal(SectionTemplate sectionTemplate) {
         sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_TEXT_COMPLETION_ONE_BLANK, DifficultyLevel.LEVEL1));
         sectionTemplate.getItems().add(new SectionTemplateItem(2, QuestionType.GRE_TEXT_COMPLETION_ONE_BLANK, DifficultyLevel.LEVEL2));
         sectionTemplate.getItems().add(new SectionTemplateItem(3, QuestionType.GRE_TEXT_COMPLETION_TWO_BLANK, DifficultyLevel.LEVEL3));
@@ -53,14 +49,9 @@ public class SectionTemplatesGenerator {
         sectionTemplate.getItems().add(new SectionTemplateItem(18, QuestionType.GRE_READING_COMPREHENSION_SHORT, DifficultyLevel.LEVEL4, questionTemplate));
         questionTemplate = questionTemplateRepository.findByLabel("GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT-MEDIUM-1L3");
         sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT, DifficultyLevel.LEVEL3, questionTemplate));
-        repository.save(sectionTemplate);
     }
 
-    public void createMediumQuantitative1SectionTemplate() {
-        SectionTemplate sectionTemplate = new SectionTemplate();
-        sectionTemplate.setSectionType(SectionType.GRE_QUANTITATIVE_REASONING_1);
-        sectionTemplate.setDifficulty(Difficulty.MEDIUM);
-        sectionTemplate.setName("First Medium Quantitative Template");
+    private void fillSectionTemplateItemsForMediumQuantitative(SectionTemplate sectionTemplate) {
         sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL1));
         sectionTemplate.getItems().add(new SectionTemplateItem(2, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL2));
         sectionTemplate.getItems().add(new SectionTemplateItem(3, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL3));
@@ -79,68 +70,9 @@ public class SectionTemplatesGenerator {
         sectionTemplate.getItems().add(new SectionTemplateItem(18, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL3));
         sectionTemplate.getItems().add(new SectionTemplateItem(19, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL3));
         sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER, DifficultyLevel.LEVEL3));
-        repository.save(sectionTemplate);
     }
 
-    public void createMediumVerbal2SectionTemplate() {
-        SectionTemplate sectionTemplate = new SectionTemplate();
-        sectionTemplate.setSectionType(SectionType.GRE_VERBAL_REASONING_2);
-        sectionTemplate.setDifficulty(Difficulty.MEDIUM);
-        sectionTemplate.setName("Second Medium Verbal Template");
-        sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_TEXT_COMPLETION_ONE_BLANK, DifficultyLevel.LEVEL1));
-        sectionTemplate.getItems().add(new SectionTemplateItem(2, QuestionType.GRE_TEXT_COMPLETION_ONE_BLANK, DifficultyLevel.LEVEL2));
-        sectionTemplate.getItems().add(new SectionTemplateItem(3, QuestionType.GRE_TEXT_COMPLETION_TWO_BLANK, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(4, QuestionType.GRE_TEXT_COMPLETION_TWO_BLANK, DifficultyLevel.LEVEL4));
-        sectionTemplate.getItems().add(new SectionTemplateItem(5, QuestionType.GRE_TEXT_COMPLETION_THREE_BLANK, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(6, QuestionType.GRE_TEXT_COMPLETION_THREE_BLANK, DifficultyLevel.LEVEL4));
-        QuestionTemplate questionTemplate = questionTemplateRepository.findByLabel("GRE_READING_COMPREHENSION_MEDIUM-MEDIUM-1L2-1L3-1L4-1L5");
-        sectionTemplate.getItems().add(new SectionTemplateItem(7, QuestionType.GRE_READING_COMPREHENSION_MEDIUM, DifficultyLevel.LEVEL3, questionTemplate));
-        questionTemplate = questionTemplateRepository.findByLabel("GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT-MEDIUM-1L3");
-        sectionTemplate.getItems().add(new SectionTemplateItem(11, QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT, DifficultyLevel.LEVEL3, questionTemplate));
-        questionTemplate = questionTemplateRepository.findByLabel("GRE_READING_COMPREHENSION_SHORT-MEDIUM-1L3-1L5");
-        sectionTemplate.getItems().add(new SectionTemplateItem(12, QuestionType.GRE_READING_COMPREHENSION_SHORT, DifficultyLevel.LEVEL4, questionTemplate));
-        sectionTemplate.getItems().add(new SectionTemplateItem(14, QuestionType.GRE_SENTENCE_EQUIVALENCE, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(15, QuestionType.GRE_SENTENCE_EQUIVALENCE, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(16, QuestionType.GRE_SENTENCE_EQUIVALENCE, DifficultyLevel.LEVEL4));
-        sectionTemplate.getItems().add(new SectionTemplateItem(17, QuestionType.GRE_SENTENCE_EQUIVALENCE, DifficultyLevel.LEVEL5));
-        questionTemplate = questionTemplateRepository.findByLabel("GRE_READING_COMPREHENSION_SHORT-MEDIUM-1L3-1L5");
-        sectionTemplate.getItems().add(new SectionTemplateItem(18, QuestionType.GRE_READING_COMPREHENSION_SHORT, DifficultyLevel.LEVEL4, questionTemplate));
-        questionTemplate = questionTemplateRepository.findByLabel("GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT-MEDIUM-1L3");
-        sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT, DifficultyLevel.LEVEL3, questionTemplate));
-        repository.save(sectionTemplate);
-    }
-
-    public void createMediumQuantitative2SectionTemplate() {
-        SectionTemplate sectionTemplate = new SectionTemplate();
-        sectionTemplate.setSectionType(SectionType.GRE_QUANTITATIVE_REASONING_2);
-        sectionTemplate.setDifficulty(Difficulty.MEDIUM);
-        sectionTemplate.setName("Second Medium Quantitative Template");
-        sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL1));
-        sectionTemplate.getItems().add(new SectionTemplateItem(2, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL2));
-        sectionTemplate.getItems().add(new SectionTemplateItem(3, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(4, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(5, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(6, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL4));
-        sectionTemplate.getItems().add(new SectionTemplateItem(7, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL5));
-        sectionTemplate.getItems().add(new SectionTemplateItem(8, QuestionType.GRE_NUMERIC, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(9, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(10, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL4));
-        sectionTemplate.getItems().add(new SectionTemplateItem(11, QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(12, QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER, DifficultyLevel.LEVEL3));
-        QuestionTemplate questionTemplate = questionTemplateRepository.findByLabel("GRE_DATA_INTERPRETATION_SET-MEDIUM-2L2-1L3-1L4");
-        sectionTemplate.getItems().add(new SectionTemplateItem(13, QuestionType.GRE_DATA_INTERPRETATION_SET, DifficultyLevel.LEVEL3, questionTemplate));
-        sectionTemplate.getItems().add(new SectionTemplateItem(17, QuestionType.GRE_NUMERIC_FRACTION, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(18, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(19, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL3));
-        sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER, DifficultyLevel.LEVEL3));
-        repository.save(sectionTemplate);
-    }
-
-    public void createEasyVerbal2SectionTemplate() {
-        SectionTemplate sectionTemplate = new SectionTemplate();
-        sectionTemplate.setSectionType(SectionType.GRE_VERBAL_REASONING_2);
-        sectionTemplate.setDifficulty(Difficulty.EASY);
-        sectionTemplate.setName("First Easy Verbal Template");
+    private void fillSectionTemplateItemsForEasyVerbal(SectionTemplate sectionTemplate) {
         sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_TEXT_COMPLETION_ONE_BLANK, DifficultyLevel.LEVEL1));
         sectionTemplate.getItems().add(new SectionTemplateItem(2, QuestionType.GRE_TEXT_COMPLETION_ONE_BLANK, DifficultyLevel.LEVEL2));
         sectionTemplate.getItems().add(new SectionTemplateItem(3, QuestionType.GRE_TEXT_COMPLETION_TWO_BLANK, DifficultyLevel.LEVEL2));
@@ -161,14 +93,9 @@ public class SectionTemplatesGenerator {
         sectionTemplate.getItems().add(new SectionTemplateItem(18, QuestionType.GRE_READING_COMPREHENSION_SHORT, DifficultyLevel.LEVEL4, questionTemplate));
         questionTemplate = questionTemplateRepository.findByLabel("GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT-EASY-1L2");
         sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT, DifficultyLevel.LEVEL2, questionTemplate));
-        repository.save(sectionTemplate);
     }
 
-    public void createEasyQuantitative2SectionTemplate() {
-        SectionTemplate sectionTemplate = new SectionTemplate();
-        sectionTemplate.setSectionType(SectionType.GRE_QUANTITATIVE_REASONING_2);
-        sectionTemplate.setDifficulty(Difficulty.EASY);
-        sectionTemplate.setName("First Easy Quantitative Template");
+    private void fillSectionTemplateItemsForEasyQuantitative(SectionTemplate sectionTemplate) {
         sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL1));
         sectionTemplate.getItems().add(new SectionTemplateItem(2, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL2));
         sectionTemplate.getItems().add(new SectionTemplateItem(3, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL2));
@@ -187,14 +114,9 @@ public class SectionTemplatesGenerator {
         sectionTemplate.getItems().add(new SectionTemplateItem(18, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL1));
         sectionTemplate.getItems().add(new SectionTemplateItem(19, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL2));
         sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER, DifficultyLevel.LEVEL3));
-        repository.save(sectionTemplate);
     }
 
-    public void createHardVerbal2SectionTemplate() {
-        SectionTemplate sectionTemplate = new SectionTemplate();
-        sectionTemplate.setSectionType(SectionType.GRE_VERBAL_REASONING_2);
-        sectionTemplate.setDifficulty(Difficulty.HARD);
-        sectionTemplate.setName("First Hard Verbal Template");
+    private void fillSectionTemplateItemsForHardVerbal(SectionTemplate sectionTemplate) {
         sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_TEXT_COMPLETION_ONE_BLANK, DifficultyLevel.LEVEL1));
         sectionTemplate.getItems().add(new SectionTemplateItem(2, QuestionType.GRE_TEXT_COMPLETION_ONE_BLANK, DifficultyLevel.LEVEL4));
         sectionTemplate.getItems().add(new SectionTemplateItem(3, QuestionType.GRE_TEXT_COMPLETION_TWO_BLANK, DifficultyLevel.LEVEL4));
@@ -215,14 +137,9 @@ public class SectionTemplatesGenerator {
         sectionTemplate.getItems().add(new SectionTemplateItem(18, QuestionType.GRE_READING_COMPREHENSION_SHORT, DifficultyLevel.LEVEL5, questionTemplate));
         questionTemplate = questionTemplateRepository.findByLabel("GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT-HARD-1L5");
         sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT, DifficultyLevel.LEVEL5, questionTemplate));
-        repository.save(sectionTemplate);
     }
 
-    public void createHardQuantitative2SectionTemplate() {
-        SectionTemplate sectionTemplate = new SectionTemplate();
-        sectionTemplate.setSectionType(SectionType.GRE_QUANTITATIVE_REASONING_2);
-        sectionTemplate.setDifficulty(Difficulty.HARD);
-        sectionTemplate.setName("First Hard Quantitative Template");
+    private void fillSectionTemplateItemsForHardQuantitative(SectionTemplate sectionTemplate) {
         sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL3));
         sectionTemplate.getItems().add(new SectionTemplateItem(2, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL4));
         sectionTemplate.getItems().add(new SectionTemplateItem(3, QuestionType.GRE_QUANTITATIVE_COMPARISON, DifficultyLevel.LEVEL3));
@@ -241,18 +158,80 @@ public class SectionTemplatesGenerator {
         sectionTemplate.getItems().add(new SectionTemplateItem(18, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL3));
         sectionTemplate.getItems().add(new SectionTemplateItem(19, QuestionType.GRE_QUANTITATIVE_SINGLE_ANSWER, DifficultyLevel.LEVEL4));
         sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER, DifficultyLevel.LEVEL3));
+    }
+
+    private void createSectionTemplate(String name, SectionType sectionType, Difficulty difficulty){
+        SectionTemplate sectionTemplate = new SectionTemplate();
+        sectionTemplate.setName(name);
+        sectionTemplate.setSectionType(sectionType);
+        sectionTemplate.setDifficulty(difficulty);
+        switch (sectionType) {
+            case GRE_VERBAL_REASONING_1:
+            case GRE_VERBAL_REASONING_2:
+            case GRE_VERBAL_UNSCORE:
+                switch (difficulty) {
+                    case EASY:
+                        fillSectionTemplateItemsForEasyVerbal(sectionTemplate);
+                        break;
+                    case MEDIUM:
+                        fillSectionTemplateItemsForMediumVerbal(sectionTemplate);
+                        break;
+                    case HARD:
+                        fillSectionTemplateItemsForHardVerbal(sectionTemplate);
+                        break;
+                }
+                break;
+            case GRE_QUANTITATIVE_REASONING_1:
+            case GRE_QUANTITATIVE_REASONING_2:
+            case GRE_QUANTITATIVE_UNSCORE:
+                switch (difficulty) {
+                    case EASY:
+                        fillSectionTemplateItemsForEasyQuantitative(sectionTemplate);
+                        break;
+                    case MEDIUM:
+                        fillSectionTemplateItemsForMediumQuantitative(sectionTemplate);
+                        break;
+                    case HARD:
+                        fillSectionTemplateItemsForHardQuantitative(sectionTemplate);
+                        break;
+                }
+                break;
+            case GRE_ANALYTICAL_WRITING_ARGUMENT:
+                sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_WRITING_ARGUMENT, DifficultyLevel.LEVEL3));
+                break;
+            case GRE_ANALYTICAL_WRITING_ISSUE:
+                sectionTemplate.getItems().add(new SectionTemplateItem(1, QuestionType.GRE_WRITING_ISSUE, DifficultyLevel.LEVEL3));
+                break;
+        }
         repository.save(sectionTemplate);
     }
 
     public void createAll() {
-        createMediumVerbal1SectionTemplate();
-        createMediumQuantitative1SectionTemplate();
-        createMediumVerbal2SectionTemplate();
-        createMediumQuantitative2SectionTemplate();
-        createEasyVerbal2SectionTemplate();
-        createEasyQuantitative2SectionTemplate();
-        createHardVerbal2SectionTemplate();
-        createHardQuantitative2SectionTemplate();
+        createSectionTemplate("First Easy Verbal Template", SectionType.GRE_VERBAL_REASONING_1, Difficulty.EASY);
+        createSectionTemplate("First Medium Verbal Template", SectionType.GRE_VERBAL_REASONING_1, Difficulty.MEDIUM);
+        createSectionTemplate("First Hard Verbal Template", SectionType.GRE_VERBAL_REASONING_1, Difficulty.HARD);
+
+        createSectionTemplate("First Easy Unscore Verbal Template", SectionType.GRE_VERBAL_UNSCORE, Difficulty.EASY);
+        createSectionTemplate("First Medium Unscore Verbal Template", SectionType.GRE_VERBAL_UNSCORE, Difficulty.MEDIUM);
+        createSectionTemplate("First Hard Unscore Verbal Template", SectionType.GRE_VERBAL_UNSCORE, Difficulty.HARD);
+
+        createSectionTemplate("First Easy Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.EASY);
+        createSectionTemplate("First Medium Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.MEDIUM);
+        createSectionTemplate("First Hard Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.HARD);
+
+        createSectionTemplate("First Easy Unscore Quantitative Template", SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.EASY);
+        createSectionTemplate("First Medium Unscore Quantitative Template", SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.MEDIUM);
+        createSectionTemplate("First Hard Unscore Quantitative Template", SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.HARD);
+
+        createSectionTemplate("First Analytical Writing Issue Template", SectionType.GRE_ANALYTICAL_WRITING_ISSUE, Difficulty.MEDIUM);
+        createSectionTemplate("First Analytical Writing Argument Template", SectionType.GRE_ANALYTICAL_WRITING_ARGUMENT, Difficulty.MEDIUM);
+
+        createSectionTemplate("Second Easy Verbal Template", SectionType.GRE_VERBAL_REASONING_2, Difficulty.EASY);
+        createSectionTemplate("Second Medium Verbal Template", SectionType.GRE_VERBAL_REASONING_2, Difficulty.MEDIUM);
+        createSectionTemplate("Second Hard Verbal Template", SectionType.GRE_VERBAL_REASONING_2, Difficulty.HARD);
+        createSectionTemplate("Second EASY Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.EASY);
+        createSectionTemplate("Second Medium Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.MEDIUM);
+        createSectionTemplate("Second Hard Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.HARD);
     }
 
 }

@@ -57,6 +57,7 @@ public class ReadingComprehensionQuestion extends Question implements QuestionsC
         List<Question> ret = new ArrayList<>(getMultipleAnswerQuestions());
         ret.addAll(getSingleAnswerQuestions());
         ret.addAll(getSelectInPassageQuestions());
+        ret.sort(Comparator.comparingInt(x -> ((InnerQuestion) x).getNumber()));
         return ret;
     }
 

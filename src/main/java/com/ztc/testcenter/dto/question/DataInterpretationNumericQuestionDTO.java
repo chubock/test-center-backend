@@ -9,6 +9,7 @@ import com.ztc.testcenter.domain.question.NumericQuestion;
 public class DataInterpretationNumericQuestionDTO extends AbstractNumericQuestionDTO {
 
     private Integer number;
+    private DataInterpretationSetQuestionDTO parent;
 
     public Integer getNumber() {
         return number;
@@ -18,9 +19,18 @@ public class DataInterpretationNumericQuestionDTO extends AbstractNumericQuestio
         this.number = number;
     }
 
+    public DataInterpretationSetQuestionDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(DataInterpretationSetQuestionDTO parent) {
+        this.parent = parent;
+    }
     void convert(DataInterpretationNumericQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
+        if (getParent() != null)
+            question.setParent(getParent().convert());
     }
 
     @Override

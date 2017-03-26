@@ -23,7 +23,7 @@ public class WritingQuestionDTO extends QuestionDTO {
     }
 
     @Override
-    public void setAnswer(String answer) {
+    public void setUserAnswer(String answer) {
         this.answer = answer;
     }
 

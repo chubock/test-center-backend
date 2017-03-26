@@ -1,6 +1,7 @@
 package com.ztc.testcenter.dto.test;
 
 import com.ztc.testcenter.domain.question.Difficulty;
+import com.ztc.testcenter.domain.test.SectionType;
 import com.ztc.testcenter.domain.test.Test;
 import com.ztc.testcenter.dto.AbstractDTO;
 import com.ztc.testcenter.dto.UserDTO;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by Yubar on 3/4/2017.
  */
 
-public abstract class TestDTO extends AbstractDTO<Test> {
+public class TestDTO extends AbstractDTO<Test> {
 
     private Long id;
     private Date date = new Date();
@@ -21,7 +22,7 @@ public abstract class TestDTO extends AbstractDTO<Test> {
     private Test.TestIntelligentType intelligentType = Test.TestIntelligentType.INTELLIGENT;
     private UserDTO user;
     private List<TestSectionDTO> testSections = new ArrayList<>();
-    private TestTemplateDTO template;
+    private List<SectionType> sectionTypes = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -71,12 +72,12 @@ public abstract class TestDTO extends AbstractDTO<Test> {
         this.testSections = testSections;
     }
 
-    public TestTemplateDTO getTemplate() {
-        return template;
+    public List<SectionType> getSectionTypes() {
+        return sectionTypes;
     }
 
-    public void setTemplate(TestTemplateDTO template) {
-        this.template = template;
+    public void setSectionTypes(List<SectionType> sectionTypes) {
+        this.sectionTypes = sectionTypes;
     }
 
     void convert(Test test) {
@@ -84,16 +85,28 @@ public abstract class TestDTO extends AbstractDTO<Test> {
         test.setDifficulty(getDifficulty());
         test.setDate(getDate());
         test.setIntelligentType(getIntelligentType());
-        if (getTemplate() != null)
-            test.setTemplate(getTemplate().convert());
         getTestSections().forEach(testSectionDTO -> test.getTestSections().add(testSectionDTO.convert()));
     }
-
 
     void copy(Test test) {
         setId(test.getId());
         setIntelligentType(test.getIntelligentType());
         setDifficulty(test.getDifficulty());
         setDate(test.getDate());
+    }
+
+    @Override
+    public Test convert() {
+        Test test = new Test();
+        convert(test);
+        return test;
+    }
+
+    public static TestDTO valueOf(Test test) {
+        if (test == null)
+            return null;
+        TestDTO testDTO = new TestDTO();
+        testDTO.copy(test);
+        return testDTO;
     }
 }

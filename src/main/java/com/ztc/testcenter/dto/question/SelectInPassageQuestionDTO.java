@@ -1,7 +1,6 @@
 package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.SelectInPassageQuestion;
-import com.ztc.testcenter.domain.test.AnsweredQuestion;
 
 /**
  * Created by Yubar on 1/20/2017.
@@ -11,6 +10,7 @@ public class SelectInPassageQuestionDTO extends QuestionDTO {
     private Integer number;
     private Integer answer;
     private Integer selected;
+    private ReadingComprehensionQuestionDTO parent;
 
     public Integer getNumber() {
         return number;
@@ -36,10 +36,20 @@ public class SelectInPassageQuestionDTO extends QuestionDTO {
         this.selected = selected;
     }
 
+    public ReadingComprehensionQuestionDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(ReadingComprehensionQuestionDTO parent) {
+        this.parent = parent;
+    }
+
     void convert(SelectInPassageQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
         question.setAnswer(getAnswer());
+        if (getParent() != null)
+            question.setParent(getParent().convert());
     }
 
     @Override
@@ -56,7 +66,7 @@ public class SelectInPassageQuestionDTO extends QuestionDTO {
     }
 
     @Override
-    public void setAnswer(String answer) {
+    public void setUserAnswer(String answer) {
         if (answer == null)
             return ;
         setSelected(Integer.valueOf(answer));

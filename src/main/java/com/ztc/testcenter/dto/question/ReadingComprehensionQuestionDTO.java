@@ -69,11 +69,17 @@ public class ReadingComprehensionQuestionDTO extends QuestionDTO {
     }
 
     void copy(ReadingComprehensionQuestion question) {
+        copy(question, false);
+    }
+
+    void copy(ReadingComprehensionQuestion question, boolean lazy) {
         super.copy(question);
         setType(question.getType());
-        question.getSingleAnswerQuestions().forEach(singleAnswerQuestion -> getSingleAnswerQuestions().add(ReadingComprehensionSingleAnswerQuestionDTO.valueOf(singleAnswerQuestion)));
-        question.getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> getMultipleAnswerQuestions().add(ReadingComprehensionMultipleAnswerQuestionDTO.valueOf(multipleAnswerQuestion)));
-        question.getSelectInPassageQuestions().forEach(selectInPassageQuestion -> getSelectInPassageQuestions().add(SelectInPassageQuestionDTO.valueOf(selectInPassageQuestion)));
+        if (! lazy) {
+            question.getSingleAnswerQuestions().forEach(singleAnswerQuestion -> getSingleAnswerQuestions().add(ReadingComprehensionSingleAnswerQuestionDTO.valueOf(singleAnswerQuestion)));
+            question.getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> getMultipleAnswerQuestions().add(ReadingComprehensionMultipleAnswerQuestionDTO.valueOf(multipleAnswerQuestion)));
+            question.getSelectInPassageQuestions().forEach(selectInPassageQuestion -> getSelectInPassageQuestions().add(SelectInPassageQuestionDTO.valueOf(selectInPassageQuestion)));
+        }
     }
 
     @Override
@@ -83,16 +89,20 @@ public class ReadingComprehensionQuestionDTO extends QuestionDTO {
         return question;
     }
 
-    public static ReadingComprehensionQuestionDTO valueOf(ReadingComprehensionQuestion question) {
+    public static ReadingComprehensionQuestionDTO valueOf(ReadingComprehensionQuestion question, boolean lazy) {
         if (question == null)
             return null;
         ReadingComprehensionQuestionDTO questionDTO = new ReadingComprehensionQuestionDTO();
-        questionDTO.copy(question);
+        questionDTO.copy(question, lazy);
         return questionDTO;
     }
 
+    public static ReadingComprehensionQuestionDTO valueOf(ReadingComprehensionQuestion question) {
+        return valueOf(question, false);
+    }
+
     @Override
-    public void setAnswer(String answer) {
+    public void setUserAnswer(String answer) {
         //Operation Not Supported For Question Groups
     }
 }

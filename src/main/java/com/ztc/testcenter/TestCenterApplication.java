@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 /**
  * Created by Yubar on 1/15/2017.
  */
 
+@EnableCaching
 @SpringBootApplication
 public class TestCenterApplication implements CommandLineRunner {
 
@@ -43,7 +45,7 @@ public class TestCenterApplication implements CommandLineRunner {
         if (GENERATE_QUESTION_TEMPLATES)
             questionTemplatesGenerator.createAll();
         if (GENERATE_QUESTIONS)
-            questionsGenerator.generateAll(1000);
+            questionsGenerator.generateAll(5000);
         if (GENERATE_USERS)
             usersGenerator.generateUsers(1000);
         if (GENERATE_SECTION_TEMPLATES)

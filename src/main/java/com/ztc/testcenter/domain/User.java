@@ -127,7 +127,22 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public static enum Gender {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        return getUsername() != null ? getUsername().equals(user.getUsername()) : user.getUsername() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getUsername() != null ? getUsername().hashCode() : 0;
+    }
+
+    public enum Gender {
         MALE,
         FEMALE
     }

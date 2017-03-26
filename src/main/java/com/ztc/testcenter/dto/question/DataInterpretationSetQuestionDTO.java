@@ -60,10 +60,16 @@ public class DataInterpretationSetQuestionDTO extends QuestionDTO {
     }
 
     void copy(DataInterpretationSetQuestion question) {
+        copy(question, false);
+    }
+
+    void copy(DataInterpretationSetQuestion question, boolean lazy) {
         super.copy(question);
-        question.getNumericQuestions().forEach(numericQuestion -> getNumericQuestions().add(DataInterpretationNumericQuestionDTO.valueOf(numericQuestion)));
-        question.getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> getMultipleAnswerQuestions().add(DataInterpretationMultipleAnswerQuestionDTO.valueOf(multipleAnswerQuestion)));
-        question.getSingleAnswerQuestions().forEach(singleAnswerQuestion -> getSingleAnswerQuestions().add(DataInterpretationSingleAnswerQuestionDTO.valueOf(singleAnswerQuestion)));
+        if (!lazy) {
+            question.getNumericQuestions().forEach(numericQuestion -> getNumericQuestions().add(DataInterpretationNumericQuestionDTO.valueOf(numericQuestion)));
+            question.getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> getMultipleAnswerQuestions().add(DataInterpretationMultipleAnswerQuestionDTO.valueOf(multipleAnswerQuestion)));
+            question.getSingleAnswerQuestions().forEach(singleAnswerQuestion -> getSingleAnswerQuestions().add(DataInterpretationSingleAnswerQuestionDTO.valueOf(singleAnswerQuestion)));
+        }
     }
 
     @Override
@@ -73,23 +79,20 @@ public class DataInterpretationSetQuestionDTO extends QuestionDTO {
         return question;
     }
 
-    public static DataInterpretationSetQuestionDTO valueOf(DataInterpretationSetQuestion question) {
+    public static DataInterpretationSetQuestionDTO valueOf(DataInterpretationSetQuestion question, boolean lazy) {
         if (question == null)
             return null;
         DataInterpretationSetQuestionDTO questionDTO = new DataInterpretationSetQuestionDTO();
-        questionDTO.copy(question);
+        questionDTO.copy(question, lazy);
         return questionDTO;
     }
 
-    public static DataInterpretationSetQuestionDTO valueOf(AnsweredQuestion answeredQuestion) {
-        if (answeredQuestion == null)
-            return null;
-        DataInterpretationSetQuestionDTO questionDTO = valueOf((DataInterpretationSetQuestion) answeredQuestion.getQuestion());
-        return questionDTO;
+    public static DataInterpretationSetQuestionDTO valueOf(DataInterpretationSetQuestion question) {
+        return valueOf(question, false);
     }
 
     @Override
-    public void setAnswer(String answer) {
+    public void setUserAnswer(String answer) {
         //Operation Not Supported For Question Groups
     }
 }

@@ -12,7 +12,10 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "ANSWERED_QUESTIONS")
+@Table(name = "ANSWERED_QUESTIONS", indexes = {
+        @Index(columnList = "user_id,difficulty,difficultyLevel,questionType"),
+        @Index(columnList = "user_id,difficulty,question_template_id"),
+})
 public class AnsweredQuestion implements Serializable {
 
     private Long id;
@@ -20,13 +23,14 @@ public class AnsweredQuestion implements Serializable {
     private TestSection testSection;
     private User user;
     private Question question;
+    private Question questionParent;
     private Difficulty difficulty;
     private DifficultyLevel difficultyLevel;
     private QuestionType questionType;
     private QuestionTemplate questionTemplate;
     private String userAnswer;
 
-    public AnsweredQuestion() {
+    protected AnsweredQuestion() {
     }
 
     public AnsweredQuestion(Question question) {
@@ -34,6 +38,10 @@ public class AnsweredQuestion implements Serializable {
         this.difficulty = question.getDifficulty();
         this.difficultyLevel = question.getDifficultyLevel();
         this.questionType = question.getQuestionType();
+        if (question instanceof InnerQuestion){
+            this.questionParent = ((InnerQuestion)question).getParent();
+            this.questionTemplate = this.questionParent.getTemplate();
+        }
     }
 
     @Id
@@ -87,42 +95,51 @@ public class AnsweredQuestion implements Serializable {
     @NotNull
     @Enumerated
     @Column(nullable = false)
-    public Difficulty getDifficulty() {
+    Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
+    void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
     @NotNull
     @Enumerated
     @Column(nullable = false)
-    public DifficultyLevel getDifficultyLevel() {
+    DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
+    void setDifficultyLevel(DifficultyLevel difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 
     @NotNull
     @Enumerated
     @Column(nullable = false)
-    public QuestionType getQuestionType() {
+    QuestionType getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(QuestionType questionType) {
+    void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    public QuestionTemplate getQuestionTemplate() {
+    Question getQuestionParent() {
+        return questionParent;
+    }
+
+    void setQuestionParent(Question questionParent) {
+        this.questionParent = questionParent;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    QuestionTemplate getQuestionTemplate() {
         return questionTemplate;
     }
 
-    public void setQuestionTemplate(QuestionTemplate questionTemplate) {
+    void setQuestionTemplate(QuestionTemplate questionTemplate) {
         this.questionTemplate = questionTemplate;
     }
 

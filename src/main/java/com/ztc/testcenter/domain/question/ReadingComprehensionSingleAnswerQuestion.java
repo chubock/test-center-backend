@@ -1,6 +1,5 @@
 package com.ztc.testcenter.domain.question;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -10,7 +9,7 @@ import javax.persistence.ManyToOne;
  */
 
 @Entity
-public class ReadingComprehensionSingleAnswerQuestion extends FiveChoiceQuestion {
+public class ReadingComprehensionSingleAnswerQuestion extends FiveChoiceQuestion implements InnerQuestion<ReadingComprehensionQuestion> {
 
     private Integer number;
     private ReadingComprehensionQuestion parent;
@@ -27,6 +26,7 @@ public class ReadingComprehensionSingleAnswerQuestion extends FiveChoiceQuestion
         this.parent = parent;
     }
 
+    @Override
     public Integer getNumber() {
         return number;
     }
@@ -35,6 +35,7 @@ public class ReadingComprehensionSingleAnswerQuestion extends FiveChoiceQuestion
         this.number = number;
     }
 
+    @Override
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     public ReadingComprehensionQuestion getParent() {
         return parent;

@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class SelectInPassageQuestion extends Question {
+public class SelectInPassageQuestion extends Question implements InnerQuestion<ReadingComprehensionQuestion> {
 
     private Integer number;
     private ReadingComprehensionQuestion parent;
@@ -24,6 +24,7 @@ public class SelectInPassageQuestion extends Question {
         this.parent = parent;
     }
 
+    @Override
     public Integer getNumber() {
         return number;
     }
@@ -37,6 +38,7 @@ public class SelectInPassageQuestion extends Question {
         return Integer.valueOf(getAnswers());
     }
 
+    @Override
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     public ReadingComprehensionQuestion getParent() {
         return parent;
