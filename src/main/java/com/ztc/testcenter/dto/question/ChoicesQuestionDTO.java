@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Yubar on 1/19/2017.
  */
-abstract class ChoicesQuestionDTO extends QuestionDTO {
+abstract class ChoicesQuestionDTO<T extends ChoiceQuestion> extends QuestionDTO<T> {
     private List<Choice> choices = new ArrayList<>();
 
     public List<Choice> getChoices() {
@@ -21,12 +21,14 @@ abstract class ChoicesQuestionDTO extends QuestionDTO {
         this.choices = choices;
     }
 
-    void convert(ChoiceQuestion question) {
+    @Override
+    public T convert(T question) {
         super.convert(question);
         getChoices().forEach(choice -> question.getChoices().add(choice.clone()));
+        return question;
     }
 
-    void copy(ChoiceQuestion question) {
+    void copy(T question) {
         super.copy(question);
         getChoices().clear();
         question.getChoices().forEach(choice -> getChoices().add(choice.clone()));

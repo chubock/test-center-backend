@@ -111,8 +111,7 @@ public class UserDTO extends AbstractDTO<User> {
     }
 
     @Override
-    public User convert() {
-        User user = new User();
+    public User convert(User user) {
         user.setId(getId());
         user.setFirstName(getFirstName());
         user.setLastName(getLastName());

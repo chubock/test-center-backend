@@ -1,12 +1,13 @@
 package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.DataInterpretationMultipleAnswerQuestion;
+import com.ztc.testcenter.domain.question.DataInterpretationSetQuestion;
 import com.ztc.testcenter.domain.question.QuantitativeMultipleAnswerQuestion;
 
 /**
  * Created by Yubar on 1/20/2017.
  */
-public class DataInterpretationMultipleAnswerQuestionDTO extends AbstractQuantitativeMultipleAnswerQuestionDTO {
+public class DataInterpretationMultipleAnswerQuestionDTO extends AbstractQuantitativeMultipleAnswerQuestionDTO<DataInterpretationMultipleAnswerQuestion> {
 
     private Integer number;
     private DataInterpretationSetQuestionDTO parent;
@@ -27,23 +28,18 @@ public class DataInterpretationMultipleAnswerQuestionDTO extends AbstractQuantit
         this.parent = parent;
     }
 
-    public void convert(DataInterpretationMultipleAnswerQuestion question) {
+    @Override
+    public DataInterpretationMultipleAnswerQuestion convert(DataInterpretationMultipleAnswerQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
         if (getParent() != null)
-            question.setParent(getParent().convert());
+            question.setParent(getParent().convert(new DataInterpretationSetQuestion()));
+        return question;
     }
 
     public void copy(DataInterpretationMultipleAnswerQuestion question) {
         super.copy(question);
         setNumber(question.getNumber());
-    }
-
-    @Override
-    public DataInterpretationMultipleAnswerQuestion convert() {
-        DataInterpretationMultipleAnswerQuestion question = new DataInterpretationMultipleAnswerQuestion();
-        convert(question);
-        return question;
     }
 
     public static DataInterpretationMultipleAnswerQuestionDTO valueOf(DataInterpretationMultipleAnswerQuestion question) {

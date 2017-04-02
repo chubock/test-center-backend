@@ -20,6 +20,9 @@ public interface TestRepository extends JpaRepository<Test, Long> {
 
     List<Test> findByUser(User user);
 
+    @Query("select t from Test t join fetch t.testSections join fetch t.template where t.id = :id")
+    Test findOneWithSectionsAndTemplate(@Param("id") Long id);
+
     @Cacheable(cacheNames = "candidate_questions")
     @Query("select q.id from Question q where q.difficulty = :difficulty and q.difficultyLevel = :difficultyLevel and q.questionType = :questionType and q.id not in (select aq.question.id from AnsweredQuestion aq where aq.user = :user and aq.difficulty = :difficulty and aq.difficultyLevel = :difficultyLevel and aq.questionType = :questionType)")
     List<Long> findQuestionIdForTest(@Param("user") User user, @Param("difficulty") Difficulty difficulty, @Param("difficultyLevel") DifficultyLevel difficultyLevel, @Param("questionType") QuestionType questionType, Pageable pageable);

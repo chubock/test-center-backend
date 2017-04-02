@@ -1,11 +1,12 @@
 package com.ztc.testcenter.dto.question;
 
+import com.ztc.testcenter.domain.question.ReadingComprehensionQuestion;
 import com.ztc.testcenter.domain.question.SelectInPassageQuestion;
 
 /**
  * Created by Yubar on 1/20/2017.
  */
-public class SelectInPassageQuestionDTO extends QuestionDTO {
+public class SelectInPassageQuestionDTO extends QuestionDTO<SelectInPassageQuestion> {
 
     private Integer number;
     private Integer answer;
@@ -44,18 +45,12 @@ public class SelectInPassageQuestionDTO extends QuestionDTO {
         this.parent = parent;
     }
 
-    void convert(SelectInPassageQuestion question) {
+    public SelectInPassageQuestion convert(SelectInPassageQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
         question.setAnswer(getAnswer());
         if (getParent() != null)
-            question.setParent(getParent().convert());
-    }
-
-    @Override
-    public SelectInPassageQuestion convert() {
-        SelectInPassageQuestion question = new SelectInPassageQuestion();
-        convert(question);
+            question.setParent(getParent().convert(new ReadingComprehensionQuestion()));
         return question;
     }
 

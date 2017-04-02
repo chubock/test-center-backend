@@ -33,7 +33,8 @@ public class AnsweredQuestion implements Serializable {
     protected AnsweredQuestion() {
     }
 
-    public AnsweredQuestion(Question question) {
+    public AnsweredQuestion(TestSection testSection, Question question) {
+        this.testSection = testSection;
         this.question = question;
         this.difficulty = question.getDifficulty();
         this.difficultyLevel = question.getDifficultyLevel();
@@ -95,7 +96,7 @@ public class AnsweredQuestion implements Serializable {
     @NotNull
     @Enumerated
     @Column(nullable = false)
-    Difficulty getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 
@@ -106,7 +107,7 @@ public class AnsweredQuestion implements Serializable {
     @NotNull
     @Enumerated
     @Column(nullable = false)
-    DifficultyLevel getDifficultyLevel() {
+    public DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;
     }
 
@@ -117,7 +118,7 @@ public class AnsweredQuestion implements Serializable {
     @NotNull
     @Enumerated
     @Column(nullable = false)
-    QuestionType getQuestionType() {
+    public QuestionType getQuestionType() {
         return questionType;
     }
 
@@ -126,7 +127,7 @@ public class AnsweredQuestion implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    Question getQuestionParent() {
+    public Question getQuestionParent() {
         return questionParent;
     }
 
@@ -135,7 +136,7 @@ public class AnsweredQuestion implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    QuestionTemplate getQuestionTemplate() {
+    public QuestionTemplate getQuestionTemplate() {
         return questionTemplate;
     }
 
@@ -143,6 +144,7 @@ public class AnsweredQuestion implements Serializable {
         this.questionTemplate = questionTemplate;
     }
 
+    @Column(length = 3000)
     public String getUserAnswer() {
         return userAnswer;
     }

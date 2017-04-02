@@ -52,11 +52,7 @@ public class FileRestService {
     public Long uploadFile(MultipartHttpServletRequest request) throws IOException {
         MultipartFile file = request.getFile("file");
         if (file != null) {
-            File f = new File();
-            f.setName(file.getOriginalFilename());
-            f.setContentType(file.getContentType());
-            f.setSize(file.getSize());
-            f.setContent(file.getBytes());
+            File f = new File(file.getOriginalFilename(), file.getContentType(), file.getSize(), file.getBytes());
             f = managerService.save(f);
             return f.getId();
         } else {

@@ -16,11 +16,7 @@ public class DataInterpretationNumericQuestion extends AbstractNumericQuestion i
     private Integer number;
     private DataInterpretationSetQuestion parent;
 
-    public DataInterpretationNumericQuestion() {
-    }
-
-    public DataInterpretationNumericQuestion(DataInterpretationSetQuestion parent) {
-        this.parent = parent;
+    protected DataInterpretationNumericQuestion() {
     }
 
     public DataInterpretationNumericQuestion(DataInterpretationSetQuestion parent, Integer number) {

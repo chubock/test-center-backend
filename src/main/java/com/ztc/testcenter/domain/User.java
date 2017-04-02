@@ -19,12 +19,21 @@ public class User implements Serializable {
     private String password;
     private String lastName;
     private String firstName;
-    private Gender gender;
+    private Gender gender = Gender.MALE;
     private Boolean enabled = true;
     private Boolean accountExpired = false;
     private Boolean credentialExpired = false;
     private Boolean locked = false;
     private List<Role> roles = new ArrayList<>();
+
+    protected User() {
+    }
+
+    public User(String username, String lastName, String firstName) {
+        this.username = username;
+        this.lastName = lastName;
+        this.firstName = firstName;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

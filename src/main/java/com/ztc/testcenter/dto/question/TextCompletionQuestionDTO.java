@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Yubar on 1/21/2017.
  */
-public class TextCompletionQuestionDTO extends QuestionDTO {
+public class TextCompletionQuestionDTO extends QuestionDTO<TextCompletionQuestion> {
 
     private List<TextCompletionQuestionItemDTO> items = new ArrayList<>();
 
@@ -22,16 +22,11 @@ public class TextCompletionQuestionDTO extends QuestionDTO {
         this.items = items;
     }
 
-    void convert(TextCompletionQuestion question) {
+    @Override
+    public TextCompletionQuestion convert(TextCompletionQuestion question) {
         super.convert(question);
         question.getItems().clear();
-        getItems().forEach(itemDTO -> question.getItems().add(itemDTO.convert()));
-    }
-
-    @Override
-    public TextCompletionQuestion convert() {
-        TextCompletionQuestion question = new TextCompletionQuestion();
-        convert(question);
+        getItems().forEach(itemDTO -> question.getItems().add(itemDTO.convert(new TextCompletionQuestionItem())));
         return question;
     }
 

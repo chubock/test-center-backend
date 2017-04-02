@@ -18,6 +18,13 @@ public class Role implements Serializable {
     private String name;
     private List<Authority> authorities = new ArrayList<>();
 
+    protected Role() {
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {

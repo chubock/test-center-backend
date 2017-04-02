@@ -6,14 +6,7 @@ import com.ztc.testcenter.domain.question.SentenceEquivalenceQuestion;
  * Created by Yubar on 1/19/2017.
  */
 
-public class SentenceEquivalenceQuestionDTO extends ChoicesQuestionDTO {
-
-    @Override
-    public SentenceEquivalenceQuestion convert() {
-        SentenceEquivalenceQuestion question = new SentenceEquivalenceQuestion();
-        convert(question);
-        return question;
-    }
+public class SentenceEquivalenceQuestionDTO extends ChoicesQuestionDTO<SentenceEquivalenceQuestion> {
 
     public static SentenceEquivalenceQuestionDTO valueOf(SentenceEquivalenceQuestion question) {
         if (question == null)

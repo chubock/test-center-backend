@@ -1,5 +1,6 @@
 package com.ztc.testcenter.dto.test;
 
+import com.ztc.testcenter.domain.test.Test;
 import com.ztc.testcenter.domain.test.TestSection;
 import com.ztc.testcenter.dto.AbstractDTO;
 import com.ztc.testcenter.dto.question.QuestionDTO;
@@ -51,11 +52,11 @@ public class TestSectionDTO extends AbstractDTO<TestSection> {
     }
 
     @Override
-    public TestSection convert() {
-        TestSection testSection = new TestSection();
+    public TestSection convert(TestSection testSection) {
         testSection.setId(getId());
         testSection.setNumber(getNumber());
-        testSection.setTest(getTest().convert());
+        if (getTest() != null && testSection.getTest() != null)
+            testSection.setTest(getTest().convert(testSection.getTest()));
         return testSection;
     }
 

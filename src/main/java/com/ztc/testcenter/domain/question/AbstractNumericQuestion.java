@@ -9,16 +9,16 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class AbstractNumericQuestion extends Question {
 
-    private Long nominatorAnswer;
+    private Double nominatorAnswer;
     private Boolean fraction = false;
-    private Long denominatorAnswer;
+    private Double denominatorAnswer;
 
     @Transient
-    public Long getNominatorAnswer() {
+    public Double getNominatorAnswer() {
         return nominatorAnswer;
     }
 
-    public void setNominatorAnswer(Long nominatorAnswer) {
+    public void setNominatorAnswer(Double nominatorAnswer) {
         this.nominatorAnswer = nominatorAnswer;
     }
 
@@ -32,11 +32,11 @@ public abstract class AbstractNumericQuestion extends Question {
     }
 
     @Transient
-    public Long getDenominatorAnswer() {
+    public Double getDenominatorAnswer() {
         return denominatorAnswer;
     }
 
-    public void setDenominatorAnswer(Long denominatorAnswer) {
+    public void setDenominatorAnswer(Double denominatorAnswer) {
         this.denominatorAnswer = denominatorAnswer;
     }
 
@@ -55,11 +55,11 @@ public abstract class AbstractNumericQuestion extends Question {
         String[] answers = this.getAnswers().split("-");
         if (answers.length == 1) {
             this.fraction = false;
-            this.nominatorAnswer = Long.valueOf(answers[0]);
+            this.nominatorAnswer = Double.valueOf(answers[0]);
         } else {
             this.fraction = true;
-            this.nominatorAnswer = Long.valueOf(answers[0]);
-            this.denominatorAnswer = Long.valueOf(answers[1]);
+            this.nominatorAnswer = Double.valueOf(answers[0]);
+            this.denominatorAnswer = Double.valueOf(answers[1]);
         }
     }
 }

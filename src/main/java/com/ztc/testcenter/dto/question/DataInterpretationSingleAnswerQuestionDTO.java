@@ -1,11 +1,12 @@
 package com.ztc.testcenter.dto.question;
 
+import com.ztc.testcenter.domain.question.DataInterpretationSetQuestion;
 import com.ztc.testcenter.domain.question.DataInterpretationSingleAnswerQuestion;
 
 /**
  * Created by Yubar on 1/20/2017.
  */
-public class DataInterpretationSingleAnswerQuestionDTO extends AbstractQuantitativeSingleAnswerQuestionDTO {
+public class DataInterpretationSingleAnswerQuestionDTO extends AbstractQuantitativeSingleAnswerQuestionDTO<DataInterpretationSingleAnswerQuestion> {
 
     private Integer number;
     private DataInterpretationSetQuestionDTO parent;
@@ -25,23 +26,19 @@ public class DataInterpretationSingleAnswerQuestionDTO extends AbstractQuantitat
     public void setParent(DataInterpretationSetQuestionDTO parent) {
         this.parent = parent;
     }
-    public void convert(DataInterpretationSingleAnswerQuestion question) {
+
+    @Override
+    public DataInterpretationSingleAnswerQuestion convert(DataInterpretationSingleAnswerQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
         if (getParent() != null)
-            question.setParent(getParent().convert());
+            question.setParent(getParent().convert(new DataInterpretationSetQuestion()));
+        return question;
     }
 
     public void copy(DataInterpretationSingleAnswerQuestion question) {
         super.copy(question);
         setNumber(question.getNumber());
-    }
-
-    @Override
-    public DataInterpretationSingleAnswerQuestion convert() {
-        DataInterpretationSingleAnswerQuestion question = new DataInterpretationSingleAnswerQuestion();
-        convert(question);
-        return question;
     }
 
     public static DataInterpretationSingleAnswerQuestionDTO valueOf(DataInterpretationSingleAnswerQuestion question) {

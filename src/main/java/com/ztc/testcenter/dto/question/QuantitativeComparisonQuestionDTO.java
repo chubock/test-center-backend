@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Yubar on 1/20/2017.
  */
-public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
+public class QuantitativeComparisonQuestionDTO extends QuestionDTO<QuantitativeComparisonQuestion> {
 
     private String quantityB;
     private Integer answer;
@@ -40,16 +40,11 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO {
         this.selected = selected;
     }
 
-    void convert(QuantitativeComparisonQuestion question) {
+    @Override
+    public QuantitativeComparisonQuestion convert(QuantitativeComparisonQuestion question) {
         super.convert(question);
         question.setQuantityB(getQuantityB());
         question.setAnswer(getAnswer());
-    }
-
-    @Override
-    public QuantitativeComparisonQuestion convert() {
-        QuantitativeComparisonQuestion question = new QuantitativeComparisonQuestion();
-        convert(question);
         return question;
     }
 

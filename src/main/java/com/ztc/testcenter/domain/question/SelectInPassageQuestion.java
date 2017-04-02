@@ -12,11 +12,7 @@ public class SelectInPassageQuestion extends Question implements InnerQuestion<R
     private Integer number;
     private ReadingComprehensionQuestion parent;
 
-    public SelectInPassageQuestion() {
-    }
-
-    public SelectInPassageQuestion(ReadingComprehensionQuestion parent) {
-        this.parent = parent;
+    protected SelectInPassageQuestion() {
     }
 
     public SelectInPassageQuestion(ReadingComprehensionQuestion parent, Integer number) {

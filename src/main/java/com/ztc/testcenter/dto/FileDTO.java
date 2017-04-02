@@ -53,8 +53,7 @@ public class FileDTO extends AbstractDTO<File> {
         this.content = content;
     }
 
-    public File convert() {
-        File file = new File();
+    public File convert(File file) {
         file.setId(getId());
         file.setContentType(getContentType());
         file.setName(getName());

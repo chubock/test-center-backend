@@ -17,10 +17,17 @@ import java.util.List;
 public class SectionTemplate implements Serializable {
 
     private Long id;
-    private String name;
     private SectionType sectionType;
     private Difficulty difficulty;
     private List<SectionTemplateItem> items = new ArrayList<>();
+
+    protected SectionTemplate() {
+    }
+
+    public SectionTemplate(SectionType sectionType, Difficulty difficulty) {
+        this.sectionType = sectionType;
+        this.difficulty = difficulty;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,16 +37,6 @@ public class SectionTemplate implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @NotNull
-    @Column(nullable = false, unique = true)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @NotNull

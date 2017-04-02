@@ -16,6 +16,13 @@ public class Authority implements Serializable {
     private String name;
     private Boolean restricted = false;
 
+    protected Authority() {
+    }
+
+    public Authority(String name) {
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {

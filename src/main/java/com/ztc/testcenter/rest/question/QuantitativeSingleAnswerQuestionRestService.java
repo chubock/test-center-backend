@@ -2,6 +2,7 @@ package com.ztc.testcenter.rest.question;
 
 import com.ztc.testcenter.domain.question.QuantitativeSingleAnswerQuestion;
 import com.ztc.testcenter.dto.question.QuantitativeSingleAnswerQuestionDTO;
+import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.QuantitativeSingleAnswerQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 public class QuantitativeSingleAnswerQuestionRestService implements QuestionRestService<QuantitativeSingleAnswerQuestionDTO> {
 
     final private QuantitativeSingleAnswerQuestionRepository repository;
+    final private FileRepository fileRepository;
 
     final private ManagerService managerService;
 
     @Autowired
-    public QuantitativeSingleAnswerQuestionRestService(QuantitativeSingleAnswerQuestionRepository repository, ManagerService managerService) {
+    public QuantitativeSingleAnswerQuestionRestService(QuantitativeSingleAnswerQuestionRepository repository, FileRepository fileRepository, ManagerService managerService) {
         this.repository = repository;
+        this.fileRepository = fileRepository;
         this.managerService = managerService;
     }
 
@@ -34,7 +37,9 @@ public class QuantitativeSingleAnswerQuestionRestService implements QuestionRest
 
     @RequestMapping(method = RequestMethod.PUT)
     public QuantitativeSingleAnswerQuestionDTO save(@RequestBody QuantitativeSingleAnswerQuestionDTO questionDTO) {
-        QuantitativeSingleAnswerQuestion question = questionDTO.convert();
+        QuantitativeSingleAnswerQuestion question = questionDTO.convert(new QuantitativeSingleAnswerQuestion());
+        if (questionDTO.getImage() != null)
+            question.setImage(fileRepository.getOne(questionDTO.getImage()));
         question = (QuantitativeSingleAnswerQuestion) managerService.save(question);
         return QuantitativeSingleAnswerQuestionDTO.valueOf(question);
     }

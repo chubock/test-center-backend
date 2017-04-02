@@ -17,7 +17,8 @@ import java.util.List;
 public class TestDTO extends AbstractDTO<Test> {
 
     private Long id;
-    private Date date = new Date();
+    private Date startDate;
+    private Date endDate;
     private Difficulty difficulty;
     private Test.TestIntelligentType intelligentType = Test.TestIntelligentType.INTELLIGENT;
     private UserDTO user;
@@ -32,12 +33,20 @@ public class TestDTO extends AbstractDTO<Test> {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Difficulty getDifficulty() {
@@ -80,26 +89,22 @@ public class TestDTO extends AbstractDTO<Test> {
         this.sectionTypes = sectionTypes;
     }
 
-    void convert(Test test) {
+    @Override
+    public Test convert(Test test) {
         test.setId(getId());
         test.setDifficulty(getDifficulty());
-        test.setDate(getDate());
+        test.setStartDate(getStartDate());
+        test.setEndDate(getEndDate());
         test.setIntelligentType(getIntelligentType());
-        getTestSections().forEach(testSectionDTO -> test.getTestSections().add(testSectionDTO.convert()));
+        return test;
     }
 
     void copy(Test test) {
         setId(test.getId());
         setIntelligentType(test.getIntelligentType());
         setDifficulty(test.getDifficulty());
-        setDate(test.getDate());
-    }
-
-    @Override
-    public Test convert() {
-        Test test = new Test();
-        convert(test);
-        return test;
+        setStartDate(test.getStartDate());
+        setEndDate(test.getEndDate());
     }
 
     public static TestDTO valueOf(Test test) {

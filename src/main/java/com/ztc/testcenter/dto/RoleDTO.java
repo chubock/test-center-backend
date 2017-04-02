@@ -1,5 +1,6 @@
 package com.ztc.testcenter.dto;
 
+import com.ztc.testcenter.domain.Authority;
 import com.ztc.testcenter.domain.Role;
 
 import java.util.ArrayList;
@@ -40,11 +41,9 @@ public class RoleDTO extends AbstractDTO<Role> {
     }
 
     @Override
-    public Role convert() {
-        Role role = new Role();
+    public Role convert(Role role) {
         role.setId(getId());
         role.setName(getName());
-        getAuthorities().forEach(authorityDTO -> role.getAuthorities().add(authorityDTO.convert()));
         return role;
     }
 

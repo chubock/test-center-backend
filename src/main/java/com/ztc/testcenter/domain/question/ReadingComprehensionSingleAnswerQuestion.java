@@ -14,11 +14,7 @@ public class ReadingComprehensionSingleAnswerQuestion extends FiveChoiceQuestion
     private Integer number;
     private ReadingComprehensionQuestion parent;
 
-    public ReadingComprehensionSingleAnswerQuestion() {
-    }
-
-    public ReadingComprehensionSingleAnswerQuestion(ReadingComprehensionQuestion parent) {
-        this.parent = parent;
+    protected ReadingComprehensionSingleAnswerQuestion() {
     }
 
     public ReadingComprehensionSingleAnswerQuestion(ReadingComprehensionQuestion parent, Integer number) {

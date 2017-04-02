@@ -14,11 +14,7 @@ public class ReadingComprehensionMultipleAnswerQuestion extends ThreeChoiceQuest
     private Integer number;
     private ReadingComprehensionQuestion parent;
 
-    public ReadingComprehensionMultipleAnswerQuestion() {
-    }
-
-    public ReadingComprehensionMultipleAnswerQuestion(ReadingComprehensionQuestion parent) {
-        this.parent = parent;
+    protected ReadingComprehensionMultipleAnswerQuestion() {
     }
 
     public ReadingComprehensionMultipleAnswerQuestion(ReadingComprehensionQuestion parent, Integer number) {

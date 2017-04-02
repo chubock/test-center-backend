@@ -16,11 +16,7 @@ public class DataInterpretationMultipleAnswerQuestion extends AbstractQuantitati
     private Integer number;
     private DataInterpretationSetQuestion parent;
 
-    public DataInterpretationMultipleAnswerQuestion() {
-    }
-
-    public DataInterpretationMultipleAnswerQuestion(DataInterpretationSetQuestion parent) {
-        this.parent = parent;
+    protected DataInterpretationMultipleAnswerQuestion() {
     }
 
     public DataInterpretationMultipleAnswerQuestion(DataInterpretationSetQuestion parent, Integer number) {

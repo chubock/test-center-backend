@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Yubar on 1/27/2017.
  */
 
-public class DataInterpretationSetQuestionDTO extends QuestionDTO {
+public class DataInterpretationSetQuestionDTO extends QuestionDTO<DataInterpretationSetQuestion> {
 
     private List<DataInterpretationNumericQuestionDTO> numericQuestions = new ArrayList<>();
     private List<DataInterpretationMultipleAnswerQuestionDTO> multipleAnswerQuestions = new ArrayList<>();
@@ -40,23 +40,25 @@ public class DataInterpretationSetQuestionDTO extends QuestionDTO {
         this.singleAnswerQuestions = singleAnswerQuestions;
     }
 
-    void convert(DataInterpretationSetQuestion question) {
+    @Override
+    public DataInterpretationSetQuestion convert(DataInterpretationSetQuestion question) {
         super.convert(question);
         getNumericQuestions().forEach(numericQuestionDTO -> {
-            DataInterpretationNumericQuestion numericQuestion = numericQuestionDTO.convert();
+            DataInterpretationNumericQuestion numericQuestion = numericQuestionDTO.convert(new DataInterpretationNumericQuestion(question, numericQuestionDTO.getNumber()));
             numericQuestion.setParent(question);
             question.getNumericQuestions().add(numericQuestion);
         });
         getMultipleAnswerQuestions().forEach(multipleAnswerQuestionDTO -> {
-            DataInterpretationMultipleAnswerQuestion multipleAnswerQuestion = multipleAnswerQuestionDTO.convert();
+            DataInterpretationMultipleAnswerQuestion multipleAnswerQuestion = multipleAnswerQuestionDTO.convert(new DataInterpretationMultipleAnswerQuestion(question, multipleAnswerQuestionDTO.getNumber()));
             multipleAnswerQuestion.setParent(question);
             question.getMultipleAnswerQuestions().add(multipleAnswerQuestion);
         });
         getSingleAnswerQuestions().forEach(singleAnswerQuestionDTO -> {
-            DataInterpretationSingleAnswerQuestion singleAnswerQuestion = singleAnswerQuestionDTO.convert();
+            DataInterpretationSingleAnswerQuestion singleAnswerQuestion = singleAnswerQuestionDTO.convert(new DataInterpretationSingleAnswerQuestion(question, singleAnswerQuestionDTO.getNumber()));
             singleAnswerQuestion.setParent(question);
             question.getSingleAnswerQuestions().add(singleAnswerQuestion);
         });
+        return question;
     }
 
     void copy(DataInterpretationSetQuestion question) {
@@ -70,13 +72,6 @@ public class DataInterpretationSetQuestionDTO extends QuestionDTO {
             question.getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> getMultipleAnswerQuestions().add(DataInterpretationMultipleAnswerQuestionDTO.valueOf(multipleAnswerQuestion)));
             question.getSingleAnswerQuestions().forEach(singleAnswerQuestion -> getSingleAnswerQuestions().add(DataInterpretationSingleAnswerQuestionDTO.valueOf(singleAnswerQuestion)));
         }
-    }
-
-    @Override
-    public DataInterpretationSetQuestion convert() {
-        DataInterpretationSetQuestion question = new DataInterpretationSetQuestion();
-        convert(question);
-        return question;
     }
 
     public static DataInterpretationSetQuestionDTO valueOf(DataInterpretationSetQuestion question, boolean lazy) {

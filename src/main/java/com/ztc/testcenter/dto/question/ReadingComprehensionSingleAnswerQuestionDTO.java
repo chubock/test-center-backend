@@ -1,12 +1,13 @@
 package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.ReadingComprehensionMultipleAnswerQuestion;
+import com.ztc.testcenter.domain.question.ReadingComprehensionQuestion;
 import com.ztc.testcenter.domain.question.ReadingComprehensionSingleAnswerQuestion;
 
 /**
  * Created by Yubar on 1/20/2017.
  */
-public class ReadingComprehensionSingleAnswerQuestionDTO extends ChoicesQuestionDTO {
+public class ReadingComprehensionSingleAnswerQuestionDTO extends ChoicesQuestionDTO<ReadingComprehensionSingleAnswerQuestion> {
 
     private Integer number;
     private ReadingComprehensionQuestionDTO parent;
@@ -26,23 +27,19 @@ public class ReadingComprehensionSingleAnswerQuestionDTO extends ChoicesQuestion
     public void setParent(ReadingComprehensionQuestionDTO parent) {
         this.parent = parent;
     }
-    public void convert(ReadingComprehensionSingleAnswerQuestion question) {
+
+    @Override
+    public ReadingComprehensionSingleAnswerQuestion convert(ReadingComprehensionSingleAnswerQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
         if (getParent() != null)
-            question.setParent(getParent().convert());
+            question.setParent(getParent().convert(new ReadingComprehensionQuestion()));
+        return question;
     }
 
     public void copy(ReadingComprehensionSingleAnswerQuestion question) {
         super.copy(question);
         setNumber(question.getNumber());
-    }
-
-    @Override
-    public ReadingComprehensionSingleAnswerQuestion convert() {
-        ReadingComprehensionSingleAnswerQuestion question = new ReadingComprehensionSingleAnswerQuestion();
-        convert(question);
-        return question;
     }
 
     public static ReadingComprehensionSingleAnswerQuestionDTO valueOf(ReadingComprehensionSingleAnswerQuestion question) {

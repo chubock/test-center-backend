@@ -38,8 +38,7 @@ public class AuthorityDTO extends AbstractDTO<Authority> {
     }
 
     @Override
-    public Authority convert() {
-        Authority authority = new Authority();
+    public Authority convert(Authority authority) {
         authority.setId(getId());
         authority.setName(getName());
         authority.setRestricted(getRestricted());

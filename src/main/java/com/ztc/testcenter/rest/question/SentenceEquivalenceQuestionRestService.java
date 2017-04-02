@@ -2,6 +2,7 @@ package com.ztc.testcenter.rest.question;
 
 import com.ztc.testcenter.domain.question.SentenceEquivalenceQuestion;
 import com.ztc.testcenter.dto.question.SentenceEquivalenceQuestionDTO;
+import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.SentenceEquivalenceQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 public class SentenceEquivalenceQuestionRestService implements QuestionRestService<SentenceEquivalenceQuestionDTO> {
 
     final private SentenceEquivalenceQuestionRepository repository;
+    final private FileRepository fileRepository;
 
     final private ManagerService managerService;
 
     @Autowired
-    public SentenceEquivalenceQuestionRestService(SentenceEquivalenceQuestionRepository repository, ManagerService managerService) {
+    public SentenceEquivalenceQuestionRestService(SentenceEquivalenceQuestionRepository repository, FileRepository fileRepository, ManagerService managerService) {
         this.repository = repository;
+        this.fileRepository = fileRepository;
         this.managerService = managerService;
     }
 
@@ -34,7 +37,9 @@ public class SentenceEquivalenceQuestionRestService implements QuestionRestServi
 
     @RequestMapping(method = RequestMethod.PUT)
     public SentenceEquivalenceQuestionDTO save(@RequestBody SentenceEquivalenceQuestionDTO questionDTO) {
-        SentenceEquivalenceQuestion question = questionDTO.convert();
+        SentenceEquivalenceQuestion question = questionDTO.convert(new SentenceEquivalenceQuestion());
+        if (questionDTO.getImage() != null)
+            question.setImage(fileRepository.getOne(questionDTO.getImage()));
         question = (SentenceEquivalenceQuestion) managerService.save(question);
         return SentenceEquivalenceQuestionDTO.valueOf(question);
     }

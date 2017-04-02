@@ -2,6 +2,7 @@ package com.ztc.testcenter.rest.question;
 
 import com.ztc.testcenter.domain.question.TextCompletionQuestion;
 import com.ztc.testcenter.dto.question.TextCompletionQuestionDTO;
+import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.TextCompletionQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 public class TextCompletionQuestionRestService implements QuestionRestService<TextCompletionQuestionDTO> {
 
     final private TextCompletionQuestionRepository repository;
+    final private FileRepository fileRepository;
 
     final private ManagerService managerService;
 
     @Autowired
-    public TextCompletionQuestionRestService(TextCompletionQuestionRepository repository, ManagerService managerService) {
+    public TextCompletionQuestionRestService(TextCompletionQuestionRepository repository, FileRepository fileRepository, ManagerService managerService) {
         this.repository = repository;
+        this.fileRepository = fileRepository;
         this.managerService = managerService;
     }
 
@@ -35,7 +38,9 @@ public class TextCompletionQuestionRestService implements QuestionRestService<Te
 
     @RequestMapping(method = RequestMethod.PUT)
     public TextCompletionQuestionDTO save(@RequestBody TextCompletionQuestionDTO questionDTO) {
-        TextCompletionQuestion question = questionDTO.convert();
+        TextCompletionQuestion question = questionDTO.convert(new TextCompletionQuestion());
+        if (questionDTO.getImage() != null)
+            question.setImage(fileRepository.getOne(questionDTO.getImage()));
         question = (TextCompletionQuestion) managerService.save(question);
         question.getItems().forEach(item -> item.populateChoices());
         return TextCompletionQuestionDTO.valueOf(question);

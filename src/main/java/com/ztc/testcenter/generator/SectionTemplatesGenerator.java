@@ -160,11 +160,8 @@ public class SectionTemplatesGenerator {
         sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER, DifficultyLevel.LEVEL3));
     }
 
-    private void createSectionTemplate(String name, SectionType sectionType, Difficulty difficulty){
-        SectionTemplate sectionTemplate = new SectionTemplate();
-        sectionTemplate.setName(name);
-        sectionTemplate.setSectionType(sectionType);
-        sectionTemplate.setDifficulty(difficulty);
+    private void createSectionTemplate(SectionType sectionType, Difficulty difficulty){
+        SectionTemplate sectionTemplate = new SectionTemplate(sectionType, difficulty);
         switch (sectionType) {
             case GRE_VERBAL_REASONING_1:
             case GRE_VERBAL_REASONING_2:
@@ -207,31 +204,31 @@ public class SectionTemplatesGenerator {
     }
 
     public void createAll() {
-        createSectionTemplate("First Easy Verbal Template", SectionType.GRE_VERBAL_REASONING_1, Difficulty.EASY);
-        createSectionTemplate("First Medium Verbal Template", SectionType.GRE_VERBAL_REASONING_1, Difficulty.MEDIUM);
-        createSectionTemplate("First Hard Verbal Template", SectionType.GRE_VERBAL_REASONING_1, Difficulty.HARD);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_1, Difficulty.EASY);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_1, Difficulty.MEDIUM);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_1, Difficulty.HARD);
 
-        createSectionTemplate("First Easy Unscore Verbal Template", SectionType.GRE_VERBAL_UNSCORE, Difficulty.EASY);
-        createSectionTemplate("First Medium Unscore Verbal Template", SectionType.GRE_VERBAL_UNSCORE, Difficulty.MEDIUM);
-        createSectionTemplate("First Hard Unscore Verbal Template", SectionType.GRE_VERBAL_UNSCORE, Difficulty.HARD);
+        createSectionTemplate(SectionType.GRE_VERBAL_UNSCORE, Difficulty.EASY);
+        createSectionTemplate(SectionType.GRE_VERBAL_UNSCORE, Difficulty.MEDIUM);
+        createSectionTemplate(SectionType.GRE_VERBAL_UNSCORE, Difficulty.HARD);
 
-        createSectionTemplate("First Easy Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.EASY);
-        createSectionTemplate("First Medium Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.MEDIUM);
-        createSectionTemplate("First Hard Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.HARD);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.EASY);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.MEDIUM);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.HARD);
 
-        createSectionTemplate("First Easy Unscore Quantitative Template", SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.EASY);
-        createSectionTemplate("First Medium Unscore Quantitative Template", SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.MEDIUM);
-        createSectionTemplate("First Hard Unscore Quantitative Template", SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.HARD);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.EASY);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.MEDIUM);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.HARD);
 
-        createSectionTemplate("First Analytical Writing Issue Template", SectionType.GRE_ANALYTICAL_WRITING_ISSUE, Difficulty.MEDIUM);
-        createSectionTemplate("First Analytical Writing Argument Template", SectionType.GRE_ANALYTICAL_WRITING_ARGUMENT, Difficulty.MEDIUM);
+        createSectionTemplate(SectionType.GRE_ANALYTICAL_WRITING_ISSUE, Difficulty.MEDIUM);
+        createSectionTemplate(SectionType.GRE_ANALYTICAL_WRITING_ARGUMENT, Difficulty.MEDIUM);
 
-        createSectionTemplate("Second Easy Verbal Template", SectionType.GRE_VERBAL_REASONING_2, Difficulty.EASY);
-        createSectionTemplate("Second Medium Verbal Template", SectionType.GRE_VERBAL_REASONING_2, Difficulty.MEDIUM);
-        createSectionTemplate("Second Hard Verbal Template", SectionType.GRE_VERBAL_REASONING_2, Difficulty.HARD);
-        createSectionTemplate("Second EASY Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.EASY);
-        createSectionTemplate("Second Medium Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.MEDIUM);
-        createSectionTemplate("Second Hard Quantitative Template", SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.HARD);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_2, Difficulty.EASY);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_2, Difficulty.MEDIUM);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_2, Difficulty.HARD);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.EASY);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.MEDIUM);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.HARD);
     }
 
 }

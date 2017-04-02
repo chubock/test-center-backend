@@ -19,7 +19,14 @@ public class File implements Serializable {
     private Long size;
     private byte[] content;
 
-    public File() {
+    protected File() {
+    }
+
+    public File(String name, String contentType, Long size, byte[] content) {
+        this.name = name;
+        this.contentType = contentType;
+        this.size = size;
+        this.content = content;
     }
 
     @Id

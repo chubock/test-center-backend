@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Yubar on 2/9/2017.
  */
-public class ReadingComprehensionQuestionDTO extends QuestionDTO {
+public class ReadingComprehensionQuestionDTO extends QuestionDTO<ReadingComprehensionQuestion> {
 
     private ReadingComprehensionQuestion.Type type = ReadingComprehensionQuestion.Type.MEDIUM;
     List<ReadingComprehensionSingleAnswerQuestionDTO> singleAnswerQuestions = new ArrayList<>();
@@ -48,24 +48,26 @@ public class ReadingComprehensionQuestionDTO extends QuestionDTO {
         this.selectInPassageQuestions = selectInPassageQuestions;
     }
 
-    void convert(ReadingComprehensionQuestion question) {
+    @Override
+    public ReadingComprehensionQuestion convert(ReadingComprehensionQuestion question) {
         super.convert(question);
         question.setType(getType());
         getSingleAnswerQuestions().forEach(singleAnswerQuestionDTO -> {
-            ReadingComprehensionSingleAnswerQuestion singleAnswerQuestion = singleAnswerQuestionDTO.convert();
+            ReadingComprehensionSingleAnswerQuestion singleAnswerQuestion = singleAnswerQuestionDTO.convert(new ReadingComprehensionSingleAnswerQuestion(question, singleAnswerQuestionDTO.getNumber()));
             singleAnswerQuestion.setParent(question);
             question.getSingleAnswerQuestions().add(singleAnswerQuestion);
         });
         getMultipleAnswerQuestions().forEach(multipleAnswerQuestionDTO -> {
-            ReadingComprehensionMultipleAnswerQuestion multipleAnswerQuestion = multipleAnswerQuestionDTO.convert();
+            ReadingComprehensionMultipleAnswerQuestion multipleAnswerQuestion = multipleAnswerQuestionDTO.convert(new ReadingComprehensionMultipleAnswerQuestion(question, multipleAnswerQuestionDTO.getNumber()));
             multipleAnswerQuestion.setParent(question);
             question.getMultipleAnswerQuestions().add(multipleAnswerQuestion);
         });
         getSelectInPassageQuestions().forEach(selectInPassageQuestionDTO -> {
-            SelectInPassageQuestion selectInPassageQuestion = selectInPassageQuestionDTO.convert();
+            SelectInPassageQuestion selectInPassageQuestion = selectInPassageQuestionDTO.convert(new SelectInPassageQuestion(question, selectInPassageQuestionDTO.getNumber()));
             selectInPassageQuestion.setParent(question);
             question.getSelectInPassageQuestions().add(selectInPassageQuestion);
         });
+        return question;
     }
 
     void copy(ReadingComprehensionQuestion question) {
@@ -80,13 +82,6 @@ public class ReadingComprehensionQuestionDTO extends QuestionDTO {
             question.getMultipleAnswerQuestions().forEach(multipleAnswerQuestion -> getMultipleAnswerQuestions().add(ReadingComprehensionMultipleAnswerQuestionDTO.valueOf(multipleAnswerQuestion)));
             question.getSelectInPassageQuestions().forEach(selectInPassageQuestion -> getSelectInPassageQuestions().add(SelectInPassageQuestionDTO.valueOf(selectInPassageQuestion)));
         }
-    }
-
-    @Override
-    public ReadingComprehensionQuestion convert() {
-        ReadingComprehensionQuestion question = new ReadingComprehensionQuestion();
-        convert(question);
-        return question;
     }
 
     public static ReadingComprehensionQuestionDTO valueOf(ReadingComprehensionQuestion question, boolean lazy) {

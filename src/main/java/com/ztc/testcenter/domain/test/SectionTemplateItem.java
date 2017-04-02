@@ -21,7 +21,7 @@ public class SectionTemplateItem implements Serializable {
     private DifficultyLevel difficulty;
     private QuestionTemplate questionTemplate;
 
-    public SectionTemplateItem() {
+    protected SectionTemplateItem() {
     }
 
     public SectionTemplateItem(Integer number, QuestionType questionType, DifficultyLevel difficulty) {

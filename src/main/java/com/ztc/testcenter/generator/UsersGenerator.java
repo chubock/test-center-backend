@@ -27,13 +27,10 @@ public class UsersGenerator {
 
     @Transactional
     public void createUser (int number) {
-        User user = new User();
-        user.setUsername("User " + number);
+        User user = new User("User " + number, "User " + number, "User " + number);
         user.setAccountExpired(false);
         user.setCredentialExpired(false);
         user.setEnabled(true);
-        user.setFirstName("User " + number);
-        user.setLastName("User " + number);
         user.setGender(User.Gender.values()[random.nextInt(2)]);
         user.setLocked(false);
         user.setPassword(encoder.encode("User " + number));

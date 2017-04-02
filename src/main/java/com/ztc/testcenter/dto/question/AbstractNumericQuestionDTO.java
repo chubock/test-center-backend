@@ -7,20 +7,20 @@ import com.ztc.testcenter.domain.test.AnsweredQuestion;
 /**
  * Created by Yubar on 1/20/2017.
  */
-public abstract class AbstractNumericQuestionDTO extends QuestionDTO {
+public abstract class AbstractNumericQuestionDTO<T extends AbstractNumericQuestion> extends QuestionDTO<T> {
 
-    private Long nominatorAnswer;
+    private Double nominatorAnswer;
     private Boolean fraction = false;
-    private Long denominatorAnswer;
+    private Double denominatorAnswer;
 
-    private Long nominator;
-    private Long denominator;
+    private Double nominator;
+    private Double denominator;
 
-    public Long getNominatorAnswer() {
+    public Double getNominatorAnswer() {
         return nominatorAnswer;
     }
 
-    public void setNominatorAnswer(Long nominatorAnswer) {
+    public void setNominatorAnswer(Double nominatorAnswer) {
         this.nominatorAnswer = nominatorAnswer;
     }
 
@@ -32,38 +32,39 @@ public abstract class AbstractNumericQuestionDTO extends QuestionDTO {
         this.fraction = fraction;
     }
 
-    public Long getDenominatorAnswer() {
+    public Double getDenominatorAnswer() {
         return denominatorAnswer;
     }
 
-    public void setDenominatorAnswer(Long denominatorAnswer) {
+    public void setDenominatorAnswer(Double denominatorAnswer) {
         this.denominatorAnswer = denominatorAnswer;
     }
 
-    public Long getNominator() {
+    public Double getNominator() {
         return nominator;
     }
 
-    public void setNominator(Long nominator) {
+    public void setNominator(Double nominator) {
         this.nominator = nominator;
     }
 
-    public Long getDenominator() {
+    public Double getDenominator() {
         return denominator;
     }
 
-    public void setDenominator(Long denominator) {
+    public void setDenominator(Double denominator) {
         this.denominator = denominator;
     }
 
-    void convert(AbstractNumericQuestion question) {
+    public T convert(T question) {
         super.convert(question);
         question.setNominatorAnswer(getNominatorAnswer());
         question.setFraction(isFraction());
         question.setDenominatorAnswer(getDenominatorAnswer());
+        return question;
     }
 
-    void copy(AbstractNumericQuestion question) {
+    void copy(T question) {
         super.copy(question);
         setNominatorAnswer(question.getNominatorAnswer());
         setFraction(question.isFraction());
@@ -76,10 +77,10 @@ public abstract class AbstractNumericQuestionDTO extends QuestionDTO {
             return ;
         String[] answers = answer.split("-");
         if (answers.length == 1) {
-            this.nominator = Long.valueOf(answers[0]);
+            this.nominator = Double.valueOf(answers[0]);
         } else {
-            this.nominator = Long.valueOf(answers[0]);
-            this.denominator = Long.valueOf(answers[1]);
+            this.nominator = Double.valueOf(answers[0]);
+            this.denominator = Double.valueOf(answers[1]);
         }
     }
 }

@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
  */
 
 @MappedSuperclass
-public abstract class AbstractQuantitativeMultipleAnswerQuestion extends ThreeChoiceQuestion {
+public abstract class AbstractQuantitativeMultipleAnswerQuestion extends DynamicChoiceQuestion {
 
     private Integer maxAnswerCount = 0;
 

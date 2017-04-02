@@ -5,7 +5,7 @@ import com.ztc.testcenter.domain.question.WritingQuestion;
 /**
  * Created by Yubar on 1/19/2017.
  */
-public class WritingQuestionDTO extends QuestionDTO {
+public class WritingQuestionDTO extends QuestionDTO<WritingQuestion> {
 
     private WritingQuestion.Type type;
     private String answer;
@@ -30,13 +30,6 @@ public class WritingQuestionDTO extends QuestionDTO {
     public WritingQuestion convert(WritingQuestion question) {
         super.convert(question);
         question.setType(getType());
-        return question;
-    }
-
-    @Override
-    public WritingQuestion convert() {
-        WritingQuestion question = new WritingQuestion();
-        convert(question);
         return question;
     }
 

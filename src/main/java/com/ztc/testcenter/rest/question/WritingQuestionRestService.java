@@ -2,6 +2,7 @@ package com.ztc.testcenter.rest.question;
 
 import com.ztc.testcenter.domain.question.WritingQuestion;
 import com.ztc.testcenter.dto.question.WritingQuestionDTO;
+import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.WritingQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 public class WritingQuestionRestService implements QuestionRestService<WritingQuestionDTO> {
 
     final private WritingQuestionRepository repository;
+    final private FileRepository fileRepository;
 
     final private ManagerService managerService;
 
     @Autowired
-    public WritingQuestionRestService(WritingQuestionRepository repository, ManagerService managerService) {
+    public WritingQuestionRestService(WritingQuestionRepository repository, FileRepository fileRepository, ManagerService managerService) {
         this.repository = repository;
+        this.fileRepository = fileRepository;
         this.managerService = managerService;
     }
 
@@ -34,7 +37,9 @@ public class WritingQuestionRestService implements QuestionRestService<WritingQu
 
     @RequestMapping(method = RequestMethod.PUT)
     public WritingQuestionDTO save(@RequestBody WritingQuestionDTO questionDTO) {
-        WritingQuestion question = questionDTO.convert();
+        WritingQuestion question = questionDTO.convert(new WritingQuestion());
+        if (questionDTO.getImage() != null)
+            question.setImage(fileRepository.getOne(questionDTO.getImage()));
         question = (WritingQuestion) managerService.save(question);
         return WritingQuestionDTO.valueOf(question);
     }

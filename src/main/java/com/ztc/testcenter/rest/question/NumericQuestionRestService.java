@@ -2,6 +2,7 @@ package com.ztc.testcenter.rest.question;
 
 import com.ztc.testcenter.domain.question.NumericQuestion;
 import com.ztc.testcenter.dto.question.NumericQuestionDTO;
+import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.NumericQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 public class NumericQuestionRestService implements QuestionRestService<NumericQuestionDTO> {
 
     final private NumericQuestionRepository repository;
+    final private FileRepository fileRepository;
 
     final private ManagerService managerService;
 
     @Autowired
-    public NumericQuestionRestService(NumericQuestionRepository repository, ManagerService managerService) {
+    public NumericQuestionRestService(NumericQuestionRepository repository, FileRepository fileRepository, ManagerService managerService) {
         this.repository = repository;
+        this.fileRepository = fileRepository;
         this.managerService = managerService;
     }
 
@@ -34,7 +37,9 @@ public class NumericQuestionRestService implements QuestionRestService<NumericQu
 
     @RequestMapping(method = RequestMethod.PUT)
     public NumericQuestionDTO save(@RequestBody NumericQuestionDTO questionDTO) {
-        NumericQuestion question = questionDTO.convert();
+        NumericQuestion question = questionDTO.convert(new NumericQuestion());
+        if (questionDTO.getImage() != null)
+            question.setImage(fileRepository.getOne(questionDTO.getImage()));
         question = (NumericQuestion) managerService.save(question);
         return NumericQuestionDTO.valueOf(question);
     }

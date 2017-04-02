@@ -34,8 +34,7 @@ public class TextCompletionQuestionItemDTO extends AbstractDTO<TextCompletionQue
     }
 
     @Override
-    public TextCompletionQuestionItem convert() {
-        TextCompletionQuestionItem item = new TextCompletionQuestionItem();
+    public TextCompletionQuestionItem convert(TextCompletionQuestionItem item) {
         getChoices().forEach(choice -> item.getChoices().add(choice.clone()));
         return item;
     }

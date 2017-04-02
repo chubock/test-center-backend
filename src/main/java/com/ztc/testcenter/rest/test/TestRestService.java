@@ -4,6 +4,7 @@ import com.ztc.testcenter.dto.test.TestDTO;
 import com.ztc.testcenter.dto.test.TestSectionDTO;
 import org.springframework.security.core.Authentication;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,4 +16,5 @@ public interface TestRestService {
     TestDTO createTest(TestDTO testDTO, Authentication authentication);
     TestSectionDTO createNextSection(Long testId);
     void answerQuestion(Long questionId, String answer);
+    Date finishTest(Long id, Authentication authentication);
 }

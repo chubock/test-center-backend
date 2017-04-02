@@ -5,14 +5,7 @@ import com.ztc.testcenter.domain.question.QuantitativeMultipleAnswerQuestion;
 /**
  * Created by Yubar on 1/20/2017.
  */
-public class QuantitativeMultipleAnswerQuestionDTO extends AbstractQuantitativeMultipleAnswerQuestionDTO {
-
-    @Override
-    public QuantitativeMultipleAnswerQuestion convert() {
-        QuantitativeMultipleAnswerQuestion question = new QuantitativeMultipleAnswerQuestion();
-        convert(question);
-        return question;
-    }
+public class QuantitativeMultipleAnswerQuestionDTO extends AbstractQuantitativeMultipleAnswerQuestionDTO<QuantitativeMultipleAnswerQuestion> {
 
     public static QuantitativeMultipleAnswerQuestionDTO valueOf(QuantitativeMultipleAnswerQuestion question) {
         if (question == null)

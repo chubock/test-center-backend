@@ -1,12 +1,13 @@
 package com.ztc.testcenter.dto.question;
 
 import com.ztc.testcenter.domain.question.DataInterpretationNumericQuestion;
+import com.ztc.testcenter.domain.question.DataInterpretationSetQuestion;
 import com.ztc.testcenter.domain.question.NumericQuestion;
 
 /**
  * Created by Yubar on 1/20/2017.
  */
-public class DataInterpretationNumericQuestionDTO extends AbstractNumericQuestionDTO {
+public class DataInterpretationNumericQuestionDTO extends AbstractNumericQuestionDTO<DataInterpretationNumericQuestion> {
 
     private Integer number;
     private DataInterpretationSetQuestionDTO parent;
@@ -26,17 +27,13 @@ public class DataInterpretationNumericQuestionDTO extends AbstractNumericQuestio
     public void setParent(DataInterpretationSetQuestionDTO parent) {
         this.parent = parent;
     }
-    void convert(DataInterpretationNumericQuestion question) {
+
+    @Override
+    public DataInterpretationNumericQuestion convert(DataInterpretationNumericQuestion question) {
         super.convert(question);
         question.setNumber(getNumber());
         if (getParent() != null)
-            question.setParent(getParent().convert());
-    }
-
-    @Override
-    public DataInterpretationNumericQuestion convert() {
-        DataInterpretationNumericQuestion question = new DataInterpretationNumericQuestion();
-        convert(question);
+            question.setParent(getParent().convert(new DataInterpretationSetQuestion()));
         return question;
     }
 

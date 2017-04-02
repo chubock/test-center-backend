@@ -16,7 +16,7 @@ public class TestTemplateItem implements Serializable {
     private Integer number;
     private SectionType sectionType;
 
-    public TestTemplateItem() {
+    protected TestTemplateItem() {
     }
 
     public TestTemplateItem(Integer number, SectionType sectionType) {

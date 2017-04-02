@@ -16,11 +16,7 @@ public class DataInterpretationSingleAnswerQuestion extends AbstractQuantitative
     private Integer number;
     private DataInterpretationSetQuestion parent;
 
-    public DataInterpretationSingleAnswerQuestion() {
-    }
-
-    public DataInterpretationSingleAnswerQuestion(DataInterpretationSetQuestion parent) {
-        this.parent = parent;
+    protected DataInterpretationSingleAnswerQuestion() {
     }
 
     public DataInterpretationSingleAnswerQuestion(DataInterpretationSetQuestion parent, Integer number) {

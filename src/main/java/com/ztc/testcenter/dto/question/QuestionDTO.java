@@ -8,7 +8,7 @@ import com.ztc.testcenter.dto.AbstractDTO;
 /**
  * Created by Yubar on 1/19/2017.
  */
-public abstract class QuestionDTO extends AbstractDTO<Question> {
+public abstract class QuestionDTO<T extends Question> extends AbstractDTO<T> {
 
     private Long id;
     private Integer number;
@@ -74,19 +74,15 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
         this.questionType = questionType;
     }
 
-    void convert(Question question) {
+    public T convert(T question) {
         question.setId(getId());
         question.setText(getText());
         question.setDifficulty(getDifficulty());
         question.setDifficultyLevel(getDifficultyLevel());
-        if (getImage() != null && getImage() != 0) {
-            File file = new File();
-            file.setId(getImage());
-            question.setImage(file);
-        }
+        return question;
     }
 
-    void copy(Question question) {
+    void copy(T question) {
         setId(question.getId());
         setText(question.getText());
         setDifficulty(question.getDifficulty());
@@ -144,6 +140,72 @@ public abstract class QuestionDTO extends AbstractDTO<Question> {
             ret = WritingQuestionDTO.valueOf((WritingQuestion) answeredQuestion.getQuestion());
         else
             throw new IllegalArgumentException("Can't find Static Factory for type of Question");
+
+        /*
+        switch (answeredQuestion.getQuestion().getQuestionType()) {
+            case GRE_DATA_INTERPRETATION_SET:
+                ret = DataInterpretationSetQuestionDTO.valueOf((DataInterpretationSetQuestion) answeredQuestion.getQuestion());
+                break;
+            case GRE_DATA_INTERPRETATION_SET_SINGLE_ANSWER:
+                ret = DataInterpretationSingleAnswerQuestionDTO.valueOf((DataInterpretationSingleAnswerQuestion) answeredQuestion.getQuestion());
+                ((DataInterpretationSingleAnswerQuestionDTO)ret).setParent(DataInterpretationSetQuestionDTO.valueOf(((DataInterpretationSingleAnswerQuestion) answeredQuestion.getQuestion()).getParent(), true));
+                break;
+            case GRE_DATA_INTERPRETATION_SET_MULTIPLE_ANSWER:
+                ret = DataInterpretationMultipleAnswerQuestionDTO.valueOf((DataInterpretationMultipleAnswerQuestion) answeredQuestion.getQuestion());
+                ((DataInterpretationMultipleAnswerQuestionDTO)ret).setParent(DataInterpretationSetQuestionDTO.valueOf(((DataInterpretationMultipleAnswerQuestion) answeredQuestion.getQuestion()).getParent(), true));
+                break;
+            case GRE_DATA_INTERPRETATION_SET_NUMERIC:
+                ret = DataInterpretationNumericQuestionDTO.valueOf((DataInterpretationNumericQuestion) answeredQuestion.getQuestion());
+                ((DataInterpretationNumericQuestionDTO)ret).setParent(DataInterpretationSetQuestionDTO.valueOf(((DataInterpretationNumericQuestion) answeredQuestion.getQuestion()).getParent(), true));
+                break;
+            case GRE_NUMERIC:
+            case GRE_NUMERIC_FRACTION:
+                ret = NumericQuestionDTO.valueOf((NumericQuestion) answeredQuestion.getQuestion());
+                break;
+            case GRE_QUANTITATIVE_COMPARISON:
+                ret = QuantitativeComparisonQuestionDTO.valueOf((QuantitativeComparisonQuestion) answeredQuestion.getQuestion());
+                break;
+            case GRE_QUANTITATIVE_SINGLE_ANSWER:
+                ret = QuantitativeSingleAnswerQuestionDTO.valueOf((QuantitativeSingleAnswerQuestion) answeredQuestion.getQuestion());
+                break;
+            case GRE_QUANTITATIVE_MULTIPLE_ANSWER:
+                ret = QuantitativeMultipleAnswerQuestionDTO.valueOf((QuantitativeMultipleAnswerQuestion) answeredQuestion.getQuestion());
+                break;
+            case GRE_READING_COMPREHENSION_SHORT:
+            case GRE_READING_COMPREHENSION_MEDIUM:
+            case GRE_READING_COMPREHENSION_LONG:
+            case GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT:
+                ret = ReadingComprehensionQuestionDTO.valueOf((ReadingComprehensionQuestion) answeredQuestion.getQuestion());
+                break;
+            case GRE_READING_COMPREHENSION_SINGLE_ANSWER:
+                ret = ReadingComprehensionSingleAnswerQuestionDTO.valueOf((ReadingComprehensionSingleAnswerQuestion) answeredQuestion.getQuestion());
+                ((ReadingComprehensionSingleAnswerQuestionDTO)ret).setParent(ReadingComprehensionQuestionDTO.valueOf(((ReadingComprehensionSingleAnswerQuestion) answeredQuestion.getQuestion()).getParent(), true));
+                break;
+            case GRE_READING_COMPREHENSION_MULTIPLE_ANSWER:
+                ret = ReadingComprehensionMultipleAnswerQuestionDTO.valueOf((ReadingComprehensionMultipleAnswerQuestion) answeredQuestion.getQuestion());
+                ((ReadingComprehensionMultipleAnswerQuestionDTO)ret).setParent(ReadingComprehensionQuestionDTO.valueOf(((ReadingComprehensionMultipleAnswerQuestion) answeredQuestion.getQuestion()).getParent(), true));
+                break;
+            case GRE_READING_COMPREHENSION_SELECT_IN_PASSAGE:
+                ret = SelectInPassageQuestionDTO.valueOf((SelectInPassageQuestion) answeredQuestion.getQuestion());
+                ((SelectInPassageQuestionDTO)ret).setParent(ReadingComprehensionQuestionDTO.valueOf(((SelectInPassageQuestion) answeredQuestion.getQuestion()).getParent(), true));
+                break;
+            case GRE_SENTENCE_EQUIVALENCE:
+                ret = SentenceEquivalenceQuestionDTO.valueOf((SentenceEquivalenceQuestion) answeredQuestion.getQuestion());
+                break;
+            case GRE_TEXT_COMPLETION_ONE_BLANK:
+            case GRE_TEXT_COMPLETION_TWO_BLANK:
+            case GRE_TEXT_COMPLETION_THREE_BLANK:
+                ret = TextCompletionQuestionDTO.valueOf((TextCompletionQuestion) answeredQuestion.getQuestion());
+                break;
+            case GRE_WRITING_ISSUE:
+            case GRE_WRITING_ARGUMENT:
+                ret = WritingQuestionDTO.valueOf((WritingQuestion) answeredQuestion.getQuestion());
+                break;
+            default:
+                throw new IllegalArgumentException("Can't find Static Factory for type of Question " + answeredQuestion.getQuestion().getQuestionType());
+        }
+        */
+
         ret.setId(answeredQuestion.getId());
         ret.setNumber(answeredQuestion.getNumber());
         ret.setUserAnswer(answeredQuestion.getUserAnswer());

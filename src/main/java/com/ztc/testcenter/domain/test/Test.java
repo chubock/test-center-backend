@@ -19,14 +19,22 @@ import java.util.List;
 public class Test implements Serializable {
 
     private Long id;
-    private Date date = new Date();
+    private User user;
+    private TestTemplate template;
     private Difficulty difficulty;
     private TestIntelligentType intelligentType = TestIntelligentType.INTELLIGENT;
-    private User user;
+    private Type type = Type.GRE;
+    private Date startDate = new Date();
+    private Date endDate;
     private List<TestSection> testSections = new ArrayList<>();
-    private TestTemplate template;
-    private Type type;
 
+    protected Test() {
+    }
+
+    public Test(User user, TestTemplate template) {
+        this.user = user;
+        this.template = template;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,12 +49,22 @@ public class Test implements Serializable {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    public Date getDate() {
-        return date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStartDate(Date date) {
+        this.startDate = date;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     @NotNull

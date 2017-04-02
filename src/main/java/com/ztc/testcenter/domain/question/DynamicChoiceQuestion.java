@@ -1,7 +1,9 @@
 package com.ztc.testcenter.domain.question;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +14,18 @@ import java.util.List;
 @MappedSuperclass
 abstract class DynamicChoiceQuestion extends SixChoiceQuestion {
 
-    private Integer choicesCount;
+    private Integer choicesCount = 0;
     private List<String> otherChoices = new ArrayList<>();
+
+    @NotNull
+    @Column(nullable = false)
+    public Integer getChoicesCount() {
+        return choicesCount;
+    }
+
+    public void setChoicesCount(Integer choicesCount) {
+        this.choicesCount = choicesCount;
+    }
 
     @ElementCollection
     List<String> getOtherChoices() {
@@ -43,9 +55,6 @@ abstract class DynamicChoiceQuestion extends SixChoiceQuestion {
                     getChoices().add(new Choice(getChoice1()));
             }
         }
-        for (Character number: getAnswers().toCharArray()) {
-            getChoices().get(Integer.valueOf(number)).setAnswer(true);
-        }
     }
 
     void extractChoices() {
@@ -55,7 +64,6 @@ abstract class DynamicChoiceQuestion extends SixChoiceQuestion {
             getChoices().subList(6, getChoices().size()).forEach(choice -> getOtherChoices().add(choice.getText()));
             getOtherChoices().forEach(choice -> getChoices().add(new Choice(choice)));
         } else {
-            getChoices().clear();
             switch (getChoices().size()) {
                 case 5:
                     setChoice5(getChoices().get(4).getText());
@@ -68,6 +76,18 @@ abstract class DynamicChoiceQuestion extends SixChoiceQuestion {
                 case 1:
                     setChoice1(getChoices().get(0).getText());
             }
+            StringBuilder answersBuilder = new StringBuilder();
+            for (int i=0; i< getChoices().size(); i++) {
+                if (getChoices().get(i).isAnswer())
+                    answersBuilder.append(i);
+            }
+            this.setAnswers(answersBuilder.toString());
         }
+    }
+
+    @Override
+    public void prepare() {
+        super.prepare();
+        choicesCount = getChoices().size();
     }
 }

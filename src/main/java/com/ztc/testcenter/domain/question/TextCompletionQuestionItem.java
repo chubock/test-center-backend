@@ -32,45 +32,45 @@ public class TextCompletionQuestionItem {
     }
 
     @NotNull
-    public String getChoice1() {
+    String getChoice1() {
         return choice1;
     }
 
-    public void setChoice1(String choice1) {
+    void setChoice1(String choice1) {
         this.choice1 = choice1;
     }
 
     @NotNull
-    public String getChoice2() {
+    String getChoice2() {
         return choice2;
     }
 
-    public void setChoice2(String choice2) {
+    void setChoice2(String choice2) {
         this.choice2 = choice2;
     }
 
     @NotNull
-    public String getChoice3() {
+    String getChoice3() {
         return choice3;
     }
 
-    public void setChoice3(String choice3) {
+    void setChoice3(String choice3) {
         this.choice3 = choice3;
     }
 
-    public String getChoice4() {
+    String getChoice4() {
         return choice4;
     }
 
-    public void setChoice4(String choice4) {
+    void setChoice4(String choice4) {
         this.choice4 = choice4;
     }
 
-    public String getChoice5() {
+    String getChoice5() {
         return choice5;
     }
 
-    public void setChoice5(String choice5) {
+    void setChoice5(String choice5) {
         this.choice5 = choice5;
     }
 

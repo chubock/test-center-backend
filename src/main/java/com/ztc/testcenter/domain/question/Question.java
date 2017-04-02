@@ -36,6 +36,7 @@ public abstract class Question implements Serializable {
         this.id = id;
     }
 
+    @Column(length = 3000)
     public String getText() {
         return text;
     }
