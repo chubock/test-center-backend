@@ -45,7 +45,7 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    @OneToMany
+    @ManyToMany
     public List<Authority> getAuthorities() {
         return authorities;
     }

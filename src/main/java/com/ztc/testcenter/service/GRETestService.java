@@ -205,7 +205,7 @@ public class GRETestService implements TestService {
             case GRE_DATA_INTERPRETATION_SET_SINGLE_ANSWER:
                 return dataInterpretationSingleAnswerQuestionRepository.findOne(id);
             case GRE_DATA_INTERPRETATION_SET_MULTIPLE_ANSWER:
-                return dataInterpretationSingleAnswerQuestionRepository.findOne(id);
+                return dataInterpretationMultipleAnswerQuestionRepository.findOne(id);
             case GRE_DATA_INTERPRETATION_SET_NUMERIC:
                 return dataInterpretationNumericQuestionRepository.findOne(id);
             case GRE_NUMERIC:

@@ -1,10 +1,12 @@
 package com.ztc.testcenter.service;
 
 import com.ztc.testcenter.domain.File;
+import com.ztc.testcenter.domain.order.Product;
 import com.ztc.testcenter.domain.question.Question;
 import com.ztc.testcenter.domain.question.QuestionsContainer;
 import com.ztc.testcenter.domain.question.QuestionTemplate;
 import com.ztc.testcenter.repository.FileRepository;
+import com.ztc.testcenter.repository.order.ProductRepository;
 import com.ztc.testcenter.repository.question.QuestionRepository;
 import com.ztc.testcenter.repository.question.QuestionTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,14 @@ public class ManagerService {
     private final QuestionRepository questionRepository;
     private final QuestionTemplateRepository questionTemplateRepository;
     private final FileRepository fileRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public ManagerService(QuestionRepository questionRepository, QuestionTemplateRepository questionTemplateRepository, FileRepository fileRepository) {
+    public ManagerService(QuestionRepository questionRepository, QuestionTemplateRepository questionTemplateRepository, FileRepository fileRepository, ProductRepository productRepository) {
         this.questionRepository = questionRepository;
         this.questionTemplateRepository = questionTemplateRepository;
         this.fileRepository = fileRepository;
+        this.productRepository = productRepository;
     }
 
     public File save(File file) {
@@ -41,6 +45,10 @@ public class ManagerService {
             saveTemplate((QuestionsContainer) question);
         question.prepare();
         return questionRepository.save(question);
+    }
+
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 
     private void saveTemplate(QuestionsContainer questionsContainer) {
