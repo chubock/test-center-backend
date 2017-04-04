@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 public class TestCenterApplication implements CommandLineRunner {
 
+    private static final Boolean GENERATE_PRODUCTS = false;
     private static final Boolean GENERATE_ADMIN_ROLE = false;
     private static final Boolean GENERATE_USER_ROLE = false;
     private static final Boolean GENERATE_AUTHORITIES = false;
@@ -24,6 +25,7 @@ public class TestCenterApplication implements CommandLineRunner {
     private static final Boolean GENERATE_SECTION_TEMPLATES = false;
     private static final Boolean GENERATE_TEST_TEMPLATES = false;
 
+    private final ProductsGenerator productsGenerator;
     private final RolesGenerator rolesGenerator;
     private final AuthoritiesGenerator authoritiesGenerator;
     private final QuestionsGenerator questionsGenerator;
@@ -33,7 +35,8 @@ public class TestCenterApplication implements CommandLineRunner {
     private final TestTemplatesGenerator testTemplatesGenerator;
 
     @Autowired
-    public TestCenterApplication(RolesGenerator rolesGenerator, AuthoritiesGenerator authoritiesGenerator, QuestionsGenerator questionsGenerator, UsersGenerator usersGenerator, QuestionTemplatesGenerator questionTemplatesGenerator, SectionTemplatesGenerator sectionTemplatesGenerator, TestTemplatesGenerator testTemplatesGenerator) {
+    public TestCenterApplication(ProductsGenerator productsGenerator, RolesGenerator rolesGenerator, AuthoritiesGenerator authoritiesGenerator, QuestionsGenerator questionsGenerator, UsersGenerator usersGenerator, QuestionTemplatesGenerator questionTemplatesGenerator, SectionTemplatesGenerator sectionTemplatesGenerator, TestTemplatesGenerator testTemplatesGenerator) {
+        this.productsGenerator = productsGenerator;
         this.rolesGenerator = rolesGenerator;
         this.authoritiesGenerator = authoritiesGenerator;
         this.questionsGenerator = questionsGenerator;
@@ -49,6 +52,8 @@ public class TestCenterApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
+        if (GENERATE_PRODUCTS)
+            productsGenerator.createProducts();
         if (GENERATE_AUTHORITIES)
             authoritiesGenerator.createAuthorities(30);
         if (GENERATE_ADMIN_ROLE)

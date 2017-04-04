@@ -7,7 +7,7 @@ import com.ztc.testcenter.dto.AbstractDTO;
  * Created by Yubar on 3/4/2017.
  */
 
-public class AuthorityDTO extends AbstractDTO<Authority> {
+public class AuthorityDTO {
 
     private Long id;
     private String name;
@@ -37,11 +37,17 @@ public class AuthorityDTO extends AbstractDTO<Authority> {
         this.restricted = restricted;
     }
 
-    @Override
-    public Authority convert(Authority authority) {
-        authority.setId(getId());
-        authority.setName(getName());
-        authority.setRestricted(getRestricted());
-        return authority;
+    private void copy(Authority authority) {
+        setId(authority.getId());
+        setName(authority.getName());
+        setRestricted(authority.isRestricted());
+    }
+
+    public static AuthorityDTO valueOf(Authority authority) {
+        if (authority == null)
+            return null;
+        AuthorityDTO authorityDTO = new AuthorityDTO();
+        authorityDTO.copy(authority);
+        return authorityDTO;
     }
 }

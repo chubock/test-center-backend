@@ -29,7 +29,7 @@ public class Authority implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    private void setId(Long id) {
         this.id = id;
     }
 
@@ -40,6 +40,8 @@ public class Authority implements Serializable {
     }
 
     public void setName(String name) {
+        if (name == null || name.equals(""))
+            throw new IllegalArgumentException();
         this.name = name;
     }
 
@@ -48,6 +50,8 @@ public class Authority implements Serializable {
     }
 
     public void setRestricted(Boolean restricted) {
+        if (restricted == null)
+            throw new IllegalArgumentException();
         this.restricted = restricted;
     }
 }

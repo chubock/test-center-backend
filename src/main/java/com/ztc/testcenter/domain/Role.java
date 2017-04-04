@@ -22,7 +22,7 @@ public class Role implements Serializable {
     }
 
     public Role(String name) {
-        this.name = name;
+        setName(name);
     }
 
     @Id
@@ -31,7 +31,7 @@ public class Role implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    private void setId(Long id) {
         this.id = id;
     }
 
@@ -42,6 +42,8 @@ public class Role implements Serializable {
     }
 
     public void setName(String name) {
+        if (name == null || name.equals(""))
+            throw new IllegalArgumentException();
         this.name = name;
     }
 

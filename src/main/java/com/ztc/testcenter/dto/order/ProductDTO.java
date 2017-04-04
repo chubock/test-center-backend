@@ -11,10 +11,11 @@ public class ProductDTO {
 
     private Long id;
     private String name;
-    private Product.ProductType productType;
+    private Product.Type type;
     private String description;
     private Integer count;
     private BigDecimal price;
+    private Product.State state = Product.State.ACTIVE;
 
     public Long getId() {
         return id;
@@ -32,12 +33,12 @@ public class ProductDTO {
         this.name = name;
     }
 
-    public Product.ProductType getProductType() {
-        return productType;
+    public Product.Type getType() {
+        return type;
     }
 
-    public void setProductType(Product.ProductType productType) {
-        this.productType = productType;
+    public void setType(Product.Type type) {
+        this.type = type;
     }
 
     public String getDescription() {
@@ -64,13 +65,22 @@ public class ProductDTO {
         this.price = price;
     }
 
+    public Product.State getState() {
+        return state;
+    }
+
+    public void setState(Product.State state) {
+        this.state = state;
+    }
+
     private void copy(Product product) {
         setId(product.getId());
         setName(product.getName());
         setDescription(product.getDescription());
-        setProductType(product.getProductType());
+        setType(product.getType());
         setCount(product.getCount());
         setPrice(product.getPrice());
+        setState(product.getState());
     }
 
     public static ProductDTO valueOf(Product product) {

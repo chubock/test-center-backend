@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Yubar on 3/4/2017.
  */
 
-public class RoleDTO extends AbstractDTO<Role> {
+public class RoleDTO {
 
     private Long id;
     private String name;
@@ -38,13 +38,6 @@ public class RoleDTO extends AbstractDTO<Role> {
 
     public void setAuthorities(List<AuthorityDTO> authorities) {
         this.authorities = authorities;
-    }
-
-    @Override
-    public Role convert(Role role) {
-        role.setId(getId());
-        role.setName(getName());
-        return role;
     }
 
     public static RoleDTO valueOf(Role role) {

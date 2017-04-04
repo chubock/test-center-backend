@@ -1,11 +1,13 @@
 package com.ztc.testcenter.service;
 
 import com.ztc.testcenter.domain.File;
+import com.ztc.testcenter.domain.Role;
 import com.ztc.testcenter.domain.order.Product;
 import com.ztc.testcenter.domain.question.Question;
 import com.ztc.testcenter.domain.question.QuestionsContainer;
 import com.ztc.testcenter.domain.question.QuestionTemplate;
 import com.ztc.testcenter.repository.FileRepository;
+import com.ztc.testcenter.repository.RoleRepository;
 import com.ztc.testcenter.repository.order.ProductRepository;
 import com.ztc.testcenter.repository.question.QuestionRepository;
 import com.ztc.testcenter.repository.question.QuestionTemplateRepository;
@@ -27,13 +29,15 @@ public class ManagerService {
     private final QuestionTemplateRepository questionTemplateRepository;
     private final FileRepository fileRepository;
     private final ProductRepository productRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public ManagerService(QuestionRepository questionRepository, QuestionTemplateRepository questionTemplateRepository, FileRepository fileRepository, ProductRepository productRepository) {
+    public ManagerService(QuestionRepository questionRepository, QuestionTemplateRepository questionTemplateRepository, FileRepository fileRepository, ProductRepository productRepository, RoleRepository roleRepository) {
         this.questionRepository = questionRepository;
         this.questionTemplateRepository = questionTemplateRepository;
         this.fileRepository = fileRepository;
         this.productRepository = productRepository;
+        this.roleRepository = roleRepository;
     }
 
     public File save(File file) {
@@ -49,6 +53,10 @@ public class ManagerService {
 
     public Product save(Product product) {
         return productRepository.save(product);
+    }
+
+    public Role save(Role role) {
+        return roleRepository.save(role);
     }
 
     private void saveTemplate(QuestionsContainer questionsContainer) {

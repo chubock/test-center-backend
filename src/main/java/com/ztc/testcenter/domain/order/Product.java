@@ -15,21 +15,20 @@ public class Product implements Serializable {
 
     private Long id;
     private String name;
-    private ProductType productType;
+    private Type type;
     private String description;
     private Integer count;
     private BigDecimal price;
+    private State state = State.ACTIVE;
 
     protected Product() {
     }
 
-    public Product(String name, ProductType productType, Integer count, BigDecimal price) {
-        if (name == null || productType == null || count == null || price == null)
-            throw new IllegalArgumentException();
-        this.name = name;
-        this.productType = productType;
-        this.count = count;
-        this.price = price;
+    public Product(String name, Type type, Integer count, BigDecimal price) {
+        setName(name);
+        setType(type);
+        setCount(count);
+        setPrice(price);
     }
 
     @Id
@@ -42,12 +41,14 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public ProductType getProductType() {
-        return productType;
+    public Type getType() {
+        return type;
     }
 
-    private void setProductType(ProductType productType) {
-        this.productType = productType;
+    public void setType(Type type) {
+        if (type == null)
+            throw new IllegalArgumentException();
+        this.type = type;
     }
 
     @NotNull
@@ -56,7 +57,9 @@ public class Product implements Serializable {
         return name;
     }
 
-    private void setName(String name) {
+    public void setName(String name) {
+        if (name == null)
+            throw new IllegalArgumentException();
         this.name = name;
     }
 
@@ -75,7 +78,9 @@ public class Product implements Serializable {
         return price;
     }
 
-    private void setPrice(BigDecimal price) {
+    public void setPrice(BigDecimal price) {
+        if (price == null || price.compareTo(BigDecimal.ZERO) < 0)
+            throw new IllegalArgumentException();
         this.price = price;
     }
 
@@ -86,11 +91,31 @@ public class Product implements Serializable {
         return count;
     }
 
-    private void setCount(Integer count) {
+    public void setCount(Integer count) {
+        if (count == null || count < 1)
+            throw new IllegalArgumentException();
         this.count = count;
     }
 
-    public enum ProductType {
+    @NotNull
+    @Enumerated
+    @Column(nullable = false)
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        if (state == null)
+            throw new IllegalArgumentException();
+        this.state = state;
+    }
+
+    public enum Type {
         GRE_TEST
+    }
+    
+    public enum State {
+        ACTIVE,
+        DEACTIVE
     }
 }

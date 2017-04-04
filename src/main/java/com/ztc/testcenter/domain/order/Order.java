@@ -12,6 +12,7 @@ import java.util.List;
  */
 
 @Entity
+@Table(name = "ORDERS")
 public class Order implements Serializable {
 
     private Long id;
