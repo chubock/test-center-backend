@@ -45,6 +45,7 @@ public class ProductRestService {
             product.setDescription(productDTO.getDescription());
             product.setPrice(productDTO.getPrice());
             product.setCount(productDTO.getCount());
+            product.setDiscount(productDTO.getDiscount());
             product.setType(productDTO.getType());
             product.setState(productDTO.getState());
         } else {

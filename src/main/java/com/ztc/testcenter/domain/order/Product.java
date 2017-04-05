@@ -1,6 +1,7 @@
 package com.ztc.testcenter.domain.order;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class Product implements Serializable {
     private String description;
     private Integer count;
     private BigDecimal price;
+    private Integer discount = 0;
     private State state = State.ACTIVE;
 
     protected Product() {
@@ -95,6 +97,20 @@ public class Product implements Serializable {
         if (count == null || count < 1)
             throw new IllegalArgumentException();
         this.count = count;
+    }
+
+    @NotNull
+    @Min(0)
+    @Max(99)
+    @Column(nullable = false)
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        if (discount == null || discount < 0 || discount > 99)
+            throw new IllegalArgumentException();
+        this.discount = discount;
     }
 
     @NotNull

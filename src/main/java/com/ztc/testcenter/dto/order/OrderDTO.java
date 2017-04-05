@@ -1,6 +1,7 @@
 package com.ztc.testcenter.dto.order;
 
 import com.ztc.testcenter.domain.order.Order;
+import com.ztc.testcenter.dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ public class OrderDTO {
     private Long id;
     private Date orderDate = new Date();
     private List<OrderItemDTO> orderItems = new ArrayList<>();
+    private UserDTO user;
 
     public Long getId() {
         return id;
@@ -37,6 +39,14 @@ public class OrderDTO {
 
     public void setOrderItems(List<OrderItemDTO> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     private void copy(Order order) {

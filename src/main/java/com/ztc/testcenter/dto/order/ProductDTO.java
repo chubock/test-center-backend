@@ -15,6 +15,7 @@ public class ProductDTO {
     private String description;
     private Integer count;
     private BigDecimal price;
+    private Integer discount = 0;
     private Product.State state = Product.State.ACTIVE;
 
     public Long getId() {
@@ -63,6 +64,14 @@ public class ProductDTO {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
     }
 
     public Product.State getState() {
