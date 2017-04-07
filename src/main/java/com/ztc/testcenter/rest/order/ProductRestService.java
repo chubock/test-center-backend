@@ -54,9 +54,4 @@ public class ProductRestService {
         return ProductDTO.valueOf(managerService.save(product));
     }
 
-    @RequestMapping(value = "/actives", method = RequestMethod.GET)
-    public Page<ProductDTO> getActiveProducts(Pageable pageable) {
-        return repository.findByState(Product.State.ACTIVE, pageable).map(ProductDTO::valueOf);
-    }
-
 }

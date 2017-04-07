@@ -3,8 +3,10 @@ package com.ztc.testcenter.rest.order;
 import com.ztc.testcenter.domain.User;
 import com.ztc.testcenter.domain.order.Order;
 import com.ztc.testcenter.domain.order.OrderItem;
+import com.ztc.testcenter.domain.order.Product;
 import com.ztc.testcenter.dto.order.OrderDTO;
 import com.ztc.testcenter.dto.order.OrderItemDTO;
+import com.ztc.testcenter.dto.order.ProductDTO;
 import com.ztc.testcenter.repository.UserRepository;
 import com.ztc.testcenter.repository.order.OrderRepository;
 import com.ztc.testcenter.repository.order.ProductRepository;
@@ -14,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by yubar on 4/5/17.
@@ -60,5 +65,10 @@ public class OrderRestService {
         Order order = new Order(user);
         orderDTO.getOrderItems().forEach(orderItemDTO -> order.getOrderItems().add(new OrderItem(order, productRepository.findOne(orderItemDTO.getProduct().getId()), orderItemDTO.getCount())));
         return OrderDTO.valueOf(userService.createOrder(order));
+    }
+
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    public List<ProductDTO> getAvailableProducts() {
+        return productRepository.findByState(Product.State.ACTIVE).stream().map(ProductDTO::valueOf).collect(Collectors.toList());
     }
 }

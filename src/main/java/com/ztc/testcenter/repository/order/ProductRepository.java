@@ -5,11 +5,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * Created by yubar on 4/3/17.
  */
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Page<Product> findByState(Product.State state, Pageable pageable);
+    List<Product> findByState(Product.State state);
 
 }
