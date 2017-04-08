@@ -71,4 +71,9 @@ public class OrderRestService {
     public List<ProductDTO> getAvailableProducts() {
         return productRepository.findByState(Product.State.ACTIVE).stream().map(ProductDTO::valueOf).collect(Collectors.toList());
     }
+
+    @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
+    public ProductDTO getProduct(@PathVariable Long id) {
+        return ProductDTO.valueOf(productRepository.findOne(id));
+    }
 }
