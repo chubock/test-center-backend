@@ -22,14 +22,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final ActionCodeRepository actionCodeRepository;
     private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, ActionCodeRepository actionCodeRepository, OrderRepository orderRepository, OrderItemRepository orderItemRepository) {
+    public UserService(UserRepository userRepository, ActionCodeRepository actionCodeRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.actionCodeRepository = actionCodeRepository;
         this.orderRepository = orderRepository;
-        this.orderItemRepository = orderItemRepository;
     }
 
     public ActionCode register(User user) {
@@ -38,6 +36,13 @@ public class UserService {
         ActionCode actionCode = new ActionCode(user, ActionCode.Action.ACTIVATE_USER);
         actionCodeRepository.save(actionCode);
         return actionCode;
+    }
+
+    public void activateUser(String code) {
+        ActionCode actionCode = actionCodeRepository.findByCode(code);
+        if (actionCode == null || actionCode.getExpired())
+            throw new IllegalArgumentException();
+//        actionCode.
     }
 
     public Order createOrder(Order order) {

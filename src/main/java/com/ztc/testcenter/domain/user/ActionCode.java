@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by Yubar on 4/8/2017.
@@ -14,6 +15,7 @@ import java.util.Date;
 public class ActionCode implements Serializable {
 
     private Long id;
+    private String code;
     private User user;
     private Date date = new Date();
     private Action action;
@@ -25,6 +27,7 @@ public class ActionCode implements Serializable {
     public ActionCode(User user, Action action) {
         setUser(user);
         setAction(action);
+        setCode(UUID.randomUUID().toString());
     }
 
     @Id
@@ -35,6 +38,18 @@ public class ActionCode implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public String getCode() {
+        return code;
+    }
+
+    private void setCode(String code) {
+        if (code == null)
+            throw new NullPointerException();
+        this.code = code;
     }
 
     @NotNull
