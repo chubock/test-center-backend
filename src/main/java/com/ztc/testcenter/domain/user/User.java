@@ -1,4 +1,4 @@
-package com.ztc.testcenter.domain;
+package com.ztc.testcenter.domain.user;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -30,9 +30,9 @@ public class User implements Serializable {
     }
 
     public User(String username, String lastName, String firstName) {
-        this.username = username;
-        this.lastName = lastName;
-        this.firstName = firstName;
+        setUsername(username);
+        setLastName(lastName);
+        setFirstName(firstName);
     }
 
     @Id
@@ -52,6 +52,8 @@ public class User implements Serializable {
     }
 
     public void setUsername(String username) {
+        if (username == null)
+            throw new NullPointerException();
         this.username = username;
     }
 
@@ -70,6 +72,8 @@ public class User implements Serializable {
     }
 
     public void setLastName(String lastName) {
+        if (lastName == null)
+            throw new NullPointerException();
         this.lastName = lastName;
     }
 
@@ -80,6 +84,8 @@ public class User implements Serializable {
     }
 
     public void setFirstName(String firstName) {
+        if (firstName == null)
+            throw new NullPointerException();
         this.firstName = firstName;
     }
 

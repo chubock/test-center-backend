@@ -1,12 +1,12 @@
 package com.ztc.testcenter.rest.test;
 
-import com.ztc.testcenter.domain.User;
+import com.ztc.testcenter.domain.user.User;
 import com.ztc.testcenter.domain.test.Test;
 import com.ztc.testcenter.domain.test.TestSection;
 import com.ztc.testcenter.dto.question.QuestionDTO;
 import com.ztc.testcenter.dto.test.TestDTO;
 import com.ztc.testcenter.dto.test.TestSectionDTO;
-import com.ztc.testcenter.repository.UserRepository;
+import com.ztc.testcenter.repository.user.UserRepository;
 import com.ztc.testcenter.repository.test.AnsweredQuestionRepository;
 import com.ztc.testcenter.repository.test.TestRepository;
 import com.ztc.testcenter.repository.test.TestSectionRepository;

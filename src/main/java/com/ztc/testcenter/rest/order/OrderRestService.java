@@ -1,13 +1,13 @@
 package com.ztc.testcenter.rest.order;
 
-import com.ztc.testcenter.domain.User;
+import com.ztc.testcenter.domain.user.User;
 import com.ztc.testcenter.domain.order.Order;
 import com.ztc.testcenter.domain.order.OrderItem;
 import com.ztc.testcenter.domain.order.Product;
 import com.ztc.testcenter.dto.order.OrderDTO;
 import com.ztc.testcenter.dto.order.OrderItemDTO;
 import com.ztc.testcenter.dto.order.ProductDTO;
-import com.ztc.testcenter.repository.UserRepository;
+import com.ztc.testcenter.repository.user.UserRepository;
 import com.ztc.testcenter.repository.order.OrderRepository;
 import com.ztc.testcenter.repository.order.ProductRepository;
 import com.ztc.testcenter.service.UserService;

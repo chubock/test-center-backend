@@ -1,13 +1,13 @@
 package com.ztc.testcenter.service;
 
 import com.ztc.testcenter.domain.File;
-import com.ztc.testcenter.domain.Role;
+import com.ztc.testcenter.domain.user.Role;
 import com.ztc.testcenter.domain.order.Product;
 import com.ztc.testcenter.domain.question.Question;
 import com.ztc.testcenter.domain.question.QuestionsContainer;
 import com.ztc.testcenter.domain.question.QuestionTemplate;
 import com.ztc.testcenter.repository.FileRepository;
-import com.ztc.testcenter.repository.RoleRepository;
+import com.ztc.testcenter.repository.user.RoleRepository;
 import com.ztc.testcenter.repository.order.ProductRepository;
 import com.ztc.testcenter.repository.question.QuestionRepository;
 import com.ztc.testcenter.repository.question.QuestionTemplateRepository;

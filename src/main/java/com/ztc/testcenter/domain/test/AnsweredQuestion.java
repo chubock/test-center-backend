@@ -1,6 +1,6 @@
 package com.ztc.testcenter.domain.test;
 
-import com.ztc.testcenter.domain.User;
+import com.ztc.testcenter.domain.user.User;
 import com.ztc.testcenter.domain.question.*;
 
 import javax.persistence.*;

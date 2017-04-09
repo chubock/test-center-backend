@@ -1,7 +1,6 @@
 package com.ztc.testcenter.dto;
 
-import com.ztc.testcenter.domain.Authority;
-import com.ztc.testcenter.dto.AbstractDTO;
+import com.ztc.testcenter.domain.user.Authority;
 
 /**
  * Created by Yubar on 3/4/2017.

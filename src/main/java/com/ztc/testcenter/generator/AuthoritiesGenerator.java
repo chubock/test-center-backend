@@ -1,7 +1,7 @@
 package com.ztc.testcenter.generator;
 
-import com.ztc.testcenter.domain.Authority;
-import com.ztc.testcenter.repository.AuthorityRepository;
+import com.ztc.testcenter.domain.user.Authority;
+import com.ztc.testcenter.repository.user.AuthorityRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

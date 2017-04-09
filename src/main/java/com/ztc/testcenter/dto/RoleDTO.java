@@ -1,7 +1,6 @@
 package com.ztc.testcenter.dto;
 
-import com.ztc.testcenter.domain.Authority;
-import com.ztc.testcenter.domain.Role;
+import com.ztc.testcenter.domain.user.Role;
 
 import java.util.ArrayList;
 import java.util.List;

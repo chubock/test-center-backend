@@ -1,6 +1,6 @@
-package com.ztc.testcenter.repository;
+package com.ztc.testcenter.repository.user;
 
-import com.ztc.testcenter.domain.User;
+import com.ztc.testcenter.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -1,6 +1,6 @@
 package com.ztc.testcenter.service;
 
-import com.ztc.testcenter.domain.User;
+import com.ztc.testcenter.domain.user.User;
 import com.ztc.testcenter.domain.question.Difficulty;
 import com.ztc.testcenter.domain.test.Test;
 import com.ztc.testcenter.domain.test.TestSection;

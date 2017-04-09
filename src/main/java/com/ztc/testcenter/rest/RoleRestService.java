@@ -1,10 +1,10 @@
 package com.ztc.testcenter.rest;
 
-import com.ztc.testcenter.domain.Role;
+import com.ztc.testcenter.domain.user.Role;
 import com.ztc.testcenter.dto.AuthorityDTO;
 import com.ztc.testcenter.dto.RoleDTO;
-import com.ztc.testcenter.repository.AuthorityRepository;
-import com.ztc.testcenter.repository.RoleRepository;
+import com.ztc.testcenter.repository.user.AuthorityRepository;
+import com.ztc.testcenter.repository.user.RoleRepository;
 import com.ztc.testcenter.service.ManagerService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

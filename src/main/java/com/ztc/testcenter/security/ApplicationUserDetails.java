@@ -1,7 +1,7 @@
 package com.ztc.testcenter.security;
 
-import com.ztc.testcenter.domain.*;
-import com.ztc.testcenter.repository.AuthorityRepository;
+import com.ztc.testcenter.domain.user.User;
+import com.ztc.testcenter.repository.user.AuthorityRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

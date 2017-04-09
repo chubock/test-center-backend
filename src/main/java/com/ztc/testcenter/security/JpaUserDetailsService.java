@@ -1,8 +1,8 @@
 package com.ztc.testcenter.security;
 
-import com.ztc.testcenter.domain.User;
-import com.ztc.testcenter.repository.AuthorityRepository;
-import com.ztc.testcenter.repository.UserRepository;
+import com.ztc.testcenter.domain.user.User;
+import com.ztc.testcenter.repository.user.AuthorityRepository;
+import com.ztc.testcenter.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

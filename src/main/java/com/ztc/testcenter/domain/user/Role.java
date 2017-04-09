@@ -1,4 +1,4 @@
-package com.ztc.testcenter.domain;
+package com.ztc.testcenter.domain.user;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,7 +1,7 @@
-package com.ztc.testcenter.repository;
+package com.ztc.testcenter.repository.user;
 
-import com.ztc.testcenter.domain.Authority;
-import com.ztc.testcenter.domain.Role;
+import com.ztc.testcenter.domain.user.Authority;
+import com.ztc.testcenter.domain.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

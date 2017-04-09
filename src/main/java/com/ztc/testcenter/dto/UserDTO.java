@@ -1,6 +1,6 @@
 package com.ztc.testcenter.dto;
 
-import com.ztc.testcenter.domain.User;
+import com.ztc.testcenter.domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;

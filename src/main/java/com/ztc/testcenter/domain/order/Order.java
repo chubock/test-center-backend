@@ -1,6 +1,6 @@
 package com.ztc.testcenter.domain.order;
 
-import com.ztc.testcenter.domain.User;
+import com.ztc.testcenter.domain.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

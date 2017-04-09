@@ -1,7 +1,7 @@
 package com.ztc.testcenter.generator;
 
-import com.ztc.testcenter.domain.User;
-import com.ztc.testcenter.repository.UserRepository;
+import com.ztc.testcenter.domain.user.User;
+import com.ztc.testcenter.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
