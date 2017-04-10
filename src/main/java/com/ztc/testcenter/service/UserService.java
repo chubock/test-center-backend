@@ -40,9 +40,10 @@ public class UserService {
 
     public void activateUser(String code) {
         ActionCode actionCode = actionCodeRepository.findByCode(code);
-        if (actionCode == null || actionCode.getExpired())
+        if (actionCode == null || actionCode.getExpired() || actionCode.getAction() != ActionCode.Action.ACTIVATE_USER)
             throw new IllegalArgumentException();
-//        actionCode.
+        actionCode.getUser().setEnabled(true);
+        userRepository.save(actionCode.getUser());
     }
 
     public Order createOrder(Order order) {

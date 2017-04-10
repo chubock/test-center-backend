@@ -1,7 +1,6 @@
 package com.ztc.testcenter.controller;
 
-import com.ztc.testcenter.domain.user.ActionCode;
-import com.ztc.testcenter.repository.user.ActionCodeRepository;
+import com.ztc.testcenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,21 +16,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/activateUser")
 public class ActivationController {
 
-    private final ActionCodeRepository actionCodeRepository;
+    private final UserService userService;
 
     @Autowired
-    public ActivationController(ActionCodeRepository actionCodeRepository) {
-        this.actionCodeRepository = actionCodeRepository;
+    public ActivationController(UserService userService) {
+        this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public String activateUser(@RequestParam String code) {
-        ActionCode actionCode = actionCodeRepository.findByCode(code);
-        if (actionCode == null || actionCode.getExpired()) {
-            throw new IllegalArgumentException();
-        }
-
-        return "";
+        userService.activateUser(code);
+        return "Account activated";
     }
 }
