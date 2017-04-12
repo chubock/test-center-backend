@@ -43,6 +43,7 @@ public class UserService {
         if (actionCode == null || actionCode.getExpired() || actionCode.getAction() != ActionCode.Action.ACTIVATE_USER)
             throw new IllegalArgumentException();
         actionCode.getUser().setEnabled(true);
+        actionCode.expire();
         userRepository.save(actionCode.getUser());
     }
 

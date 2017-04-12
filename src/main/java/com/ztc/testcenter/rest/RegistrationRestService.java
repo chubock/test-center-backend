@@ -37,7 +37,8 @@ public class RegistrationRestService {
 
     @RequestMapping(value = "/isUsernameUnique", method = RequestMethod.GET)
     public boolean isUsernameUnique(@RequestParam String username) {
-        return userRepository.findByUsername(username) == null;
+        User user = userRepository.findByUsername(username);
+        return user == null;
     }
 
     @RequestMapping(method = RequestMethod.POST)

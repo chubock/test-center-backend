@@ -31,7 +31,7 @@ public class EmailService {
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
             messageHelper.setTo(to);
             messageHelper.setSubject(subject);
-            messageHelper.setText(text);
+            messageHelper.setText(text, true);
             mailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();

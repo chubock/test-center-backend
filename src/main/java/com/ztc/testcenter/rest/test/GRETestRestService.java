@@ -10,8 +10,10 @@ import com.ztc.testcenter.repository.user.UserRepository;
 import com.ztc.testcenter.repository.test.AnsweredQuestionRepository;
 import com.ztc.testcenter.repository.test.TestRepository;
 import com.ztc.testcenter.repository.test.TestSectionRepository;
+import com.ztc.testcenter.security.ApplicationUserDetails;
 import com.ztc.testcenter.service.GRETestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,11 +45,13 @@ public class GRETestRestService implements TestRestService {
     }
 
     private User getUser(Authentication authentication) {
-        return userRepository.getOne(10l); //TODO: should be replaced by: return ((ApplicationUserDetails) authentication.getPrincipal()).getUser();
+//        return userRepository.getOne(10l); //TODO: should be replaced by: return ((ApplicationUserDetails) authentication.getPrincipal()).getUser();
+        return ((ApplicationUserDetails) authentication.getPrincipal()).getUser();
     }
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
     public List<TestDTO> getTests(Authentication authentication) {
         User currentUser = getUser(authentication);
         return testRepository.findByUser(currentUser).stream().map(TestDTO::valueOf).collect(Collectors.toList());
