@@ -29,4 +29,14 @@ public class AuthoritiesGenerator {
             createAuthority(i + 1);
     }
 
+    public void createAuthorities() {
+        authorityRepository.save(new Authority("questions.list"));
+        authorityRepository.save(new Authority("questions.save"));
+        authorityRepository.save(new Authority("questions.delete"));
+
+        authorityRepository.save(new Authority("products.list"));
+        authorityRepository.save(new Authority("products.get"));
+        authorityRepository.save(new Authority("products.save"));
+    }
+
 }

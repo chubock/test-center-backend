@@ -19,6 +19,9 @@ public interface TestRepository extends JpaRepository<Test, Long> {
 
     List<Test> findByUser(User user);
 
+    @Query("select t.id from Test t where t.user = :user and t.endDate is null")
+    Long findCurrentTestId(@Param("user") User user);
+
     @Query("select t from Test t join fetch t.testSections join fetch t.template where t.id = :id")
     Test findOneWithSectionsAndTemplate(@Param("id") Long id);
 

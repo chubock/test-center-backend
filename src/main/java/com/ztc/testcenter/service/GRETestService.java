@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by yubar on 2/28/17.
@@ -105,6 +102,11 @@ public class GRETestService implements TestService {
         return testSection;
     }
 
+    public TestSection createTestSection(Long id, Map<Long, String> answers) {
+        answerQuestions(answers);
+        return createTestSection(id);
+    }
+
     public void answerQuestion(Long answeredQuestionId, String answer) {
         AnsweredQuestion answeredQuestion = answeredQuestionRepository.findOne(answeredQuestionId);
         //check if test section is not finished.
@@ -117,7 +119,8 @@ public class GRETestService implements TestService {
         answeredQuestion.setUserAnswer(answer);
     }
 
-    public Date finishTest(Long testId) {
+    public Date finishTest(Long testId, Map<Long, String> answers) {
+        answerQuestions(answers);
         Test test = testRepository.findOne(testId);
         TestSection lastSection = test.getTestSections().get(test.getTestSections().size() - 1);
         int allowedSectionTime = lastSection.getSectionType().time + lastSection.getSectionType().breakTime;
@@ -129,6 +132,10 @@ public class GRETestService implements TestService {
         testRepository.save(test);
         testSectionRepository.save(lastSection);
         return test.getEndDate();
+    }
+
+    private void answerQuestions(Map<Long, String> answers) {
+        answers.keySet().forEach(questionId -> answerQuestion(questionId, answers.get(questionId)));
     }
 
     private TestTemplate findTestTemplate() {

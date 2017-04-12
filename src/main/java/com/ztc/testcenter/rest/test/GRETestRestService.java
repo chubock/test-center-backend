@@ -6,8 +6,6 @@ import com.ztc.testcenter.domain.test.TestSection;
 import com.ztc.testcenter.dto.question.QuestionDTO;
 import com.ztc.testcenter.dto.test.TestDTO;
 import com.ztc.testcenter.dto.test.TestSectionDTO;
-import com.ztc.testcenter.repository.user.UserRepository;
-import com.ztc.testcenter.repository.test.AnsweredQuestionRepository;
 import com.ztc.testcenter.repository.test.TestRepository;
 import com.ztc.testcenter.repository.test.TestSectionRepository;
 import com.ztc.testcenter.security.ApplicationUserDetails;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -32,20 +31,15 @@ public class GRETestRestService implements TestRestService {
     private final GRETestService testService;
     private final TestRepository testRepository;
     private final TestSectionRepository testSectionRepository;
-    private final UserRepository userRepository;
-    private final AnsweredQuestionRepository answeredQuestionRepository;
 
     @Autowired
-    public GRETestRestService(GRETestService testService, TestRepository testRepository, TestSectionRepository testSectionRepository, UserRepository userRepository, AnsweredQuestionRepository answeredQuestionRepository) {
+    public GRETestRestService(GRETestService testService, TestRepository testRepository, TestSectionRepository testSectionRepository) {
         this.testService = testService;
         this.testRepository = testRepository;
         this.testSectionRepository = testSectionRepository;
-        this.userRepository = userRepository;
-        this.answeredQuestionRepository = answeredQuestionRepository;
     }
 
     private User getUser(Authentication authentication) {
-//        return userRepository.getOne(10l); //TODO: should be replaced by: return ((ApplicationUserDetails) authentication.getPrincipal()).getUser();
         return ((ApplicationUserDetails) authentication.getPrincipal()).getUser();
     }
 
@@ -59,7 +53,8 @@ public class GRETestRestService implements TestRestService {
 
     @Override
     @RequestMapping(value= "{id}", method = RequestMethod.GET)
-    public TestDTO getTest(@PathVariable Long id) {
+    @PreAuthorize("isAuthenticated()")
+    public TestDTO getTest(@PathVariable Long id, Authentication authentication) {
         Test test = testRepository.findOneWithSectionsAndTemplate(id);
         TestDTO ret = TestDTO.valueOf(test);
         test.getTemplate().getItems().forEach(testTemplateItem -> ret.getSectionTypes().add(testTemplateItem.getSectionType()));
@@ -67,8 +62,19 @@ public class GRETestRestService implements TestRestService {
         return ret;
     }
 
+    @RequestMapping(value = "current", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
+    public TestDTO getCurrentTest(Authentication authentication) {
+        Long testId = testRepository.findCurrentTestId(getUser(authentication));
+        if (testId == null)
+            return null;
+        TestDTO testDTO = getTest(testId, authentication);
+        return testDTO;
+    }
+
     @Override
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated()")
     public TestDTO createTest(@RequestBody TestDTO testDTO, Authentication authentication) {
         User currentUser = getUser(authentication);
         Test test = testService.createTest(currentUser, testDTO.getDifficulty(), testDTO.getIntelligentType());
@@ -82,8 +88,10 @@ public class GRETestRestService implements TestRestService {
         return ret;
     }
 
+    @Override
     @RequestMapping(value = "/testSections/{id}", method = RequestMethod.GET)
-    public TestSectionDTO getTestSection(@PathVariable Long id) {
+    @PreAuthorize("isAuthenticated()")
+    public TestSectionDTO getTestSection(@PathVariable Long id, Authentication authentication) {
         TestSection testSection = testSectionRepository.findOneWithQuestions(id);
         TestSectionDTO ret = TestSectionDTO.valueOf(testSection);
         testSection.getAnsweredQuestions().forEach(answeredQuestion -> {
@@ -95,8 +103,9 @@ public class GRETestRestService implements TestRestService {
 
     @Override
     @RequestMapping(value = "{id}/testSections", method = RequestMethod.POST)
-    public TestSectionDTO createNextSection(@PathVariable Long id) {
-        TestSection testSection = testService.createTestSection(id);
+    @PreAuthorize("isAuthenticated()")
+    public TestSectionDTO createNextSection(@PathVariable Long id, @RequestBody Map<Long, String> answers, Authentication authentication) {
+        TestSection testSection = testService.createTestSection(id, answers);
         TestSectionDTO testSectionDTO = TestSectionDTO.valueOf(testSection);
         testSection.getAnsweredQuestions().forEach(answeredQuestion -> testSectionDTO.getAnsweredQuestions().add(QuestionDTO.valueOf(answeredQuestion)));
         return testSectionDTO;
@@ -104,13 +113,15 @@ public class GRETestRestService implements TestRestService {
 
     @Override
     @RequestMapping(value = "question/{id}/answer", method = RequestMethod.PUT)
-    public void answerQuestion(@PathVariable("id") Long answeredQuestionId, @RequestBody(required = false) String answer) {
+    @PreAuthorize("isAuthenticated()")
+    public void answerQuestion(@PathVariable("id") Long answeredQuestionId, @RequestBody(required = false) String answer, Authentication authentication) {
         testService.answerQuestion(answeredQuestionId, answer);
     }
 
     @Override
     @RequestMapping(value = "/{id}/finish", method = RequestMethod.POST)
-    public Date finishTest(@PathVariable Long id, Authentication authentication) {
-        return testService.finishTest(id);
+    @PreAuthorize("isAuthenticated()")
+    public Date finishTest(@PathVariable Long id, @RequestBody Map<Long, String> answers, Authentication authentication) {
+        return testService.finishTest(id, answers);
     }
 }
