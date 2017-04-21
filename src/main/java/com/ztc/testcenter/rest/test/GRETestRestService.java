@@ -69,6 +69,7 @@ public class GRETestRestService implements TestRestService {
         if (testId == null)
             return null;
         TestDTO testDTO = getTest(testId, authentication);
+        testDTO.getTestSections().forEach(testSectionDTO -> testSectionDTO.getAnsweredQuestions().addAll(getTestSection(testSectionDTO.getId(), authentication).getAnsweredQuestions()));
         return testDTO;
     }
 

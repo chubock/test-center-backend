@@ -110,12 +110,12 @@ public class GRETestService implements TestService {
     public void answerQuestion(Long answeredQuestionId, String answer) {
         AnsweredQuestion answeredQuestion = answeredQuestionRepository.findOne(answeredQuestionId);
         //check if test section is not finished.
-        if (answeredQuestion.getTestSection().getEndDate() != null)
-            throw new IllegalStateException();
+//        if (answeredQuestion.getTestSection().getEndDate() != null)
+//            throw new IllegalStateException();
         int time = answeredQuestion.getTestSection().getSectionType().breakTime + answeredQuestion.getTestSection().getSectionType().time + 1;
         //check if its not too late
-        if (answeredQuestion.getTestSection().getStartDate().toInstant().isBefore(Instant.now().minusSeconds(time * 60)))
-            throw new IllegalStateException();
+//        if (answeredQuestion.getTestSection().getStartDate().toInstant().isBefore(Instant.now().minusSeconds(time * 60)))
+//            throw new IllegalStateException();
         answeredQuestion.setUserAnswer(answer);
     }
 

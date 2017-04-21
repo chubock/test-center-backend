@@ -12,9 +12,18 @@ import java.util.List;
  */
 public class QuantitativeComparisonQuestionDTO extends QuestionDTO<QuantitativeComparisonQuestion> {
 
+    private String quantityA;
     private String quantityB;
     private Integer answer;
     private Integer selected;
+
+    public String getQuantityA() {
+        return quantityA;
+    }
+
+    public void setQuantityA(String quantityA) {
+        this.quantityA = quantityA;
+    }
 
     public String getQuantityB() {
         return quantityB;
@@ -43,6 +52,7 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO<QuantitativeC
     @Override
     public QuantitativeComparisonQuestion convert(QuantitativeComparisonQuestion question) {
         super.convert(question);
+        question.setQuantityA(getQuantityA());
         question.setQuantityB(getQuantityB());
         question.setAnswer(getAnswer());
         return question;
@@ -50,6 +60,7 @@ public class QuantitativeComparisonQuestionDTO extends QuestionDTO<QuantitativeC
 
     void copy(QuantitativeComparisonQuestion question) {
         super.copy(question);
+        setQuantityA(question.getQuantityA());
         setQuantityB(question.getQuantityB());
         setAnswer(question.getAnswer());
     }

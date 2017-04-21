@@ -12,6 +12,8 @@ public abstract class AbstractNumericQuestionDTO<T extends AbstractNumericQuesti
     private Double nominatorAnswer;
     private Boolean fraction = false;
     private Double denominatorAnswer;
+    private String prefix;
+    private String postfix;
 
     private Double nominator;
     private Double denominator;
@@ -40,6 +42,22 @@ public abstract class AbstractNumericQuestionDTO<T extends AbstractNumericQuesti
         this.denominatorAnswer = denominatorAnswer;
     }
 
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getPostfix() {
+        return postfix;
+    }
+
+    public void setPostfix(String postfix) {
+        this.postfix = postfix;
+    }
+
     public Double getNominator() {
         return nominator;
     }
@@ -61,6 +79,8 @@ public abstract class AbstractNumericQuestionDTO<T extends AbstractNumericQuesti
         question.setNominatorAnswer(getNominatorAnswer());
         question.setFraction(isFraction());
         question.setDenominatorAnswer(getDenominatorAnswer());
+        question.setPrefix(getPrefix());
+        question.setPostfix(getPostfix());
         return question;
     }
 
@@ -69,6 +89,8 @@ public abstract class AbstractNumericQuestionDTO<T extends AbstractNumericQuesti
         setNominatorAnswer(question.getNominatorAnswer());
         setFraction(question.isFraction());
         setDenominatorAnswer(question.getDenominatorAnswer());
+        setPrefix(question.getPrefix());
+        setPostfix(question.getPostfix());
     }
 
     @Override
