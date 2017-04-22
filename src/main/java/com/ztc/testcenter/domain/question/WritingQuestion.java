@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 public class WritingQuestion extends Question {
 
     private Type type;
+    private String description;
 
     @Enumerated
     @NotNull
@@ -23,6 +24,15 @@ public class WritingQuestion extends Question {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    @Column(length = 3000)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

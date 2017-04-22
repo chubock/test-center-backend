@@ -12,6 +12,8 @@ public abstract class AbstractNumericQuestion extends Question {
     private Double nominatorAnswer;
     private Boolean fraction = false;
     private Double denominatorAnswer;
+    private String prefix;
+    private String postfix;
 
     @Transient
     public Double getNominatorAnswer() {
@@ -38,6 +40,22 @@ public abstract class AbstractNumericQuestion extends Question {
 
     public void setDenominatorAnswer(Double denominatorAnswer) {
         this.denominatorAnswer = denominatorAnswer;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getPostfix() {
+        return postfix;
+    }
+
+    public void setPostfix(String postfix) {
+        this.postfix = postfix;
     }
 
     @Override

@@ -12,7 +12,16 @@ import java.util.List;
 @DiscriminatorValue("Q_COMPARISON")
 public class QuantitativeComparisonQuestion extends Question {
 
+    private String quantityA;
     private String quantityB;
+
+    public String getQuantityA() {
+        return quantityA;
+    }
+
+    public void setQuantityA(String quantityA) {
+        this.quantityA = quantityA;
+    }
 
     public String getQuantityB() {
         return quantityB;
