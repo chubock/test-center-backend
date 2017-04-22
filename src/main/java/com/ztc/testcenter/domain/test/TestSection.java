@@ -23,14 +23,19 @@ public class TestSection implements Serializable {
     private SectionTemplate template;
     private SectionType sectionType;
     private List<AnsweredQuestion> answeredQuestions = new ArrayList<>();
+    private Date lastActivityDate;
+    private Integer lastQuestionNumber = 1;
+    private Long remainingSeconds;
 
     protected TestSection() {
     }
 
     public TestSection(Test test, SectionTemplate template) {
+        this.lastActivityDate = this.startDate;
         this.test = test;
         this.template = template;
         this.sectionType = template.getSectionType();
+        this.remainingSeconds = (long) (sectionType.time * 60);
     }
 
     @Id
@@ -107,5 +112,42 @@ public class TestSection implements Serializable {
 
     public void setAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
         this.answeredQuestions = answeredQuestions;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    @Column(nullable = false)
+    public Date getLastActivityDate() {
+        return lastActivityDate;
+    }
+
+    public void setLastActivityDate(Date lastActivityDate) {
+        if (lastActivityDate == null)
+            throw new NullPointerException();
+        this.lastActivityDate = lastActivityDate;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public Integer getLastQuestionNumber() {
+        return lastQuestionNumber;
+    }
+
+    public void setLastQuestionNumber(Integer lastQuestionNumber) {
+        if (lastQuestionNumber == null)
+            throw new NullPointerException();
+        this.lastQuestionNumber = lastQuestionNumber;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public Long getRemainingSeconds() {
+        return remainingSeconds;
+    }
+
+    public void setRemainingSeconds(Long remainingSeconds) {
+        if (remainingSeconds == null)
+            throw new NullPointerException();
+        this.remainingSeconds = remainingSeconds;
     }
 }

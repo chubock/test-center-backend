@@ -10,10 +10,12 @@ import com.ztc.testcenter.dto.order.ProductDTO;
 import com.ztc.testcenter.repository.user.UserRepository;
 import com.ztc.testcenter.repository.order.OrderRepository;
 import com.ztc.testcenter.repository.order.ProductRepository;
+import com.ztc.testcenter.security.ApplicationUserDetails;
 import com.ztc.testcenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,16 +44,18 @@ public class OrderRestService {
     }
 
     private User getUser(Authentication authentication) {
-        return userRepository.getOne(10l); //TODO: should be replaced by: return ((ApplicationUserDetails) authentication.getPrincipal()).getUser();
+        return ((ApplicationUserDetails) authentication.getPrincipal()).getUser();
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
     private Page<OrderDTO> getOrders(Authentication authentication, Pageable pageable) {
         User user = getUser(authentication);
         return orderRepository.findByUser(user, pageable).map(OrderDTO::valueOf);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
     public OrderDTO getOrder(@PathVariable Long id) {
         Order order = orderRepository.findWithOrderItems(id);
         OrderDTO ret = OrderDTO.valueOf(order);
@@ -60,6 +64,7 @@ public class OrderRestService {
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated()")
     public OrderDTO createOrder(@RequestBody OrderDTO orderDTO, Authentication authentication) {
         User user = getUser(authentication);
         Order order = new Order(user);

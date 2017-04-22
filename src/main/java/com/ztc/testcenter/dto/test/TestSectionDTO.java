@@ -1,11 +1,11 @@
 package com.ztc.testcenter.dto.test;
 
-import com.ztc.testcenter.domain.test.Test;
 import com.ztc.testcenter.domain.test.TestSection;
 import com.ztc.testcenter.dto.AbstractDTO;
 import com.ztc.testcenter.dto.question.QuestionDTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +18,9 @@ public class TestSectionDTO extends AbstractDTO<TestSection> {
     private Integer number;
     private TestDTO test;
     private List<QuestionDTO> answeredQuestions = new ArrayList<>();
+    private Date lastActivityDate;
+    private Integer lastQuestionNumber = 1;
+    private Long remainingSeconds;
 
     public Long getId() {
         return id;
@@ -51,6 +54,30 @@ public class TestSectionDTO extends AbstractDTO<TestSection> {
         this.answeredQuestions = answeredQuestions;
     }
 
+    public Date getLastActivityDate() {
+        return lastActivityDate;
+    }
+
+    public void setLastActivityDate(Date lastActivityDate) {
+        this.lastActivityDate = lastActivityDate;
+    }
+
+    public Long getRemainingSeconds() {
+        return remainingSeconds;
+    }
+
+    public void setRemainingSeconds(Long remainingSeconds) {
+        this.remainingSeconds = remainingSeconds;
+    }
+
+    public Integer getLastQuestionNumber() {
+        return lastQuestionNumber;
+    }
+
+    public void setLastQuestionNumber(Integer lastQuestionNumber) {
+        this.lastQuestionNumber = lastQuestionNumber;
+    }
+
     @Override
     public TestSection convert(TestSection testSection) {
         testSection.setId(getId());
@@ -66,6 +93,9 @@ public class TestSectionDTO extends AbstractDTO<TestSection> {
         TestSectionDTO testSectionDTO = new TestSectionDTO();
         testSectionDTO.setId(testSection.getId());
         testSectionDTO.setNumber(testSection.getNumber());
+        testSectionDTO.setLastQuestionNumber(testSection.getLastQuestionNumber());
+        testSectionDTO.setRemainingSeconds(testSection.getRemainingSeconds());
+        testSectionDTO.setLastActivityDate(testSection.getLastActivityDate());
         return testSectionDTO;
     }
 }
