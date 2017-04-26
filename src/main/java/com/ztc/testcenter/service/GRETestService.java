@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import org.slf4j.Logger;
@@ -99,11 +100,11 @@ public class GRETestService implements TestService {
         TestSection testSection = new TestSection(test, sectionTemplate);
         if (! test.getTestSections().isEmpty()) {
             TestSection lastSection = test.getTestSections().get(test.getTestSections().size() - 1);
-            int allowedSectionTime = lastSection.getSectionType().time + lastSection.getSectionType().breakTime;
-            if (lastSection.getStartDate().toInstant().isAfter(Instant.now().minusSeconds(allowedSectionTime * 60)))
-                lastSection.setEndDate(new Date());
-            else
-                lastSection.setEndDate(Date.from(lastSection.getStartDate().toInstant().plusSeconds(allowedSectionTime)));
+//            int allowedSectionTime = lastSection.getSectionType().time + lastSection.getSectionType().breakTime;
+//            if (lastSection.getStartDate().toInstant().isAfter(Instant.now().minusSeconds(allowedSectionTime * 60)))
+            lastSection.setEndDate(new Date());
+//            else
+//                lastSection.setEndDate(Date.from(lastSection.getStartDate().toInstant().plusSeconds(allowedSectionTime)));
             testSectionRepository.save(lastSection);
             testSection.setStartDate(lastSection.getEndDate());
         } else {
@@ -121,34 +122,52 @@ public class GRETestService implements TestService {
     }
 
     public void answerQuestion(Long answeredQuestionId, String answer) {
+        answerQuestion(answeredQuestionId, answer, true);
+    }
+
+    private void answerQuestion(Long answeredQuestionId, String answer, boolean updateLastActivity) {
         AnsweredQuestion answeredQuestion = answeredQuestionRepository.findOne(answeredQuestionId);
         //check if test section is not finished.
         if (answeredQuestion.getTestSection().getEndDate() != null)
             throw new IllegalStateException();
         int time = answeredQuestion.getTestSection().getSectionType().breakTime + answeredQuestion.getTestSection().getSectionType().time + 1;
         //check if its not too late
+        if (answeredQuestion.getTestSection().getEndDate() != null)
+            throw new IllegalStateException();
+//        int time = answeredQuestion.getTestSection().getSectionType().breakTime + answeredQuestion.getTestSection().getSectionType().time + 1;
+////        check if its not too late
 //        if (answeredQuestion.getTestSection().getStartDate().toInstant().isBefore(Instant.now().minusSeconds(time * 60)))
 //            throw new IllegalStateException();
         answeredQuestion.setUserAnswer(answer);
+        if (updateLastActivity) {
+            long questionElapsedTime = Duration.between(answeredQuestion.getTestSection().getLastActivityDate().toInstant(), Instant.now()).getSeconds();
+            answeredQuestion.getTestSection().setRemainingSeconds(answeredQuestion.getTestSection().getRemainingSeconds() - questionElapsedTime);
+            answeredQuestion.getTestSection().setLastQuestionNumber(answeredQuestion.getNumber());
+            answeredQuestion.getTestSection().setLastActivityDate(new Date());
+        }
     }
 
     public Date finishTest(Long testId, Map<Long, String> answers) {
         answerQuestions(answers);
         Test test = testRepository.findOne(testId);
         TestSection lastSection = test.getTestSections().get(test.getTestSections().size() - 1);
-        int allowedSectionTime = lastSection.getSectionType().time + lastSection.getSectionType().breakTime;
-        if (lastSection.getStartDate().toInstant().isAfter(Instant.now().minusSeconds(allowedSectionTime * 60)))
-            lastSection.setEndDate(new Date());
-        else
-            lastSection.setEndDate(Date.from(lastSection.getStartDate().toInstant().plusSeconds(allowedSectionTime)));
+//        int allowedSectionTime = lastSection.getSectionType().time + lastSection.getSectionType().breakTime;
+//        if (lastSection.getStartDate().toInstant().isAfter(Instant.now().minusSeconds(allowedSectionTime * 60)))
+        lastSection.setEndDate(new Date());
+//        else
+//            lastSection.setEndDate(Date.from(lastSection.getStartDate().toInstant().plusSeconds(allowedSectionTime)));
         test.setEndDate(lastSection.getEndDate());
         testRepository.save(test);
         testSectionRepository.save(lastSection);
         return test.getEndDate();
     }
 
+    public void startSection(Long testSectionId) {
+        testSectionRepository.findOne(testSectionId).setLastActivityDate(new Date());
+    }
+
     private void answerQuestions(Map<Long, String> answers) {
-        answers.keySet().forEach(questionId -> answerQuestion(questionId, answers.get(questionId)));
+        answers.keySet().forEach(questionId -> answerQuestion(questionId, answers.get(questionId), false));
     }
 
     private TestTemplate findTestTemplate() {
