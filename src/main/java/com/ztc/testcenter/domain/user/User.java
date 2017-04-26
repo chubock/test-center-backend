@@ -25,6 +25,8 @@ public class User implements Serializable {
     private Boolean credentialExpired = false;
     private Boolean locked = false;
     private List<Role> roles = new ArrayList<>();
+    private Integer freeGreTestCount = 1;
+    private Integer greTestCount = 0;
 
     protected User() {
     }
@@ -140,6 +142,54 @@ public class User implements Serializable {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public Integer getFreeGreTestCount() {
+        return freeGreTestCount;
+    }
+
+    public void setFreeGreTestCount(Integer freeGRETestCount) {
+        if (freeGRETestCount == null)
+            throw new NullPointerException();
+        if (freeGRETestCount < 0)
+            throw new IllegalArgumentException();
+        this.freeGreTestCount = freeGRETestCount;
+    }
+
+    public void decrementFreeGRETestCount() {
+        if (freeGreTestCount < 1)
+            throw new IllegalStateException();
+        freeGreTestCount--;
+    }
+
+    public void increaseFreeGRETestCount(int increase) {
+        freeGreTestCount +=increase;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public Integer getGreTestCount() {
+        return greTestCount;
+    }
+
+    public void setGreTestCount(Integer greTestCount) {
+        if (greTestCount == null)
+            throw new NullPointerException();
+        if (greTestCount < 0)
+            throw new IllegalArgumentException();
+        this.greTestCount = greTestCount;
+    }
+
+    public void decrementGreTestCount() {
+        if (greTestCount < 1)
+            throw new IllegalStateException();
+        greTestCount--;
+    }
+
+    public void increaseGreTestCount(int increase) {
+        greTestCount+=increase;
     }
 
     @Override

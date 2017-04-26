@@ -27,13 +27,20 @@ public class Test implements Serializable {
     private Date startDate = new Date();
     private Date endDate;
     private List<TestSection> testSections = new ArrayList<>();
+    private Boolean free = false;
 
     protected Test() {
     }
 
     public Test(User user, TestTemplate template) {
-        this.user = user;
-        this.template = template;
+        setUser(user);
+        setTemplate(template);
+    }
+
+    public Test(User user, TestTemplate template, Boolean free) {
+        setUser(user);
+        setTemplate(template);
+        setFree(free);
     }
 
     @Id
@@ -128,6 +135,18 @@ public class Test implements Serializable {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public Boolean getFree() {
+        return free;
+    }
+
+    void setFree(Boolean free) {
+        if (free == null)
+            throw new NullPointerException();
+        this.free = free;
     }
 
     public enum TestIntelligentType {

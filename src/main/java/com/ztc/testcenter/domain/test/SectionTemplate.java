@@ -19,6 +19,7 @@ public class SectionTemplate implements Serializable {
     private Long id;
     private SectionType sectionType;
     private Difficulty difficulty;
+    private Boolean free = false;
     private List<SectionTemplateItem> items = new ArrayList<>();
 
     protected SectionTemplate() {
@@ -59,6 +60,18 @@ public class SectionTemplate implements Serializable {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public Boolean getFree() {
+        return free;
+    }
+
+    public void setFree(Boolean free) {
+        if (free == null)
+            throw new NullPointerException();
+        this.free = free;
     }
 
     @OrderBy("number")

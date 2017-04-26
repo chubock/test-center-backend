@@ -17,6 +17,7 @@ public abstract class QuestionDTO<T extends Question> extends AbstractDTO<T> {
     private Difficulty difficulty = Difficulty.MEDIUM;
     private DifficultyLevel difficultyLevel = DifficultyLevel.LEVEL3;
     private QuestionType questionType;
+    private Boolean free = false;
 
     public Long getId() {
         return id;
@@ -74,11 +75,20 @@ public abstract class QuestionDTO<T extends Question> extends AbstractDTO<T> {
         this.questionType = questionType;
     }
 
+    public Boolean getFree() {
+        return free;
+    }
+
+    public void setFree(Boolean free) {
+        this.free = free;
+    }
+
     public T convert(T question) {
         question.setId(getId());
         question.setText(getText());
         question.setDifficulty(getDifficulty());
         question.setDifficultyLevel(getDifficultyLevel());
+        question.setFree(getFree());
         return question;
     }
 
@@ -88,6 +98,7 @@ public abstract class QuestionDTO<T extends Question> extends AbstractDTO<T> {
         setDifficulty(question.getDifficulty());
         setDifficultyLevel(question.getDifficultyLevel());
         setQuestionType(question.getQuestionType());
+        setFree(question.getFree());
         if (question.getImage() != null)
             setImage(question.getImage().getId());
     }

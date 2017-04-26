@@ -16,11 +16,11 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query("select count(q) from Question q where q.difficulty = :difficulty and q.difficultyLevel = :difficultyLevel and q.questionType = :questionType")
     Long countOfQuestions(@Param("questionType") QuestionType questionType, @Param("difficulty") Difficulty difficulty, @Param("difficultyLevel") DifficultyLevel difficultyLevel);
 
-    @Cacheable(cacheNames = "user_questions_count")
+    @Cacheable(cacheNames = "questions_count_by_template")
     @Query("select count(q) from Question q where q.difficulty = :difficulty and q.template = :template")
     Long countOfQuestions(@Param("template") QuestionTemplate template, @Param("difficulty") Difficulty difficulty);
 
-    @Cacheable(cacheNames = "questions_count_by_template")
+    @Cacheable(cacheNames = "user_questions_count")
     @Query("select count(q) from AnsweredQuestion q where q.user = :user and q.difficulty = :difficulty and q.difficultyLevel = :difficultyLevel and q.questionType = :questionType")
     Long countOfQuestions(@Param("user") User user, @Param("questionType") QuestionType questionType, @Param("difficulty") Difficulty difficulty, @Param("difficultyLevel") DifficultyLevel difficultyLevel);
 

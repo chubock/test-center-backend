@@ -26,11 +26,18 @@ public interface TestRepository extends JpaRepository<Test, Long> {
     Test findOneWithSectionsAndTemplate(@Param("id") Long id);
 
     @Cacheable(cacheNames = "candidate_questions")
-    @Query("select q.id from Question q where q.difficulty = :difficulty and q.difficultyLevel = :difficultyLevel and q.questionType = :questionType and q.id not in (select aq.question.id from AnsweredQuestion aq where aq.user = :user and aq.difficulty = :difficulty and aq.difficultyLevel = :difficultyLevel and aq.questionType = :questionType)")
-    List<Long> findQuestionIdForTest(@Param("user") User user, @Param("difficulty") Difficulty difficulty, @Param("difficultyLevel") DifficultyLevel difficultyLevel, @Param("questionType") QuestionType questionType, Pageable pageable);
+    @Query("select q.id from Question q where q.difficulty = :difficulty and q.difficultyLevel = :difficultyLevel and q.questionType = :questionType and q.free = :free and q.id not in (select aq.question.id from AnsweredQuestion aq where aq.user = :user and aq.difficulty = :difficulty and aq.difficultyLevel = :difficultyLevel and aq.questionType = :questionType and aq.free = :free)")
+    List<Long> findQuestionIdForTest(@Param("user") User user, @Param("difficulty") Difficulty difficulty, @Param("difficultyLevel") DifficultyLevel difficultyLevel, @Param("questionType") QuestionType questionType, @Param("free") Boolean free, Pageable pageable);
 
     @Cacheable(cacheNames = "candidate_questions_by_template")
-    @Query("select q.id from Question q where q.difficulty = :difficulty and q.template = :questionTemplate and q.id not in (select distinct aq.questionParent.id from AnsweredQuestion aq where aq.user = :user and aq.difficulty = :difficulty and aq.questionTemplate = :questionTemplate)")
-    List<Long> findQuestionIdForTest(@Param("user") User user, @Param("difficulty") Difficulty difficulty, @Param("questionTemplate") QuestionTemplate questionTemplate, Pageable pageable);
+    @Query("select q.id from Question q where q.difficulty = :difficulty and q.template = :questionTemplate and q.free = :free and q.id not in (select distinct aq.questionParent.id from AnsweredQuestion aq where aq.user = :user and aq.difficulty = :difficulty and aq.questionTemplate = :questionTemplate and aq.free = :free)")
+    List<Long> findQuestionIdForTest(@Param("user") User user, @Param("difficulty") Difficulty difficulty, @Param("questionTemplate") QuestionTemplate questionTemplate, @Param("free") Boolean free, Pageable pageable);
+
+    @Query("select q.id from Question q where q.difficulty = :difficulty and q.difficultyLevel = :difficultyLevel and q.questionType = :questionType and q.free = :free")
+    List<Long> findQuestionIdForTest(@Param("difficulty") Difficulty difficulty, @Param("difficultyLevel") DifficultyLevel difficultyLevel, @Param("questionType") QuestionType questionType, @Param("free") Boolean free, Pageable pageable);
+
+    @Query("select q.id from Question q where q.difficulty = :difficulty and q.template = :questionTemplate and q.free = :free")
+    List<Long> findQuestionIdForTest(@Param("difficulty") Difficulty difficulty, @Param("questionTemplate") QuestionTemplate questionTemplate, @Param("free") Boolean free, Pageable pageable);
+
 
 }

@@ -19,5 +19,5 @@ public interface SectionTemplateRepository extends JpaRepository<SectionTemplate
 
     @Cacheable
     @EntityGraph(attributePaths = "items")
-    List<SectionTemplate> findBySectionTypeAndDifficulty(SectionType sectionType, Difficulty difficulty);
+    List<SectionTemplate> findBySectionTypeAndDifficultyAndFree(SectionType sectionType, Difficulty difficulty, Boolean free);
 }

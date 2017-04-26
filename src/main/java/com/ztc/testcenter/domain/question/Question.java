@@ -25,6 +25,7 @@ public abstract class Question implements Serializable {
     private DifficultyLevel difficultyLevel = DifficultyLevel.LEVEL3;
     private String answers;
     private QuestionTemplate template;
+    private Boolean free = false;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,6 +96,18 @@ public abstract class Question implements Serializable {
     public abstract QuestionType getQuestionType();
 
     private void setQuestionType(QuestionType questionType) {}
+
+    @NotNull
+    @Column(nullable = false)
+    public Boolean getFree() {
+        return free;
+    }
+
+    public void setFree(Boolean free) {
+        if (free == null)
+            throw new NullPointerException();
+        this.free = free;
+    }
 
     public void prepare() {
 

@@ -29,6 +29,7 @@ public class AnsweredQuestion implements Serializable {
     private QuestionType questionType;
     private QuestionTemplate questionTemplate;
     private String userAnswer;
+    private Boolean free;
 
     protected AnsweredQuestion() {
     }
@@ -39,6 +40,7 @@ public class AnsweredQuestion implements Serializable {
         this.difficulty = question.getDifficulty();
         this.difficultyLevel = question.getDifficultyLevel();
         this.questionType = question.getQuestionType();
+        this.free = question.getFree();
         if (question instanceof InnerQuestion){
             this.questionParent = ((InnerQuestion)question).getParent();
             this.questionTemplate = this.questionParent.getTemplate();
@@ -142,6 +144,18 @@ public class AnsweredQuestion implements Serializable {
 
     void setQuestionTemplate(QuestionTemplate questionTemplate) {
         this.questionTemplate = questionTemplate;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public Boolean getFree() {
+        return free;
+    }
+
+    void setFree(Boolean free) {
+        if (free == null)
+            throw new NullPointerException();
+        this.free = free;
     }
 
     @Column(length = 3000)

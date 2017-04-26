@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.*;
+import org.slf4j.Logger;
 
 /**
  * Created by yubar on 2/28/17.
@@ -20,6 +21,7 @@ import java.util.*;
 @Service
 @Transactional
 public class GRETestService implements TestService {
+
 
     private final QuestionRepository questionRepository;
     private final TestRepository testRepository;
@@ -70,8 +72,19 @@ public class GRETestService implements TestService {
         this.writingQuestionRepository = writingQuestionRepository;
     }
 
-    public Test createTest(User user, Difficulty difficulty, Test.TestIntelligentType intelligentType) {
-        Test test = new Test(user, findTestTemplate());
+    public Test createTest(User user, Difficulty difficulty, Test.TestIntelligentType intelligentType, Boolean free) {
+        if (free) {
+            if (user.getFreeGreTestCount() == 0)
+                throw new IllegalStateException();
+            else
+                user.decrementFreeGRETestCount();
+        } else {
+            if (user.getGreTestCount() == 0)
+                throw new IllegalStateException();
+            else
+                user.decrementGreTestCount();
+        }
+        Test test = new Test(user, findTestTemplate(), free);
         test.setDifficulty(difficulty);
         test.setIntelligentType(intelligentType);
         testRepository.save(test);
@@ -110,8 +123,8 @@ public class GRETestService implements TestService {
     public void answerQuestion(Long answeredQuestionId, String answer) {
         AnsweredQuestion answeredQuestion = answeredQuestionRepository.findOne(answeredQuestionId);
         //check if test section is not finished.
-//        if (answeredQuestion.getTestSection().getEndDate() != null)
-//            throw new IllegalStateException();
+        if (answeredQuestion.getTestSection().getEndDate() != null)
+            throw new IllegalStateException();
         int time = answeredQuestion.getTestSection().getSectionType().breakTime + answeredQuestion.getTestSection().getSectionType().time + 1;
         //check if its not too late
 //        if (answeredQuestion.getTestSection().getStartDate().toInstant().isBefore(Instant.now().minusSeconds(time * 60)))
@@ -147,7 +160,7 @@ public class GRETestService implements TestService {
         if (test.getTestSections().size() == test.getTemplate().getItems().size())
             throw new IllegalArgumentException("All Test Sections for this test has been created");
         TestTemplateItem testTemplateItem = test.getTemplate().getItems().get(test.getTestSections().size());
-        List<SectionTemplate> sectionTemplates = sectionTemplateRepository.findBySectionTypeAndDifficulty(testTemplateItem.getSectionType(), findSectionDifficulty(test));
+        List<SectionTemplate> sectionTemplates = sectionTemplateRepository.findBySectionTypeAndDifficultyAndFree(testTemplateItem.getSectionType(), findSectionDifficulty(test), test.getFree());
         return sectionTemplates.get(random.nextInt(sectionTemplates.size()));
     }
 
@@ -172,12 +185,18 @@ public class GRETestService implements TestService {
                 Long countOfQuestions = questionRepository.countOfQuestions(item.getQuestionType(), testSection.getTemplate().getDifficulty(), item.getDifficulty());
                 Long countOfUserQuestions = questionRepository.countOfQuestions(testSection.getTest().getUser(), item.getQuestionType(), testSection.getTemplate().getDifficulty(), item.getDifficulty());
                 PageRequest pageRequest = new PageRequest(random.nextInt((int) ((countOfQuestions - countOfUserQuestions)/10)), 10);
-                candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getUser(), testSection.getTemplate().getDifficulty(), item.getDifficulty(), item.getQuestionType(), pageRequest);
+                candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getUser(), testSection.getTemplate().getDifficulty(), item.getDifficulty(), item.getQuestionType(), testSection.getTest().getFree(), pageRequest);
+                //Check if we can't find unique question, then we have to find some duplicate questions;
+                if (candidateQuestionsIds == null || candidateQuestionsIds.isEmpty())
+                    candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTemplate().getDifficulty(), item.getDifficulty(), item.getQuestionType(), testSection.getTest().getFree(), new PageRequest(random.nextInt((int) (countOfQuestions/10)), 10));
             } else {
                 Long countOfQuestions = questionRepository.countOfQuestions(item.getQuestionTemplate(), testSection.getTemplate().getDifficulty());
                 Long countOfUserQuestions = questionRepository.countOfQuestions(testSection.getTest().getUser(), item.getQuestionTemplate(), testSection.getTemplate().getDifficulty());
                 PageRequest pageRequest = new PageRequest(random.nextInt((int) ((countOfQuestions - countOfUserQuestions)/10)), 10);
-                candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getUser(), testSection.getTest().getDifficulty(), item.getQuestionTemplate(), pageRequest);
+                candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getUser(), testSection.getTest().getDifficulty(), item.getQuestionTemplate(), testSection.getTest().getFree(), pageRequest);
+                //Check if we can't find unique question, then we have to find some duplicate questions;
+                if (candidateQuestionsIds == null || candidateQuestionsIds.isEmpty())
+                    candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getDifficulty(), item.getQuestionTemplate(), testSection.getTest().getFree(), new PageRequest(random.nextInt((int) (countOfQuestions/10)), 10));
             }
             if (candidateQuestionsIds == null || candidateQuestionsIds.isEmpty())
                 throw new IllegalStateException("Can't find any question for this test");
