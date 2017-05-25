@@ -75,11 +75,24 @@ public class GRETestRestService implements TestRestService {
     }
 
     @Override
+    @RequestMapping(value = "/free", method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated()")
+    public TestDTO createFreeTest(@RequestBody TestDTO testDTO, Authentication authentication) {
+        User currentUser = getUser(authentication);
+        Test test = testService.createFreeTest(currentUser, testDTO.getDifficulty(), testDTO.getIntelligentType());
+        return prepareTestResponse(test);
+    }
+
+    @Override
     @RequestMapping(method = RequestMethod.POST)
     @PreAuthorize("isAuthenticated()")
     public TestDTO createTest(@RequestBody TestDTO testDTO, Authentication authentication) {
         User currentUser = getUser(authentication);
         Test test = testService.createTest(currentUser, testDTO.getDifficulty(), testDTO.getIntelligentType());
+        return prepareTestResponse(test);
+    }
+
+    private TestDTO prepareTestResponse(Test test) {
         TestDTO ret = TestDTO.valueOf(test);
         test.getTemplate().getItems().forEach(testTemplateItem -> ret.getSectionTypes().add(testTemplateItem.getSectionType()));
         test.getTestSections().forEach(testSection -> {
@@ -114,10 +127,28 @@ public class GRETestRestService implements TestRestService {
     }
 
     @Override
+    @RequestMapping(value = "question/{id}/see", method = RequestMethod.PUT)
+    public void seeQuestion(@PathVariable Long id, Authentication authentication) {
+        testService.seeQuestion(id);
+    }
+
+    @Override
     @RequestMapping(value = "question/{id}/answer", method = RequestMethod.PUT)
     @PreAuthorize("isAuthenticated()")
     public void answerQuestion(@PathVariable("id") Long answeredQuestionId, @RequestBody(required = false) String answer, Authentication authentication) {
         testService.answerQuestion(answeredQuestionId, answer);
+    }
+
+    @Override
+    @RequestMapping(value = "question/{id}/mark", method = RequestMethod.PUT)
+    public void markQuestion(@PathVariable Long id, Authentication authentication) {
+        testService.markQuestion(id);
+    }
+
+    @Override
+    @RequestMapping(value = "question/{id}/unMark", method = RequestMethod.PUT)
+    public void unMarkQuestion(@PathVariable Long id, Authentication authentication) {
+        testService.unMarkQuestion(id);
     }
 
     @Override

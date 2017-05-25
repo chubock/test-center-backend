@@ -150,7 +150,7 @@ public class User implements Serializable {
         return freeGreTestCount;
     }
 
-    public void setFreeGreTestCount(Integer freeGRETestCount) {
+    private void setFreeGreTestCount(Integer freeGRETestCount) {
         if (freeGRETestCount == null)
             throw new NullPointerException();
         if (freeGRETestCount < 0)
@@ -174,7 +174,7 @@ public class User implements Serializable {
         return greTestCount;
     }
 
-    public void setGreTestCount(Integer greTestCount) {
+    private void setGreTestCount(Integer greTestCount) {
         if (greTestCount == null)
             throw new NullPointerException();
         if (greTestCount < 0)

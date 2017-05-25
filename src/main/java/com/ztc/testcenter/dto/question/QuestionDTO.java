@@ -1,5 +1,6 @@
 package com.ztc.testcenter.dto.question;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.ztc.testcenter.domain.File;
 import com.ztc.testcenter.domain.question.*;
 import com.ztc.testcenter.domain.test.AnsweredQuestion;
@@ -18,6 +19,8 @@ public abstract class QuestionDTO<T extends Question> extends AbstractDTO<T> {
     private DifficultyLevel difficultyLevel = DifficultyLevel.LEVEL3;
     private QuestionType questionType;
     private Boolean free = false;
+    private Boolean seen;
+    private Boolean marked;
 
     public Long getId() {
         return id;
@@ -81,6 +84,22 @@ public abstract class QuestionDTO<T extends Question> extends AbstractDTO<T> {
 
     public void setFree(Boolean free) {
         this.free = free;
+    }
+
+    public Boolean getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Boolean seen) {
+        this.seen = seen;
+    }
+
+    public Boolean getMarked() {
+        return marked;
+    }
+
+    public void setMarked(Boolean marked) {
+        this.marked = marked;
     }
 
     public T convert(T question) {
@@ -220,6 +239,9 @@ public abstract class QuestionDTO<T extends Question> extends AbstractDTO<T> {
         ret.setId(answeredQuestion.getId());
         ret.setNumber(answeredQuestion.getNumber());
         ret.setUserAnswer(answeredQuestion.getUserAnswer());
+        ret.setFree(answeredQuestion.getFree());
+        ret.setSeen(answeredQuestion.getSeen());
+        ret.setMarked(answeredQuestion.getMarked());
         return ret;
     }
 }

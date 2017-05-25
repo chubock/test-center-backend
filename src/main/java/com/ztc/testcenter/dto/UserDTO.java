@@ -21,6 +21,8 @@ public class UserDTO extends AbstractDTO<User> {
     private Boolean credentialExpired = false;
     private Boolean locked = false;
     private List<RoleDTO> roles = new ArrayList<>();
+    private Integer freeGreTestCount = 1;
+    private Integer greTestCount = 0;
 
     public Long getId() {
         return id;
@@ -108,6 +110,22 @@ public class UserDTO extends AbstractDTO<User> {
 
     public void setRoles(List<RoleDTO> roles) {
         this.roles = roles;
+    }
+
+    public Integer getFreeGreTestCount() {
+        return freeGreTestCount;
+    }
+
+    public void setFreeGreTestCount(Integer freeGreTestCount) {
+        this.freeGreTestCount = freeGreTestCount;
+    }
+
+    public Integer getGreTestCount() {
+        return greTestCount;
+    }
+
+    public void setGreTestCount(Integer greTestCount) {
+        this.greTestCount = greTestCount;
     }
 
     @Override

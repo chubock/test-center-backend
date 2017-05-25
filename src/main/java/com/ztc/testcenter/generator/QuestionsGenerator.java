@@ -506,58 +506,66 @@ public class QuestionsGenerator {
     }
 
     @Transactional
-    public void createNumericQuestion(Integer number) {
+    public void createNumericQuestion(Integer number, Boolean free) {
         NumericQuestion question = getNumericQuestionSamples().get(random.nextInt(getNumericQuestionSamples().size()));
         prepareQuestion(question, number);
+        question.setFree(free);
         managerService.save(question);
     }
 
     @Transactional
-    public void createQuantitativeComparisonQuestion(Integer number) {
+    public void createQuantitativeComparisonQuestion(Integer number, Boolean free) {
         QuantitativeComparisonQuestion question = getQuantitativeComparisonQuestionSamples().get(random.nextInt(getQuantitativeComparisonQuestionSamples().size()));
         prepareQuestion(question, number);
+        question.setFree(free);
         managerService.save(question);
     }
 
     @Transactional
-    public void createQuantitativeMultipleAnswerQuestion(Integer number) {
+    public void createQuantitativeMultipleAnswerQuestion(Integer number, Boolean free) {
         QuantitativeMultipleAnswerQuestion question = getQuantitativeMultipleAnswerQuestionSamples().get(random.nextInt(getQuantitativeMultipleAnswerQuestionSamples().size()));
         prepareQuestion(question, number);
+        question.setFree(free);
         managerService.save(question);
     }
 
     @Transactional
-    public void createQuantitativeSingleAnswerQuestion(Integer number) {
+    public void createQuantitativeSingleAnswerQuestion(Integer number, Boolean free) {
         QuantitativeSingleAnswerQuestion question = getQuantitativeSingleAnswerQuestionSamples().get(random.nextInt(getQuantitativeSingleAnswerQuestionSamples().size()));
         prepareQuestion(question, number);
+        question.setFree(free);
         managerService.save(question);
     }
 
     @Transactional
-    public void createSentenceEquivalenceQuestion(Integer number) {
+    public void createSentenceEquivalenceQuestion(Integer number, Boolean free) {
         SentenceEquivalenceQuestion question = getSentenceEquivalenceQuestionSamples().get(random.nextInt(getSentenceEquivalenceQuestionSamples().size()));
         prepareQuestion(question, number);
+        question.setFree(free);
         managerService.save(question);
     }
 
     @Transactional
-    public void createTextCompletionQuestion(Integer number) {
+    public void createTextCompletionQuestion(Integer number, Boolean free) {
         TextCompletionQuestion question = getTextCompletionQuestionSamples().get(random.nextInt(getTextCompletionQuestionSamples().size()));
         prepareQuestion(question, number);
+        question.setFree(free);
         managerService.save(question);
     }
 
     @Transactional
-    public void createWritingQuestion(Integer number) {
+    public void createWritingQuestion(Integer number, Boolean free) {
         WritingQuestion question = getWritingQuestionSamples().get(random.nextInt(getWritingQuestionSamples().size()));
         prepareQuestion(question, number);
+        question.setFree(free);
         managerService.save(question);
     }
 
     @Transactional
-    public void createDataInterpretationSetQuestion(int number) {
+    public void createDataInterpretationSetQuestion(int number, Boolean free) {
         QuestionTemplate template = dataInterpretationTemplates.get(random.nextInt(dataInterpretationTemplates.size()));
         DataInterpretationSetQuestion question = new DataInterpretationSetQuestion();
+        question.setFree(free);
         DataInterpretationSetQuestion sampleQuestion = getDataInterpretationSetQuestionSamples().get(random.nextInt(getDataInterpretationSetQuestionSamples().size()));
         question.setTemplate(template);
         question.setText(sampleQuestion.getText() + " " + number);
@@ -573,18 +581,21 @@ public class QuestionsGenerator {
                     case GRE_DATA_INTERPRETATION_SET_NUMERIC:
                         innerQuestion = new DataInterpretationNumericQuestion(question, n++);
                         innerQuestion.setText(sampleInnerQuestion.getText() + " " + number);
+                        innerQuestion.setFree(free);
                         ((DataInterpretationNumericQuestion)innerQuestion).setNominatorAnswer(((DataInterpretationNumericQuestion)sampleInnerQuestion).getNominatorAnswer());
                         ((DataInterpretationNumericQuestion)innerQuestion).setDenominatorAnswer(((DataInterpretationNumericQuestion)sampleInnerQuestion).getDenominatorAnswer());
                         question.getNumericQuestions().add((DataInterpretationNumericQuestion) innerQuestion);
                         break;
                     case GRE_DATA_INTERPRETATION_SET_MULTIPLE_ANSWER:
                         innerQuestion = new DataInterpretationMultipleAnswerQuestion(question, n++);
+                        innerQuestion.setFree(free);
                         innerQuestion.setText(sampleInnerQuestion.getText() + " " + number);
                         ((DataInterpretationMultipleAnswerQuestion)innerQuestion).setChoices(new ArrayList<>(((DataInterpretationMultipleAnswerQuestion)sampleInnerQuestion).getChoices()));
                         question.getMultipleAnswerQuestions().add((DataInterpretationMultipleAnswerQuestion) innerQuestion);
                         break;
                     case GRE_DATA_INTERPRETATION_SET_SINGLE_ANSWER:
                         innerQuestion = new DataInterpretationSingleAnswerQuestion(question, n++);
+                        innerQuestion.setFree(free);
                         innerQuestion.setText(sampleInnerQuestion.getText() + " " + number);
                         ((DataInterpretationSingleAnswerQuestion)innerQuestion).setChoices(new ArrayList<>(((DataInterpretationSingleAnswerQuestion)sampleInnerQuestion).getChoices()));
                         question.getSingleAnswerQuestions().add((DataInterpretationSingleAnswerQuestion) innerQuestion);
@@ -602,9 +613,10 @@ public class QuestionsGenerator {
     }
 
     @Transactional
-    private void createReadingComprehensionQuestion(int number) {
+    private void createReadingComprehensionQuestion(int number, Boolean free) {
         QuestionTemplate template = readingComprehensionTemplates.get(random.nextInt(readingComprehensionTemplates.size()));
         ReadingComprehensionQuestion question = new ReadingComprehensionQuestion();
+        question.setFree(free);
         ReadingComprehensionQuestion sampleQuestion = getReadingComprehensionQuestionSamples().get(random.nextInt(getReadingComprehensionQuestionSamples().size()));
         switch (template.getQuestionType()) {
             case GRE_READING_COMPREHENSION_LONG:
@@ -632,18 +644,21 @@ public class QuestionsGenerator {
                 switch (sampleInnerQuestion.getQuestionType()) {
                     case GRE_READING_COMPREHENSION_SELECT_IN_PASSAGE:
                         innerQuestion = new SelectInPassageQuestion(question, n++);
+                        innerQuestion.setFree(free);
                         innerQuestion.setText(sampleInnerQuestion.getText());
                         ((SelectInPassageQuestion)innerQuestion).setAnswer(((SelectInPassageQuestion)sampleInnerQuestion).getAnswer());
                         question.getSelectInPassageQuestions().add((SelectInPassageQuestion) innerQuestion);
                         break;
                     case GRE_READING_COMPREHENSION_MULTIPLE_ANSWER:
                         innerQuestion = new ReadingComprehensionMultipleAnswerQuestion(question, n++);
+                        innerQuestion.setFree(free);
                         innerQuestion.setText(sampleInnerQuestion.getText() + " " + number);
                         ((ReadingComprehensionMultipleAnswerQuestion)innerQuestion).setChoices(new ArrayList<>(((ReadingComprehensionMultipleAnswerQuestion)sampleInnerQuestion).getChoices()));
                         question.getMultipleAnswerQuestions().add((ReadingComprehensionMultipleAnswerQuestion) innerQuestion);
                         break;
                     case GRE_READING_COMPREHENSION_SINGLE_ANSWER:
                         innerQuestion = new ReadingComprehensionSingleAnswerQuestion(question, n++);
+                        innerQuestion.setFree(free);
                         innerQuestion.setText(sampleInnerQuestion.getText() + " " + number);
                         ((ReadingComprehensionSingleAnswerQuestion)innerQuestion).setChoices(new ArrayList<>(((ReadingComprehensionSingleAnswerQuestion)sampleInnerQuestion).getChoices()));
                         question.getSingleAnswerQuestions().add((ReadingComprehensionSingleAnswerQuestion) innerQuestion);
@@ -660,17 +675,28 @@ public class QuestionsGenerator {
         managerService.save(question);
     }
 
-    public void generateAll(Integer count) {
-        for (int i=0; i< count; i++) {
-            createDataInterpretationSetQuestion(i + 1);
-            createNumericQuestion(i + 1);
-            createQuantitativeComparisonQuestion(i + 1);
-            createQuantitativeMultipleAnswerQuestion(i + 1);
-            createQuantitativeSingleAnswerQuestion(i + 1);
-            createReadingComprehensionQuestion(i + 1);
-            createSentenceEquivalenceQuestion(i + 1);
-            createTextCompletionQuestion(i + 1);
-            createWritingQuestion(i + 1);
+    public void generateAll(Integer notFreeCount, Integer freeCount) {
+        for (int i=0; i< notFreeCount; i++) {
+            createDataInterpretationSetQuestion(i + 1, false);
+            createNumericQuestion(i + 1, false);
+            createQuantitativeComparisonQuestion(i + 1, false);
+            createQuantitativeMultipleAnswerQuestion(i + 1, false);
+            createQuantitativeSingleAnswerQuestion(i + 1, false);
+            createReadingComprehensionQuestion(i + 1, false);
+            createSentenceEquivalenceQuestion(i + 1, false);
+            createTextCompletionQuestion(i + 1, false);
+            createWritingQuestion(i + 1, false);
+        }
+        for (int i=0; i< freeCount; i++) {
+            createDataInterpretationSetQuestion(i + 1, true);
+            createNumericQuestion(i + 1, true);
+            createQuantitativeComparisonQuestion(i + 1, true);
+            createQuantitativeMultipleAnswerQuestion(i + 1, true);
+            createQuantitativeSingleAnswerQuestion(i + 1, true);
+            createReadingComprehensionQuestion(i + 1, true);
+            createSentenceEquivalenceQuestion(i + 1, true);
+            createTextCompletionQuestion(i + 1, true);
+            createWritingQuestion(i + 1, true);
         }
     }
 

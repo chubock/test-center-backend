@@ -160,8 +160,9 @@ public class SectionTemplatesGenerator {
         sectionTemplate.getItems().add(new SectionTemplateItem(20, QuestionType.GRE_QUANTITATIVE_MULTIPLE_ANSWER, DifficultyLevel.LEVEL3));
     }
 
-    private void createSectionTemplate(SectionType sectionType, Difficulty difficulty){
+    private void createSectionTemplate(SectionType sectionType, Difficulty difficulty, Boolean free){
         SectionTemplate sectionTemplate = new SectionTemplate(sectionType, difficulty);
+        sectionTemplate.setFree(free);
         switch (sectionType) {
             case GRE_VERBAL_REASONING_1:
             case GRE_VERBAL_REASONING_2:
@@ -203,7 +204,40 @@ public class SectionTemplatesGenerator {
         repository.save(sectionTemplate);
     }
 
-    public void createAll() {
+    private void createSectionTemplate(SectionType sectionType, Difficulty difficulty) {
+        createSectionTemplate(sectionType, difficulty, false);
+    }
+
+    public void createFreeSectionTemplates() {
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_1, Difficulty.EASY, true);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_1, Difficulty.MEDIUM, true);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_1, Difficulty.HARD, true);
+
+        createSectionTemplate(SectionType.GRE_VERBAL_UNSCORE, Difficulty.EASY, true);
+        createSectionTemplate(SectionType.GRE_VERBAL_UNSCORE, Difficulty.MEDIUM, true);
+        createSectionTemplate(SectionType.GRE_VERBAL_UNSCORE, Difficulty.HARD, true);
+
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.EASY, true);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.MEDIUM, true);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_1, Difficulty.HARD, true);
+
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.EASY, true);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.MEDIUM, true);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_UNSCORE, Difficulty.HARD, true);
+
+        createSectionTemplate(SectionType.GRE_ANALYTICAL_WRITING_ISSUE, Difficulty.MEDIUM, true);
+        createSectionTemplate(SectionType.GRE_ANALYTICAL_WRITING_ARGUMENT, Difficulty.MEDIUM, true);
+
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_2, Difficulty.EASY, true);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_2, Difficulty.MEDIUM, true);
+        createSectionTemplate(SectionType.GRE_VERBAL_REASONING_2, Difficulty.HARD, true);
+
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.EASY, true);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.MEDIUM, true);
+        createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.HARD, true);
+    }
+
+    public void createNotFreeSectionTemplates() {
         createSectionTemplate(SectionType.GRE_VERBAL_REASONING_1, Difficulty.EASY);
         createSectionTemplate(SectionType.GRE_VERBAL_REASONING_1, Difficulty.MEDIUM);
         createSectionTemplate(SectionType.GRE_VERBAL_REASONING_1, Difficulty.HARD);
@@ -226,9 +260,15 @@ public class SectionTemplatesGenerator {
         createSectionTemplate(SectionType.GRE_VERBAL_REASONING_2, Difficulty.EASY);
         createSectionTemplate(SectionType.GRE_VERBAL_REASONING_2, Difficulty.MEDIUM);
         createSectionTemplate(SectionType.GRE_VERBAL_REASONING_2, Difficulty.HARD);
+
         createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.EASY);
         createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.MEDIUM);
         createSectionTemplate(SectionType.GRE_QUANTITATIVE_REASONING_2, Difficulty.HARD);
+    }
+
+    public void createAll() {
+        createNotFreeSectionTemplates();
+        createFreeSectionTemplates();
     }
 
 }

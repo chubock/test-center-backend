@@ -12,8 +12,12 @@ import java.util.Map;
  * Created by Yubar on 3/9/2017.
  */
 public interface TestService {
-    Test createTest(User user, Difficulty difficulty, Test.TestIntelligentType intelligentType, Boolean free);
+    Test createTest(User user, Difficulty difficulty, Test.TestIntelligentType intelligentType);
+    Test createFreeTest(User user, Difficulty difficulty, Test.TestIntelligentType intelligentType);
     TestSection createTestSection(Long testId);
+    void seeQuestion(Long id);
     void answerQuestion(Long answeredQuestionId, String answer);
+    void markQuestion(Long id);
+    void unMarkQuestion(Long id);
     Date finishTest(Long testId, Map<Long, String> answers);
 }

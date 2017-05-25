@@ -65,7 +65,7 @@ public class TestCenterApplication implements CommandLineRunner {
         if (GENERATE_QUESTION_TEMPLATES)
             questionTemplatesGenerator.createAll();
         if (GENERATE_QUESTIONS)
-            questionsGenerator.generateAll(5000);
+            questionsGenerator.generateAll(5000, 10);
         if (GENERATE_USERS)
             usersGenerator.generateUsers(1000);
         if (GENERATE_SECTION_TEMPLATES)

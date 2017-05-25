@@ -30,6 +30,8 @@ public class AnsweredQuestion implements Serializable {
     private QuestionTemplate questionTemplate;
     private String userAnswer;
     private Boolean free;
+    private Boolean seen = false;
+    private Boolean marked = false;
 
     protected AnsweredQuestion() {
     }
@@ -156,6 +158,30 @@ public class AnsweredQuestion implements Serializable {
         if (free == null)
             throw new NullPointerException();
         this.free = free;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public Boolean getSeen() {
+        return seen;
+    }
+
+    private void setSeen(Boolean seen) {
+        this.seen = seen;
+    }
+
+    public void setSeen() {
+        this.seen = true;
+    }
+
+    @NotNull
+    @Column(nullable = false)
+    public Boolean getMarked() {
+        return marked;
+    }
+
+    public void setMarked(Boolean marked) {
+        this.marked = marked;
     }
 
     @Column(length = 3000)
