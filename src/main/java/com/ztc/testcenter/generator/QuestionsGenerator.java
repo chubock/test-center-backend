@@ -223,14 +223,14 @@ public class QuestionsGenerator {
         final List<QuantitativeComparisonQuestion> quantitativeComparisonQuestionSamples = new ArrayList<>();
 
         QuantitativeComparisonQuestion quantitativeComparisonQuestion = new QuantitativeComparisonQuestion();
-        quantitativeComparisonQuestion.setText("\\(x^2 + 1\\)");
+        quantitativeComparisonQuestion.setQuantityA("\\(x^2 + 1\\)");
         quantitativeComparisonQuestion.setQuantityB("\\(2x - 1\\)");
         quantitativeComparisonQuestion.setAnswer(0);
 
         quantitativeComparisonQuestionSamples.add(quantitativeComparisonQuestion);
 
         quantitativeComparisonQuestion = new QuantitativeComparisonQuestion();
-        quantitativeComparisonQuestion.setText("\\(x\\)");
+        quantitativeComparisonQuestion.setQuantityA("\\(x\\)");
         quantitativeComparisonQuestion.setQuantityB("\\(y\\)");
         quantitativeComparisonQuestion.setImage(fileRepository.getOne((long) 1));
         quantitativeComparisonQuestion.setAnswer(3);
