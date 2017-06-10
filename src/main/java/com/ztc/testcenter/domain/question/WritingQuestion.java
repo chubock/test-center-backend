@@ -44,6 +44,11 @@ public class WritingQuestion extends Question {
         return null;
     }
 
+    @Override
+    public boolean isCorrect(String answers) {
+        return answers != null && !answers.equals("");
+    }
+
     public enum Type {
         ANALYZE_AND_ISSUE,
         ANALYZE_AND_ARGUMENT

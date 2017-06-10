@@ -5,9 +5,11 @@ import com.ztc.testcenter.dto.question.DataInterpretationSetQuestionDTO;
 import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.DataInterpretationSetQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
+import com.ztc.testcenter.specification.QuestionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/dataInterpretationSetQuestions")
-public class DataInterpretationSetQuestionRestService implements QuestionRestService<DataInterpretationSetQuestionDTO> {
+public class DataInterpretationSetQuestionRestService implements QuestionRestService<DataInterpretationSetQuestionDTO, DataInterpretationSetQuestion> {
 
     final private DataInterpretationSetQuestionRepository repository;
     final private FileRepository fileRepository;
@@ -31,11 +33,13 @@ public class DataInterpretationSetQuestionRestService implements QuestionRestSer
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<DataInterpretationSetQuestionDTO> getQuestions(Pageable pageable) {
-        return repository.findAll(pageable).map(DataInterpretationSetQuestionDTO::valueOf);
+    @PreAuthorize("hasAuthority('GRE_DATA_INTERPRETATION_SET_QUESTION_REST_SERVICE__GET_QUESTIONS')")
+    public Page<DataInterpretationSetQuestionDTO> getQuestions(@ModelAttribute QuestionSpecification<DataInterpretationSetQuestion> specification, Pageable pageable) {
+        return repository.findAll(specification, pageable).map(DataInterpretationSetQuestionDTO::valueOf);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('GRE_DATA_INTERPRETATION_SET_QUESTION_REST_SERVICE__SAVE')")
     public DataInterpretationSetQuestionDTO save(@RequestBody DataInterpretationSetQuestionDTO questionDTO) {
         DataInterpretationSetQuestion question = questionDTO.convert(new DataInterpretationSetQuestion());
         if (questionDTO.getImage() != null)
@@ -46,6 +50,7 @@ public class DataInterpretationSetQuestionRestService implements QuestionRestSer
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('GRE_DATA_INTERPRETATION_SET_QUESTION_REST_SERVICE__DELETE')")
     public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }

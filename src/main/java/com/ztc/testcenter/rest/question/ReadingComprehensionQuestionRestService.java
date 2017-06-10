@@ -5,9 +5,11 @@ import com.ztc.testcenter.dto.question.ReadingComprehensionQuestionDTO;
 import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.ReadingComprehensionQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
+import com.ztc.testcenter.specification.QuestionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/readingComprehensionQuestions")
-public class ReadingComprehensionQuestionRestService implements QuestionRestService<ReadingComprehensionQuestionDTO> {
+public class ReadingComprehensionQuestionRestService implements QuestionRestService<ReadingComprehensionQuestionDTO, ReadingComprehensionQuestion> {
 
     final private ReadingComprehensionQuestionRepository repository;
     final private FileRepository fileRepository;
@@ -31,11 +33,13 @@ public class ReadingComprehensionQuestionRestService implements QuestionRestServ
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<ReadingComprehensionQuestionDTO> getQuestions(Pageable pageable) {
-        return repository.findAll(pageable).map(ReadingComprehensionQuestionDTO::valueOf);
+    @PreAuthorize("hasAuthority('GRE_READING_COMPREHENSION_QUESTION_REST_SERVICE__GET_QUESTIONS')")
+    public Page<ReadingComprehensionQuestionDTO> getQuestions(@ModelAttribute QuestionSpecification<ReadingComprehensionQuestion> specification, Pageable pageable) {
+        return repository.findAll(specification, pageable).map(ReadingComprehensionQuestionDTO::valueOf);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('GRE_READING_COMPREHENSION_QUESTION_REST_SERVICE__GET_SAVE')")
     public ReadingComprehensionQuestionDTO save(@RequestBody ReadingComprehensionQuestionDTO questionDTO) {
         ReadingComprehensionQuestion question = questionDTO.convert(new ReadingComprehensionQuestion());
         if (questionDTO.getImage() != null)
@@ -46,6 +50,7 @@ public class ReadingComprehensionQuestionRestService implements QuestionRestServ
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('GRE_READING_COMPREHENSION_QUESTION_REST_SERVICE__GET_DELETE')")
     public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }

@@ -30,8 +30,10 @@ public class AnsweredQuestion implements Serializable {
     private QuestionTemplate questionTemplate;
     private String userAnswer;
     private Boolean free;
-    private Boolean seen = false;
     private Boolean marked = false;
+    private Status status = Status.NOT_SEEN;
+    private Double score;
+    private String comment;
 
     protected AnsweredQuestion() {
     }
@@ -160,18 +162,9 @@ public class AnsweredQuestion implements Serializable {
         this.free = free;
     }
 
-    @NotNull
-    @Column(nullable = false)
-    public Boolean getSeen() {
-        return seen;
-    }
-
-    private void setSeen(Boolean seen) {
-        this.seen = seen;
-    }
-
     public void setSeen() {
-        this.seen = true;
+        if (status == Status.NOT_SEEN)
+            status = Status.NOT_ANSWERED;
     }
 
     @NotNull
@@ -191,5 +184,39 @@ public class AnsweredQuestion implements Serializable {
 
     public void setUserAnswer(String userAnswer) {
         this.userAnswer = userAnswer;
+    }
+
+    @NotNull
+    @Enumerated
+    @Column(nullable = false)
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public enum  Status {
+        NOT_SEEN,
+        NOT_ANSWERED,
+        CORRECT,
+        INCORRECT
     }
 }

@@ -41,4 +41,16 @@ public class TextCompletionQuestion extends Question {
         getItems().forEach(item -> item.prepare());
     }
 
+    @Override
+    public boolean isCorrect(String answers) {
+        if (answers == null || answers.length() != items.size())
+            return false;
+        char[] chars = answers.toCharArray();
+        int i = 0;
+        for (TextCompletionQuestionItem textCompletionQuestionItem : getItems()) {
+            if (!textCompletionQuestionItem.getAnswer().equals(Character.getNumericValue(chars[i++])))
+                return false;
+        }
+        return true;
+    }
 }

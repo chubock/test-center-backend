@@ -13,7 +13,6 @@ import java.util.Map;
  */
 public interface TestService {
     Test createTest(User user, Difficulty difficulty, Test.TestIntelligentType intelligentType);
-    Test createFreeTest(User user, Difficulty difficulty, Test.TestIntelligentType intelligentType);
     TestSection createTestSection(Long testId);
     void seeQuestion(Long id);
     void answerQuestion(Long answeredQuestionId, String answer);

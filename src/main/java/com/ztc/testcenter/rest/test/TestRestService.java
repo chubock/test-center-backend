@@ -15,7 +15,6 @@ public interface TestRestService {
     List<TestDTO> getTests(Authentication authentication);
     TestDTO getTest(Long testId, Authentication authentication);
     TestDTO createTest(TestDTO testDTO, Authentication authentication);
-    TestDTO createFreeTest(TestDTO testDTO, Authentication authentication);
     TestSectionDTO getTestSection(Long id, Authentication authentication);
     TestSectionDTO createNextSection(Long testId, Map<Long, String> answers, Authentication authentication);
     void seeQuestion(Long questionId, Authentication authentication);

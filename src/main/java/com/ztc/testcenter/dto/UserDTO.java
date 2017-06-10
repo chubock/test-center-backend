@@ -20,7 +20,7 @@ public class UserDTO extends AbstractDTO<User> {
     private Boolean accountExpired = false;
     private Boolean credentialExpired = false;
     private Boolean locked = false;
-    private List<RoleDTO> roles = new ArrayList<>();
+    private List<String> roles = new ArrayList<>();
     private Integer freeGreTestCount = 1;
     private Integer greTestCount = 0;
 
@@ -104,11 +104,11 @@ public class UserDTO extends AbstractDTO<User> {
         this.locked = locked;
     }
 
-    public List<RoleDTO> getRoles() {
+    public List<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<RoleDTO> roles) {
+    public void setRoles(List<String> roles) {
         this.roles = roles;
     }
 

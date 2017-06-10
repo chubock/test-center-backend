@@ -5,9 +5,11 @@ import com.ztc.testcenter.dto.question.SentenceEquivalenceQuestionDTO;
 import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.SentenceEquivalenceQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
+import com.ztc.testcenter.specification.QuestionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/sentenceEquivalenceQuestions")
-public class SentenceEquivalenceQuestionRestService implements QuestionRestService<SentenceEquivalenceQuestionDTO> {
+public class SentenceEquivalenceQuestionRestService implements QuestionRestService<SentenceEquivalenceQuestionDTO, SentenceEquivalenceQuestion> {
 
     final private SentenceEquivalenceQuestionRepository repository;
     final private FileRepository fileRepository;
@@ -31,11 +33,13 @@ public class SentenceEquivalenceQuestionRestService implements QuestionRestServi
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<SentenceEquivalenceQuestionDTO> getQuestions(Pageable pageable) {
-        return repository.findAll(pageable).map(SentenceEquivalenceQuestionDTO::valueOf);
+    @PreAuthorize("hasAuthority('GRE_SENTENCE_EQUIVALENCE_QUESTION_REST_SERVICE__GET_QUESTIONS')")
+    public Page<SentenceEquivalenceQuestionDTO> getQuestions(@ModelAttribute QuestionSpecification<SentenceEquivalenceQuestion> specification, Pageable pageable) {
+        return repository.findAll(specification, pageable).map(SentenceEquivalenceQuestionDTO::valueOf);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('GRE_SENTENCE_EQUIVALENCE_QUESTION_REST_SERVICE__SAVE')")
     public SentenceEquivalenceQuestionDTO save(@RequestBody SentenceEquivalenceQuestionDTO questionDTO) {
         SentenceEquivalenceQuestion question = questionDTO.convert(new SentenceEquivalenceQuestion());
         if (questionDTO.getImage() != null)
@@ -45,6 +49,7 @@ public class SentenceEquivalenceQuestionRestService implements QuestionRestServi
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('GRE_SENTENCE_EQUIVALENCE_QUESTION_REST_SERVICE__DELETE')")
     public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }

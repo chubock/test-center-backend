@@ -48,14 +48,14 @@ public class OrderRestService {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ORDER_REST_SERVICE__GET_ORDERS', 'ORDER_REST_SERVICE__GET_ORDERS_ALL')")
     private Page<OrderDTO> getOrders(Authentication authentication, Pageable pageable) {
         User user = getUser(authentication);
         return orderRepository.findByUser(user, pageable).map(OrderDTO::valueOf);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ORDER_REST_SERVICE__GET_ORDER', 'ORDER_REST_SERVICE__GET_ORDER_ALL')")
     public OrderDTO getOrder(@PathVariable Long id) {
         Order order = orderRepository.findWithOrderItems(id);
         OrderDTO ret = OrderDTO.valueOf(order);
@@ -64,7 +64,7 @@ public class OrderRestService {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ORDER_REST_SERVICE__CREATE_ORDER')")
     public OrderDTO createOrder(@RequestBody OrderDTO orderDTO, Authentication authentication) {
         User user = getUser(authentication);
         Order order = new Order(user);
@@ -73,11 +73,13 @@ public class OrderRestService {
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ORDER_REST_SERVICE__GET_AVAILABLE_PRODUCTS')")
     public List<ProductDTO> getAvailableProducts() {
         return productRepository.findByState(Product.State.ACTIVE).stream().map(ProductDTO::valueOf).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ORDER_REST_SERVICE__GET_PRODUCT')")
     public ProductDTO getProduct(@PathVariable Long id) {
         return ProductDTO.valueOf(productRepository.findOne(id));
     }

@@ -47,7 +47,8 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    @ManyToMany
+    @Enumerated(value = EnumType.STRING)
+    @ElementCollection
     public List<Authority> getAuthorities() {
         return authorities;
     }

@@ -1,7 +1,6 @@
 package com.ztc.testcenter.security;
 
 import com.ztc.testcenter.domain.user.User;
-import com.ztc.testcenter.repository.user.AuthorityRepository;
 import com.ztc.testcenter.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,12 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class JpaUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final AuthorityRepository authorityRepository;
 
     @Autowired
-    public JpaUserDetailsService(UserRepository userRepository, AuthorityRepository authorityRepository) {
+    public JpaUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.authorityRepository = authorityRepository;
     }
 
     @Override
@@ -33,6 +30,7 @@ public class JpaUserDetailsService implements UserDetailsService {
         if (user == null)
             throw new UsernameNotFoundException("No User Found for : " + s);
         user.getRoles().size();
-        return new ApplicationUserDetails(user, authorityRepository);
+        user.getRoles().forEach(role -> role.getAuthorities().size());
+        return new ApplicationUserDetails(user);
     }
 }

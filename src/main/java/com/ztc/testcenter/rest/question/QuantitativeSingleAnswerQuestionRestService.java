@@ -5,9 +5,11 @@ import com.ztc.testcenter.dto.question.QuantitativeSingleAnswerQuestionDTO;
 import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.QuantitativeSingleAnswerQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
+import com.ztc.testcenter.specification.QuestionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/quantitativeSingleAnswerQuestions")
-public class QuantitativeSingleAnswerQuestionRestService implements QuestionRestService<QuantitativeSingleAnswerQuestionDTO> {
+public class QuantitativeSingleAnswerQuestionRestService implements QuestionRestService<QuantitativeSingleAnswerQuestionDTO, QuantitativeSingleAnswerQuestion> {
 
     final private QuantitativeSingleAnswerQuestionRepository repository;
     final private FileRepository fileRepository;
@@ -31,11 +33,13 @@ public class QuantitativeSingleAnswerQuestionRestService implements QuestionRest
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<QuantitativeSingleAnswerQuestionDTO> getQuestions(Pageable pageable) {
-        return repository.findAll(pageable).map(QuantitativeSingleAnswerQuestionDTO::valueOf);
+    @PreAuthorize("hasAuthority('GRE_QUANTITATIVE_SINGLE_ANSWER_QUESTION_REST_SERVICE__GET_QUESTIONS')")
+    public Page<QuantitativeSingleAnswerQuestionDTO> getQuestions(@ModelAttribute QuestionSpecification<QuantitativeSingleAnswerQuestion> specification, Pageable pageable) {
+        return repository.findAll(specification, pageable).map(QuantitativeSingleAnswerQuestionDTO::valueOf);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('GRE_QUANTITATIVE_SINGLE_ANSWER_QUESTION_REST_SERVICE__SAVE')")
     public QuantitativeSingleAnswerQuestionDTO save(@RequestBody QuantitativeSingleAnswerQuestionDTO questionDTO) {
         QuantitativeSingleAnswerQuestion question = questionDTO.convert(new QuantitativeSingleAnswerQuestion());
         if (questionDTO.getImage() != null)
@@ -45,6 +49,7 @@ public class QuantitativeSingleAnswerQuestionRestService implements QuestionRest
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('GRE_QUANTITATIVE_SINGLE_ANSWER_QUESTION_REST_SERVICE__DELETE')")
     public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }

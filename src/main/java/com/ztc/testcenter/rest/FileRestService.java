@@ -49,6 +49,7 @@ public class FileRestService {
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('FILE_REST_SERVICE__UPLOAD_FILE')")
     public Long uploadFile(MultipartHttpServletRequest request) throws IOException {
         MultipartFile file = request.getFile("file");
         if (file != null) {

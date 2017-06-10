@@ -83,6 +83,11 @@ public class ReadingComprehensionQuestion extends Question implements QuestionsC
         getSingleAnswerQuestions().forEach(question -> question.prepare());
     }
 
+    @Override
+    public boolean isCorrect(String answers) {
+        throw new IllegalStateException("Question Groups doesn't support isCorrect Behaviour");
+    }
+
     public enum Type {
         SHORT,
         MEDIUM,

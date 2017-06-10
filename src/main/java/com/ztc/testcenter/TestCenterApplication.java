@@ -7,8 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
-import java.util.UUID;
-
 /**
  * Created by Yubar on 1/15/2017.
  */
@@ -18,9 +16,7 @@ import java.util.UUID;
 public class TestCenterApplication implements CommandLineRunner {
 
     private static final Boolean GENERATE_PRODUCTS = false;
-    private static final Boolean GENERATE_ADMIN_ROLE = false;
-    private static final Boolean GENERATE_USER_ROLE = false;
-    private static final Boolean GENERATE_AUTHORITIES = false;
+    private static final Boolean GENERATE_ROLES = false;
     private static final Boolean GENERATE_QUESTIONS = false;
     private static final Boolean GENERATE_USERS = false;
     private static final Boolean GENERATE_QUESTION_TEMPLATES = false;
@@ -29,7 +25,6 @@ public class TestCenterApplication implements CommandLineRunner {
 
     private final ProductsGenerator productsGenerator;
     private final RolesGenerator rolesGenerator;
-    private final AuthoritiesGenerator authoritiesGenerator;
     private final QuestionsGenerator questionsGenerator;
     private final UsersGenerator usersGenerator;
     private final QuestionTemplatesGenerator questionTemplatesGenerator;
@@ -37,10 +32,9 @@ public class TestCenterApplication implements CommandLineRunner {
     private final TestTemplatesGenerator testTemplatesGenerator;
 
     @Autowired
-    public TestCenterApplication(ProductsGenerator productsGenerator, RolesGenerator rolesGenerator, AuthoritiesGenerator authoritiesGenerator, QuestionsGenerator questionsGenerator, UsersGenerator usersGenerator, QuestionTemplatesGenerator questionTemplatesGenerator, SectionTemplatesGenerator sectionTemplatesGenerator, TestTemplatesGenerator testTemplatesGenerator) {
+    public TestCenterApplication(ProductsGenerator productsGenerator, RolesGenerator rolesGenerator, QuestionsGenerator questionsGenerator, UsersGenerator usersGenerator, QuestionTemplatesGenerator questionTemplatesGenerator, SectionTemplatesGenerator sectionTemplatesGenerator, TestTemplatesGenerator testTemplatesGenerator) {
         this.productsGenerator = productsGenerator;
         this.rolesGenerator = rolesGenerator;
-        this.authoritiesGenerator = authoritiesGenerator;
         this.questionsGenerator = questionsGenerator;
         this.usersGenerator = usersGenerator;
         this.questionTemplatesGenerator = questionTemplatesGenerator;
@@ -56,21 +50,17 @@ public class TestCenterApplication implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         if (GENERATE_PRODUCTS)
             productsGenerator.createProducts();
-        if (GENERATE_AUTHORITIES)
-            authoritiesGenerator.createAuthorities(30);
-        if (GENERATE_ADMIN_ROLE)
-            rolesGenerator.createAdminRole();
-        if (GENERATE_USER_ROLE)
-            rolesGenerator.createUserRole();
+        if (GENERATE_ROLES)
+            rolesGenerator.createAuthorities();
         if (GENERATE_QUESTION_TEMPLATES)
             questionTemplatesGenerator.createAll();
-        if (GENERATE_QUESTIONS)
-            questionsGenerator.generateAll(5000, 10);
         if (GENERATE_USERS)
-            usersGenerator.generateUsers(1000);
+            usersGenerator.generateUsers();
         if (GENERATE_SECTION_TEMPLATES)
             sectionTemplatesGenerator.createAll();
         if (GENERATE_TEST_TEMPLATES)
             testTemplatesGenerator.createAll();
+        if (GENERATE_QUESTIONS)
+            questionsGenerator.generateAll(3000, 1000);
     }
 }

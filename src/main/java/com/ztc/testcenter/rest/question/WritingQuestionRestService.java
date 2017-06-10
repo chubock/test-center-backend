@@ -5,9 +5,11 @@ import com.ztc.testcenter.dto.question.WritingQuestionDTO;
 import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.WritingQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
+import com.ztc.testcenter.specification.QuestionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/writingQuestions")
-public class WritingQuestionRestService implements QuestionRestService<WritingQuestionDTO> {
+public class WritingQuestionRestService implements QuestionRestService<WritingQuestionDTO, WritingQuestion> {
 
     final private WritingQuestionRepository repository;
     final private FileRepository fileRepository;
@@ -31,11 +33,13 @@ public class WritingQuestionRestService implements QuestionRestService<WritingQu
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<WritingQuestionDTO> getQuestions(Pageable pageable) {
-        return repository.findAll(pageable).map(WritingQuestionDTO::valueOf);
+    @PreAuthorize("hasAuthority('GRE_WRITING_QUESTION_REST_SERVICE__GET_QUESTIONS')")
+    public Page<WritingQuestionDTO> getQuestions(@ModelAttribute QuestionSpecification<WritingQuestion> specification, Pageable pageable) {
+        return repository.findAll(specification, pageable).map(WritingQuestionDTO::valueOf);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('GRE_WRITING_QUESTION_REST_SERVICE__SAVE')")
     public WritingQuestionDTO save(@RequestBody WritingQuestionDTO questionDTO) {
         WritingQuestion question = questionDTO.convert(new WritingQuestion());
         if (questionDTO.getImage() != null)
@@ -45,6 +49,7 @@ public class WritingQuestionRestService implements QuestionRestService<WritingQu
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('GRE_WRITING_QUESTION_REST_SERVICE__DELETE')")
     public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }

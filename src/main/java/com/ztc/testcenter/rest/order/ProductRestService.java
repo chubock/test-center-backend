@@ -7,6 +7,7 @@ import com.ztc.testcenter.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,16 +28,19 @@ public class ProductRestService {
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('PRODUCT_REST_SERVICE__GET_PRODUCTS')")
     public Page<ProductDTO> getProducts(Pageable pageable) {
         return repository.findAll(pageable).map(ProductDTO::valueOf);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('PRODUCT_REST_SERVICE__GET_PRODUCT')")
     public ProductDTO getProduct(@PathVariable Long id) {
         return ProductDTO.valueOf(repository.findOne(id));
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('PRODUCT_REST_SERVICE__SAVE_PRODUCT')")
     public ProductDTO saveProduct(@RequestBody ProductDTO productDTO) {
         Product product;
         if (productDTO.getId() != null) {

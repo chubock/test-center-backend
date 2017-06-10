@@ -26,6 +26,7 @@ public abstract class Question implements Serializable {
     private String answers;
     private QuestionTemplate template;
     private Boolean free = false;
+    private File document;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -109,8 +110,21 @@ public abstract class Question implements Serializable {
         this.free = free;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    public File getDocument() {
+        return document;
+    }
+
+    public void setDocument(File document) {
+        this.document = document;
+    }
+
     public void prepare() {
 
+    }
+
+    public boolean isCorrect(String answers) {
+        return answers != null && answers.equals(getAnswers());
     }
 
     @Override

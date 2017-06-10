@@ -5,9 +5,11 @@ import com.ztc.testcenter.dto.question.QuantitativeMultipleAnswerQuestionDTO;
 import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.QuantitativeMultipleAnswerQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
+import com.ztc.testcenter.specification.QuestionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/quantitativeMultipleAnswerQuestions")
-public class QuantitativeMultipleAnswerQuestionRestService implements QuestionRestService<QuantitativeMultipleAnswerQuestionDTO> {
+public class QuantitativeMultipleAnswerQuestionRestService implements QuestionRestService<QuantitativeMultipleAnswerQuestionDTO, QuantitativeMultipleAnswerQuestion> {
 
     final private QuantitativeMultipleAnswerQuestionRepository repository;
     final private FileRepository fileRepository;
@@ -31,11 +33,13 @@ public class QuantitativeMultipleAnswerQuestionRestService implements QuestionRe
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<QuantitativeMultipleAnswerQuestionDTO> getQuestions(Pageable pageable) {
-        return repository.findAll(pageable).map(QuantitativeMultipleAnswerQuestionDTO::valueOf);
+    @PreAuthorize("hasAuthority('GRE_QUANTITATIVE_MULTIPLE_ANSWER_QUESTION_REST_SERVICE__GET_QUESTIONS')")
+    public Page<QuantitativeMultipleAnswerQuestionDTO> getQuestions(@ModelAttribute QuestionSpecification<QuantitativeMultipleAnswerQuestion> specification, Pageable pageable) {
+        return repository.findAll(specification, pageable).map(QuantitativeMultipleAnswerQuestionDTO::valueOf);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('GRE_QUANTITATIVE_MULTIPLE_ANSWER_QUESTION_REST_SERVICE__SAVE')")
     public QuantitativeMultipleAnswerQuestionDTO save(@RequestBody QuantitativeMultipleAnswerQuestionDTO questionDTO) {
         QuantitativeMultipleAnswerQuestion question = questionDTO.convert(new QuantitativeMultipleAnswerQuestion());
         if (questionDTO.getImage() != null)
@@ -45,6 +49,7 @@ public class QuantitativeMultipleAnswerQuestionRestService implements QuestionRe
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('GRE_QUANTITATIVE_MULTIPLE_ANSWER_QUESTION_REST_SERVICE__DELETE')")
     public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }

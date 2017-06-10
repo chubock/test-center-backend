@@ -1,7 +1,6 @@
 package com.ztc.testcenter.security;
 
 import com.ztc.testcenter.domain.user.User;
-import com.ztc.testcenter.repository.user.AuthorityRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,19 +15,15 @@ import java.util.List;
 public class ApplicationUserDetails implements UserDetails {
 
     private final User user;
-    private final AuthorityRepository authorityRepository;
 
-    public ApplicationUserDetails(User user, AuthorityRepository authorityRepository) {
+    public ApplicationUserDetails(User user) {
         this.user = user;
-        this.authorityRepository = authorityRepository;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {
-            authorityRepository.findAllByRole(role).forEach(authority -> authorities.add(new SimpleGrantedAuthority(authority.getName())));
-        });
+        user.getRoles().forEach(role -> role.getAuthorities().forEach(authority -> authorities.add(new SimpleGrantedAuthority(authority.name()))));
         return authorities;
     }
 

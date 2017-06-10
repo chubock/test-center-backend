@@ -64,4 +64,9 @@ public class DataInterpretationSetQuestion extends Question implements Questions
         getMultipleAnswerQuestions().forEach(question -> question.prepare());
         getSingleAnswerQuestions().forEach(question -> question.prepare());
     }
+
+    @Override
+    public boolean isCorrect(String answers) {
+        throw new IllegalStateException("Question Groups doesn't support isCorrect behaviour");
+    }
 }

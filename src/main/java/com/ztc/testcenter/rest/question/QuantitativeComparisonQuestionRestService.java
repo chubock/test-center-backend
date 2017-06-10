@@ -5,9 +5,11 @@ import com.ztc.testcenter.dto.question.QuantitativeComparisonQuestionDTO;
 import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.QuantitativeComparisonQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
+import com.ztc.testcenter.specification.QuestionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/quantitativeComparisonQuestions")
-public class QuantitativeComparisonQuestionRestService implements QuestionRestService<QuantitativeComparisonQuestionDTO> {
+public class QuantitativeComparisonQuestionRestService implements QuestionRestService<QuantitativeComparisonQuestionDTO, QuantitativeComparisonQuestion> {
 
     final private QuantitativeComparisonQuestionRepository repository;
     final private FileRepository fileRepository;
@@ -31,11 +33,13 @@ public class QuantitativeComparisonQuestionRestService implements QuestionRestSe
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<QuantitativeComparisonQuestionDTO> getQuestions(Pageable pageable) {
-        return repository.findAll(pageable).map(QuantitativeComparisonQuestionDTO::valueOf);
+    @PreAuthorize("hasAuthority('GRE_QUANTITATIVE_COMPARISON_QUESTION_REST_SERVICE__GET_QUESTIONS')")
+    public Page<QuantitativeComparisonQuestionDTO> getQuestions(@ModelAttribute QuestionSpecification<QuantitativeComparisonQuestion> specification, Pageable pageable) {
+        return repository.findAll(specification, pageable).map(QuantitativeComparisonQuestionDTO::valueOf);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('GRE_QUANTITATIVE_COMPARISON_QUESTION_REST_SERVICE__SAVE')")
     public QuantitativeComparisonQuestionDTO save(@RequestBody QuantitativeComparisonQuestionDTO questionDTO) {
         QuantitativeComparisonQuestion question = questionDTO.convert(new QuantitativeComparisonQuestion());
         if (questionDTO.getImage() != null)
@@ -45,6 +49,7 @@ public class QuantitativeComparisonQuestionRestService implements QuestionRestSe
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('GRE_QUANTITATIVE_COMPARISON_QUESTION_REST_SERVICE__DELETE')")
     public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }

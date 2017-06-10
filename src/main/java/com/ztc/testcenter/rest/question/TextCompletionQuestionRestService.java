@@ -5,9 +5,11 @@ import com.ztc.testcenter.dto.question.TextCompletionQuestionDTO;
 import com.ztc.testcenter.repository.FileRepository;
 import com.ztc.testcenter.repository.question.TextCompletionQuestionRepository;
 import com.ztc.testcenter.service.ManagerService;
+import com.ztc.testcenter.specification.QuestionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/textCompletionQuestions")
-public class TextCompletionQuestionRestService implements QuestionRestService<TextCompletionQuestionDTO> {
+public class TextCompletionQuestionRestService implements QuestionRestService<TextCompletionQuestionDTO, TextCompletionQuestion> {
 
     final private TextCompletionQuestionRepository repository;
     final private FileRepository fileRepository;
@@ -31,12 +33,14 @@ public class TextCompletionQuestionRestService implements QuestionRestService<Te
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<TextCompletionQuestionDTO> getQuestions(Pageable pageable) {
-        Page<TextCompletionQuestion> allWithItems = repository.findAllWithItems(pageable);
+    @PreAuthorize("hasAuthority('GRE_TEXT_COMPLETION_QUESTION_REST_SERVICE__GET_QUESTIONS')")
+    public Page<TextCompletionQuestionDTO> getQuestions(@ModelAttribute QuestionSpecification<TextCompletionQuestion> specification, Pageable pageable) {
+        Page<TextCompletionQuestion> allWithItems = repository.findAll(specification, pageable);
         return allWithItems.map(TextCompletionQuestionDTO::valueOf);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('GRE_TEXT_COMPLETION_QUESTION_REST_SERVICE__SAVE')")
     public TextCompletionQuestionDTO save(@RequestBody TextCompletionQuestionDTO questionDTO) {
         TextCompletionQuestion question = questionDTO.convert(new TextCompletionQuestion());
         if (questionDTO.getImage() != null)
@@ -47,6 +51,7 @@ public class TextCompletionQuestionRestService implements QuestionRestService<Te
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('GRE_TEXT_COMPLETION_QUESTION_REST_SERVICE__DELETE')")
     public void delete(@PathVariable Long id) {
         managerService.deleteQuestion(id);
     }

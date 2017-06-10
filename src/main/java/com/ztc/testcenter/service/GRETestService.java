@@ -3,6 +3,7 @@ package com.ztc.testcenter.service;
 import com.ztc.testcenter.domain.user.User;
 import com.ztc.testcenter.domain.question.*;
 import com.ztc.testcenter.domain.test.*;
+import com.ztc.testcenter.exceptions.*;
 import com.ztc.testcenter.repository.question.*;
 import com.ztc.testcenter.repository.test.*;
 import com.ztc.testcenter.repository.user.UserRepository;
@@ -36,24 +37,10 @@ public class GRETestService implements TestService {
     private final AnsweredQuestionRepository answeredQuestionRepository;
     private final Random random = new Random();
 
-    private final DataInterpretationSetQuestionRepository dataInterpretationSetQuestionRepository;
-    private final DataInterpretationSingleAnswerQuestionRepository dataInterpretationSingleAnswerQuestionRepository;
-    private final DataInterpretationMultipleAnswerQuestionRepository dataInterpretationMultipleAnswerQuestionRepository;
-    private final DataInterpretationNumericQuestionRepository dataInterpretationNumericQuestionRepository;
-    private final NumericQuestionRepository numericQuestionRepository;
-    private final QuantitativeComparisonQuestionRepository quantitativeComparisonQuestionRepository;
-    private final QuantitativeSingleAnswerQuestionRepository quantitativeSingleAnswerQuestionRepository;
-    private final QuantitativeMultipleAnswerQuestionRepository quantitativeMultipleAnswerQuestionRepository;
-    private final ReadingComprehensionQuestionRepository readingComprehensionQuestionRepository;
-    private final ReadingComprehensionSingleAnswerQuestionRepository readingComprehensionSingleAnswerQuestionRepository;
-    private final ReadingComprehensionMultipleAnswerQuestionRepository readingComprehensionMultipleAnswerQuestionRepository;
-    private final SelectInPassageQuestionRepository selectInPassageQuestionRepository;
-    private final SentenceEquivalenceQuestionRepository sentenceEquivalenceQuestionRepository;
-    private final TextCompletionQuestionRepository textCompletionQuestionRepository;
-    private final WritingQuestionRepository writingQuestionRepository;
+    private final QuestionService questionService;
 
     @Autowired
-    public GRETestService(Logger logger, UserRepository userRepository, QuestionRepository questionRepository, TestRepository testRepository, TestTemplateRepository testTemplateRepository, SectionTemplateRepository sectionTemplateRepository, TestSectionRepository testSectionRepository, AnsweredQuestionRepository answeredQuestionRepository, DataInterpretationSetQuestionRepository dataInterpretationSetQuestionRepository, DataInterpretationSingleAnswerQuestionRepository dataInterpretationSingleAnswerQuestionRepository, DataInterpretationMultipleAnswerQuestionRepository dataInterpretationMultipleAnswerQuestionRepository, DataInterpretationNumericQuestionRepository dataInterpretationNumericQuestionRepository, NumericQuestionRepository numericQuestionRepository, QuantitativeComparisonQuestionRepository quantitativeComparisonQuestionRepository, QuantitativeSingleAnswerQuestionRepository quantitativeSingleAnswerQuestionRepository, QuantitativeMultipleAnswerQuestionRepository quantitativeMultipleAnswerQuestionRepository, ReadingComprehensionQuestionRepository readingComprehensionQuestionRepository, ReadingComprehensionSingleAnswerQuestionRepository readingComprehensionSingleAnswerQuestionRepository, ReadingComprehensionMultipleAnswerQuestionRepository readingComprehensionMultipleAnswerQuestionRepository, SelectInPassageQuestionRepository selectInPassageQuestionRepository, SentenceEquivalenceQuestionRepository sentenceEquivalenceQuestionRepository, TextCompletionQuestionRepository textCompletionQuestionRepository, WritingQuestionRepository writingQuestionRepository) {
+    public GRETestService(Logger logger, UserRepository userRepository, QuestionRepository questionRepository, TestRepository testRepository, TestTemplateRepository testTemplateRepository, SectionTemplateRepository sectionTemplateRepository, TestSectionRepository testSectionRepository, AnsweredQuestionRepository answeredQuestionRepository, QuestionService questionService) {
         this.logger = logger;
         this.userRepository = userRepository;
         this.questionRepository = questionRepository;
@@ -62,45 +49,22 @@ public class GRETestService implements TestService {
         this.sectionTemplateRepository = sectionTemplateRepository;
         this.testSectionRepository = testSectionRepository;
         this.answeredQuestionRepository = answeredQuestionRepository;
-        this.dataInterpretationSetQuestionRepository = dataInterpretationSetQuestionRepository;
-        this.dataInterpretationSingleAnswerQuestionRepository = dataInterpretationSingleAnswerQuestionRepository;
-        this.dataInterpretationMultipleAnswerQuestionRepository = dataInterpretationMultipleAnswerQuestionRepository;
-        this.dataInterpretationNumericQuestionRepository = dataInterpretationNumericQuestionRepository;
-        this.numericQuestionRepository = numericQuestionRepository;
-        this.quantitativeComparisonQuestionRepository = quantitativeComparisonQuestionRepository;
-        this.quantitativeSingleAnswerQuestionRepository = quantitativeSingleAnswerQuestionRepository;
-        this.quantitativeMultipleAnswerQuestionRepository = quantitativeMultipleAnswerQuestionRepository;
-        this.readingComprehensionQuestionRepository = readingComprehensionQuestionRepository;
-        this.readingComprehensionSingleAnswerQuestionRepository = readingComprehensionSingleAnswerQuestionRepository;
-        this.readingComprehensionMultipleAnswerQuestionRepository = readingComprehensionMultipleAnswerQuestionRepository;
-        this.selectInPassageQuestionRepository = selectInPassageQuestionRepository;
-        this.sentenceEquivalenceQuestionRepository = sentenceEquivalenceQuestionRepository;
-        this.textCompletionQuestionRepository = textCompletionQuestionRepository;
-        this.writingQuestionRepository = writingQuestionRepository;
-    }
-
-    public Test createFreeTest(User user, Difficulty difficulty, Test.TestIntelligentType intelligentType) {
-        user = userRepository.findOne(user.getId());
-        if (user.getFreeGreTestCount() == 0)
-            throw new IllegalStateException();
-        else
-            user.decrementFreeGRETestCount();
-        Test test = new Test(user, findTestTemplate(), true);
-        test.setDifficulty(difficulty);
-        test.setIntelligentType(intelligentType);
-        testRepository.save(test);
-        TestSection firstSection = createTestSection(test.getId());
-        test.getTestSections().add(firstSection);
-        return test;
+        this.questionService = questionService;
     }
 
     public Test createTest(User user, Difficulty difficulty, Test.TestIntelligentType intelligentType) {
         user = userRepository.findOne(user.getId());
-        if (user.getGreTestCount() == 0)
-                throw new IllegalStateException();
+        boolean freeTest = false;
+        if (user.getFreeGreTestCount() > 0) {
+            freeTest = true;
+            user.decrementFreeGRETestCount();
+        } else {
+            if (user.getGreTestCount() == 0)
+                throw new NoTestAvailableException();
             else
                 user.decrementGreTestCount();
-        Test test = new Test(user, findTestTemplate(), false);
+        }
+        Test test = new Test(user, findTestTemplate(), freeTest);
         test.setDifficulty(difficulty);
         test.setIntelligentType(intelligentType);
         testRepository.save(test);
@@ -111,15 +75,13 @@ public class GRETestService implements TestService {
 
     public TestSection createTestSection(Long testId) {
         Test test = testRepository.findOne(testId);
+        if (test == null)
+            throw new TestNotFoundException();
         SectionTemplate sectionTemplate = findSectionTemplate(test);
         TestSection testSection = new TestSection(test, sectionTemplate);
         if (! test.getTestSections().isEmpty()) {
             TestSection lastSection = test.getTestSections().get(test.getTestSections().size() - 1);
-//            int allowedSectionTime = lastSection.getSectionType().time + lastSection.getSectionType().breakTime;
-//            if (lastSection.getStartDate().toInstant().isAfter(Instant.now().minusSeconds(allowedSectionTime * 60)))
             lastSection.setEndDate(new Date());
-//            else
-//                lastSection.setEndDate(Date.from(lastSection.getStartDate().toInstant().plusSeconds(allowedSectionTime)));
             testSectionRepository.save(lastSection);
             testSection.setStartDate(lastSection.getEndDate());
         } else {
@@ -166,31 +128,28 @@ public class GRETestService implements TestService {
 
     private void answerQuestion(Long answeredQuestionId, String answer, boolean updateLastActivity) {
         AnsweredQuestion answeredQuestion = answeredQuestionRepository.findOne(answeredQuestionId);
-        //check if test section is not finished.
+        if (answeredQuestion == null)
+            throw new AnsweredQuestionNotFound();
         if (answeredQuestion.getTestSection().getEndDate() != null)
-            throw new IllegalStateException();
-        int time = answeredQuestion.getTestSection().getSectionType().breakTime + answeredQuestion.getTestSection().getSectionType().time + 1;
-        //check if its not too late
-        if (answeredQuestion.getTestSection().getEndDate() != null)
-            throw new IllegalStateException();
-//        int time = answeredQuestion.getTestSection().getSectionType().breakTime + answeredQuestion.getTestSection().getSectionType().time + 1;
-////        check if its not too late
-//        if (answeredQuestion.getTestSection().getStartDate().toInstant().isBefore(Instant.now().minusSeconds(time * 60)))
-//            throw new IllegalStateException();
+            throw new TestSectionTimeFinishedException();
         answeredQuestion.setUserAnswer(answer);
+        if (answer == null || answer.equals(""))
+            answeredQuestion.setStatus(AnsweredQuestion.Status.NOT_ANSWERED);
+        else {
+            Question question = questionService.findQuestion(answeredQuestion.getQuestion().getId(), answeredQuestion.getQuestionType());
+            answeredQuestion.setStatus(question.isCorrect(answer) ? AnsweredQuestion.Status.CORRECT : AnsweredQuestion.Status.INCORRECT);
+        }
         if (updateLastActivity)
             updateLastActivityInfo(answeredQuestion);
     }
 
     public Date finishTest(Long testId, Map<Long, String> answers) {
-        answerQuestions(answers);
         Test test = testRepository.findOne(testId);
+        if (test == null)
+            throw new TestNotFoundException();
+        answerQuestions(answers);
         TestSection lastSection = test.getTestSections().get(test.getTestSections().size() - 1);
-//        int allowedSectionTime = lastSection.getSectionType().time + lastSection.getSectionType().breakTime;
-//        if (lastSection.getStartDate().toInstant().isAfter(Instant.now().minusSeconds(allowedSectionTime * 60)))
         lastSection.setEndDate(new Date());
-//        else
-//            lastSection.setEndDate(Date.from(lastSection.getStartDate().toInstant().plusSeconds(allowedSectionTime)));
         test.setEndDate(lastSection.getEndDate());
         testRepository.save(test);
         testSectionRepository.save(lastSection);
@@ -207,6 +166,8 @@ public class GRETestService implements TestService {
 
     private TestTemplate findTestTemplate() {
         List<TestTemplate> testTemplates = testTemplateRepository.findAll();
+        if (testTemplates.size() == 0)
+            throw new NoTestTemplateFound();
         return testTemplates.get(random.nextInt(testTemplates.size()));
     }
 
@@ -219,9 +180,11 @@ public class GRETestService implements TestService {
 
     private SectionTemplate findSectionTemplate(Test test) {
         if (test.getTestSections().size() == test.getTemplate().getItems().size())
-            throw new IllegalArgumentException("All Test Sections for this test has been created");
+            throw new TestSectionsFinishedException();
         TestTemplateItem testTemplateItem = test.getTemplate().getItems().get(test.getTestSections().size());
         List<SectionTemplate> sectionTemplates = sectionTemplateRepository.findBySectionTypeAndDifficultyAndFree(testTemplateItem.getSectionType(), findSectionDifficulty(test), test.getFree());
+        if (sectionTemplates.size() == 0)
+            throw new NoSectionTemplateAvailable();
         return sectionTemplates.get(random.nextInt(sectionTemplates.size()));
     }
 
@@ -247,7 +210,7 @@ public class GRETestService implements TestService {
                 Long countOfUserQuestions = questionRepository.countOfQuestions(testSection.getTest().getUser(), item.getQuestionType(), testSection.getTemplate().getDifficulty(), item.getDifficulty(), testSection.getTest().getFree());
                 PageRequest pageRequest = getPageRequest(countOfQuestions, countOfUserQuestions);
                 candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getUser(), testSection.getTemplate().getDifficulty(), item.getDifficulty(), item.getQuestionType(), testSection.getTest().getFree(), pageRequest);
-                //Check if we can't find unique question, then we have to find some duplicate questions;
+                //Check if we can't find unique question, then we have to find some questions anyway;
                 if (candidateQuestionsIds == null || candidateQuestionsIds.isEmpty()){
                     logger.warn("Couldn't find unique question for user : " + testSection.getTest().getUser().getId() + ", difficulty: " + testSection.getTemplate().getDifficulty() + ", difficulty_level: " + item.getDifficulty() + ", free: " + testSection.getTest().getFree() + " (page_number: " + pageRequest.getPageNumber() + ", page_size: " + pageRequest.getPageSize());
                     candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTemplate().getDifficulty(), item.getDifficulty(), item.getQuestionType(), testSection.getTest().getFree(), new PageRequest(random.nextInt((int) (countOfQuestions/10)), 10));
@@ -257,19 +220,19 @@ public class GRETestService implements TestService {
                 Long countOfUserQuestions = questionRepository.countOfQuestions(testSection.getTest().getUser(), item.getQuestionTemplate(), testSection.getTemplate().getDifficulty(), testSection.getTest().getFree());
                 PageRequest pageRequest = getPageRequest(countOfQuestions, countOfUserQuestions);
                 candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getUser(), testSection.getTest().getDifficulty(), item.getQuestionTemplate(), testSection.getTest().getFree(), pageRequest);
-                //Check if we can't find unique question, then we have to find some duplicate questions;
+                //Check if we can't find unique question, then we have to find some questions anyway;
                 if (candidateQuestionsIds == null || candidateQuestionsIds.isEmpty()){
                     logger.warn("Couldn't find unique question for user : " + testSection.getTest().getUser().getId() + ", difficulty: " + testSection.getTemplate().getDifficulty() + ", question_template: " + item.getQuestionTemplate().getLabel() + ", free: " + testSection.getTest().getFree() + " (page_number: " + pageRequest.getPageNumber() + ", page_size: " + pageRequest.getPageSize());
                     candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getDifficulty(), item.getQuestionTemplate(), testSection.getTest().getFree(), new PageRequest(random.nextInt((int) (countOfQuestions/10)), 10));
                 }
             }
             if (candidateQuestionsIds == null || candidateQuestionsIds.isEmpty())
-                throw new IllegalStateException("Can't find any question for this test");
+                throw new NoQuestionAvailableException();
             Long questionId = candidateQuestionsIds.get(random.nextInt(candidateQuestionsIds.size()));
             while(usedQuestionsIds.contains(questionId))
                 questionId = candidateQuestionsIds.get(random.nextInt(candidateQuestionsIds.size()));
             usedQuestionsIds.add(questionId);
-            Question question = findQuestion(questionId, item.getQuestionTemplate() == null ? item.getQuestionType() : item.getQuestionTemplate().getQuestionType());
+            Question question = questionService.findQuestion(questionId, item.getQuestionTemplate() == null ? item.getQuestionType() : item.getQuestionTemplate().getQuestionType());
             if (question instanceof QuestionsContainer) {
                 QuestionsContainer questionsContainer = (QuestionsContainer) questionRepository.findOne(question.getId());
                 questionsContainer.innerQuestions().forEach(innerQuestion -> {
@@ -295,47 +258,4 @@ public class GRETestService implements TestService {
         return new PageRequest(random.nextInt((int) ((all - used)/10)), 10);
     }
 
-    public Question findQuestion(Long id, QuestionType questionType) {
-        switch (questionType) {
-            case GRE_DATA_INTERPRETATION_SET:
-                return dataInterpretationSetQuestionRepository.findOne(id);
-            case GRE_DATA_INTERPRETATION_SET_SINGLE_ANSWER:
-                return dataInterpretationSingleAnswerQuestionRepository.findOne(id);
-            case GRE_DATA_INTERPRETATION_SET_MULTIPLE_ANSWER:
-                return dataInterpretationMultipleAnswerQuestionRepository.findOne(id);
-            case GRE_DATA_INTERPRETATION_SET_NUMERIC:
-                return dataInterpretationNumericQuestionRepository.findOne(id);
-            case GRE_NUMERIC:
-            case GRE_NUMERIC_FRACTION:
-                return numericQuestionRepository.findOne(id);
-            case GRE_QUANTITATIVE_COMPARISON:
-                return quantitativeComparisonQuestionRepository.findOne(id);
-            case GRE_QUANTITATIVE_SINGLE_ANSWER:
-                return quantitativeSingleAnswerQuestionRepository.findOne(id);
-            case GRE_QUANTITATIVE_MULTIPLE_ANSWER:
-                return quantitativeMultipleAnswerQuestionRepository.findOne(id);
-            case GRE_READING_COMPREHENSION_SHORT:
-            case GRE_READING_COMPREHENSION_MEDIUM:
-            case GRE_READING_COMPREHENSION_LONG:
-            case GRE_READING_COMPREHENSION_PARAGRAPH_ARGUMENT:
-                return readingComprehensionQuestionRepository.findOne(id);
-            case GRE_READING_COMPREHENSION_SINGLE_ANSWER:
-                return readingComprehensionSingleAnswerQuestionRepository.findOne(id);
-            case GRE_READING_COMPREHENSION_MULTIPLE_ANSWER:
-                return readingComprehensionMultipleAnswerQuestionRepository.findOne(id);
-            case GRE_READING_COMPREHENSION_SELECT_IN_PASSAGE:
-                return selectInPassageQuestionRepository.findOne(id);
-            case GRE_SENTENCE_EQUIVALENCE:
-                return sentenceEquivalenceQuestionRepository.findOne(id);
-            case GRE_TEXT_COMPLETION_ONE_BLANK:
-            case GRE_TEXT_COMPLETION_TWO_BLANK:
-            case GRE_TEXT_COMPLETION_THREE_BLANK:
-                return textCompletionQuestionRepository.findOne(id);
-            case GRE_WRITING_ISSUE:
-            case GRE_WRITING_ARGUMENT:
-                return writingQuestionRepository.findOne(id);
-            default:
-                throw new IllegalArgumentException();
-        }
-    }
 }

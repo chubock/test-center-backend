@@ -1,5 +1,6 @@
 package com.ztc.testcenter.dto;
 
+import com.ztc.testcenter.domain.user.Authority;
 import com.ztc.testcenter.domain.user.Role;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class RoleDTO {
 
     private Long id;
     private String name;
-    private List<AuthorityDTO> authorities = new ArrayList<>();
+    private List<Authority> authorities = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -31,11 +32,11 @@ public class RoleDTO {
         this.name = name;
     }
 
-    public List<AuthorityDTO> getAuthorities() {
+    public List<Authority> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(List<AuthorityDTO> authorities) {
+    public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
     }
 

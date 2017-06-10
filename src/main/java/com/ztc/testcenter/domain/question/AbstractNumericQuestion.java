@@ -66,6 +66,19 @@ public abstract class AbstractNumericQuestion extends Question {
             setAnswers(String.valueOf(this.nominatorAnswer));
     }
 
+    @Override
+    public boolean isCorrect(String answers) {
+        if (answers == null)
+            return false;
+        String[] split = answers.split("-");
+        if (split.length == 1 && isFraction() || split.length == 2 && !isFraction())
+            return false;
+        if (isFraction())
+            return Double.compare(Double.valueOf(split[0]) * denominatorAnswer, Double.valueOf(split[1]) * nominatorAnswer) == 0;
+        else
+            return Double.compare(Double.valueOf(split[0]), nominatorAnswer) == 0;
+    }
+
     @PostLoad
     @PostUpdate
     @PostPersist
