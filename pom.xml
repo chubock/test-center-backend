@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ztc</groupId>
-  <artifactId>TestCenter</artifactId>
+  <artifactId>test-center</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <!--<message>testSection-center Maven Webapp</message>-->
@@ -55,7 +55,7 @@
 
   </dependencies>
   <build>
-    <finalName>testSection-center</finalName>
+    <finalName>TestCenter</finalName>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
