@@ -6,8 +6,7 @@ job1:
   stage: build
   script:
     - cd /home/backend/test-center
-    - git checkout -f test
-    - git pull origin test
+    - git pull
     - mvn clean
     - mvn package
   tags:
