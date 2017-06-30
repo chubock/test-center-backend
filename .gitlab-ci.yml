@@ -1,0 +1,25 @@
+stages:
+  - build
+  - deploy
+
+job1:
+  stage: build
+  script:
+    - cd test-center
+    - git checkout -f test
+    - git pull origin test
+    - mvn clean
+    - mvn package
+  only:
+    test
+  tags:
+    test
+
+job2:
+  stage: deploy
+  script:
+    - sudo systemctl restart backend.service
+  only:
+    test
+  tags:
+    test
