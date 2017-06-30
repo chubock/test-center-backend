@@ -10,16 +10,12 @@ job1:
     - git pull origin test
     - mvn clean
     - mvn package
-  only:
-    test
   tags:
-    test
+    [test]
 
 job2:
   stage: deploy
   script:
     - sudo systemctl restart backend.service
-  only:
-    test
   tags:
-    test
+    [test]
