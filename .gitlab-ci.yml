@@ -5,6 +5,8 @@ stages:
 job1:
   stage: build
   script:
+    - whoami
+    - pwd
     - cd test-center
     - git checkout -f test
     - git pull origin test
