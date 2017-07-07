@@ -5,20 +5,20 @@ stages:
 job1:
   stage: build
   script:
-    - cd /home/backend/test-center
-    - git pull origin test
+    - cd /home/backend/gre-center
+    - git pull origin gre
     - mvn clean
     - mvn package
   tags:
-    [test]
+    [gre]
   only:
-    [test]
+    [gre]
 
 job2:
   stage: deploy
   script:
     - sudo systemctl restart backend.service
   tags:
-    [test]
+    [gre]
   only:
-    [test]
+    [gre]
