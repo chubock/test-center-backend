@@ -1,6 +1,6 @@
 package com.ztc.testcenter.config;
 
-import com.ztc.testcenter.security.JpaUserDetailsService;
+import com.ztc.testcenter.config.security.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

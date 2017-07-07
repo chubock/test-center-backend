@@ -1,6 +1,12 @@
 package com.ztc.testcenter;
 
-import com.ztc.testcenter.generator.*;
+import com.ztc.testcenter.question.gre.generator.QuestionTemplatesGenerator;
+import com.ztc.testcenter.question.gre.generator.QuestionsGenerator;
+import com.ztc.testcenter.test.gre.generator.SectionTemplatesGenerator;
+import com.ztc.testcenter.test.gre.generator.TestTemplatesGenerator;
+import com.ztc.testcenter.shop.generator.ProductsGenerator;
+import com.ztc.testcenter.user.generator.RolesGenerator;
+import com.ztc.testcenter.user.generator.UsersGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
