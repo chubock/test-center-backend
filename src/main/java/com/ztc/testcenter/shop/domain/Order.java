@@ -1,7 +1,5 @@
 package com.ztc.testcenter.shop.domain;
 
-import com.ztc.testcenter.user.domain.User;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -20,13 +18,13 @@ public class Order implements Serializable {
     private Long id;
     private Date orderDate = new Date();
     private List<OrderItem> orderItems = new ArrayList<>();
-    private User user;
+    private String username;
 
     protected Order() {
     }
 
-    public Order(User user) {
-        setUser(user);
+    public Order(String username) {
+        setUsername(username);
     }
 
     @Id
@@ -60,14 +58,13 @@ public class Order implements Serializable {
     }
 
     @NotNull
-    @ManyToOne(optional = false)
-    public User getUser() {
-        if (user == null)
+    public String getUsername() {
+        if (username == null)
             throw new IllegalArgumentException();
-        return user;
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String user) {
+        this.username = user;
     }
 }

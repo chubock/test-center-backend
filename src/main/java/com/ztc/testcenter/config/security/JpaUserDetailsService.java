@@ -29,8 +29,6 @@ public class JpaUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(s);
         if (user == null)
             throw new UsernameNotFoundException("No User Found for : " + s);
-        user.getRoles().size();
-        user.getRoles().forEach(role -> role.getAuthorities().size());
         return new ApplicationUserDetails(user);
     }
 }

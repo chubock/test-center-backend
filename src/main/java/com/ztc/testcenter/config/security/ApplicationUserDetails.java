@@ -5,9 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Yubar on 11/18/2016.
@@ -22,9 +21,7 @@ public class ApplicationUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> role.getAuthorities().forEach(authority -> authorities.add(new SimpleGrantedAuthority(authority.name()))));
-        return authorities;
+        return user.getAuthorities().stream().map(a -> new SimpleGrantedAuthority(a.name())).collect(Collectors.toList());
     }
 
     @Override

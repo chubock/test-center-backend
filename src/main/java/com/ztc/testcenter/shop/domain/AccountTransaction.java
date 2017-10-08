@@ -18,7 +18,7 @@ public class AccountTransaction implements Serializable {
     private Long id;
     private BigDecimal credit = BigDecimal.ZERO;
     private BigDecimal deposit = BigDecimal.ZERO;
-    private User user;
+    private String username;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,12 +51,11 @@ public class AccountTransaction implements Serializable {
     }
 
     @NotNull
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String user) {
+        this.username = user;
     }
 }

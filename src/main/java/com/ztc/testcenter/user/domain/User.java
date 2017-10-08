@@ -14,19 +14,15 @@ import java.util.List;
 @Table(name = "users")
 public class User implements Serializable {
 
-    private Long id;
     private String username;
     private String password;
     private String lastName;
     private String firstName;
-    private Gender gender = Gender.MALE;
     private Boolean enabled = true;
     private Boolean accountExpired = false;
     private Boolean credentialExpired = false;
     private Boolean locked = false;
-    private List<Role> roles = new ArrayList<>();
-    private Integer freeGreTestCount = 1;
-    private Integer greTestCount = 0;
+    private List<Authority> authorities = new ArrayList<>();
 
     protected User() {
     }
@@ -38,17 +34,6 @@ public class User implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @NotNull
-    @Column(nullable = false, unique = true)
     public String getUsername() {
         return username;
     }
@@ -91,17 +76,6 @@ public class User implements Serializable {
         this.firstName = firstName;
     }
 
-    @NotNull
-    @Enumerated
-    @Column(nullable = false)
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
     public Boolean getEnabled() {
         return enabled;
     }
@@ -134,62 +108,14 @@ public class User implements Serializable {
         this.locked = locked;
     }
 
-    @ManyToMany
-    @JoinTable(name = "USER_ROLES")
-    public List<Role> getRoles() {
-        return roles;
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    public List<Authority> getAuthorities() {
+        return authorities;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    @NotNull
-    @Column(nullable = false)
-    public Integer getFreeGreTestCount() {
-        return freeGreTestCount;
-    }
-
-    private void setFreeGreTestCount(Integer freeGRETestCount) {
-        if (freeGRETestCount == null)
-            throw new NullPointerException();
-        if (freeGRETestCount < 0)
-            throw new IllegalArgumentException();
-        this.freeGreTestCount = freeGRETestCount;
-    }
-
-    public void decrementFreeGRETestCount() {
-        if (freeGreTestCount < 1)
-            throw new IllegalStateException();
-        freeGreTestCount--;
-    }
-
-    public void increaseFreeGRETestCount(int increase) {
-        freeGreTestCount +=increase;
-    }
-
-    @NotNull
-    @Column(nullable = false)
-    public Integer getGreTestCount() {
-        return greTestCount;
-    }
-
-    private void setGreTestCount(Integer greTestCount) {
-        if (greTestCount == null)
-            throw new NullPointerException();
-        if (greTestCount < 0)
-            throw new IllegalArgumentException();
-        this.greTestCount = greTestCount;
-    }
-
-    public void decrementGreTestCount() {
-        if (greTestCount < 1)
-            throw new IllegalStateException();
-        greTestCount--;
-    }
-
-    public void increaseGreTestCount(int increase) {
-        greTestCount+=increase;
+    public void setAuthorities(List<Authority> roles) {
+        this.authorities = roles;
     }
 
     @Override
@@ -205,11 +131,6 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return getUsername() != null ? getUsername().hashCode() : 0;
-    }
-
-    public enum Gender {
-        MALE,
-        FEMALE
     }
 
 }

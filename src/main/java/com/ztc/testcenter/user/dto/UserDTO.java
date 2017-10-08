@@ -1,6 +1,5 @@
 package com.ztc.testcenter.user.dto;
 
-import com.ztc.testcenter.config.dto.AbstractDTO;
 import com.ztc.testcenter.user.domain.User;
 
 import java.util.ArrayList;
@@ -9,29 +8,19 @@ import java.util.List;
 /**
  * Created by Yubar on 3/4/2017.
  */
-public class UserDTO extends AbstractDTO<User> {
+public class UserDTO {
 
-    private Long id;
     private String username;
     private String password;
     private String lastName;
     private String firstName;
-    private User.Gender gender;
     private Boolean enabled = true;
     private Boolean accountExpired = false;
     private Boolean credentialExpired = false;
     private Boolean locked = false;
-    private List<String> roles = new ArrayList<>();
+    private List<String> authorities = new ArrayList<>();
     private Integer freeGreTestCount = 1;
     private Integer greTestCount = 0;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -63,14 +52,6 @@ public class UserDTO extends AbstractDTO<User> {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public User.Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(User.Gender gender) {
-        this.gender = gender;
     }
 
     public Boolean getEnabled() {
@@ -105,12 +86,12 @@ public class UserDTO extends AbstractDTO<User> {
         this.locked = locked;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public List<String> getAuthorities() {
+        return authorities;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
     }
 
     public Integer getFreeGreTestCount() {
@@ -129,13 +110,10 @@ public class UserDTO extends AbstractDTO<User> {
         this.greTestCount = greTestCount;
     }
 
-    @Override
     public User convert(User user) {
-        user.setId(getId());
         user.setFirstName(getFirstName());
         user.setLastName(getLastName());
         user.setUsername(getUsername());
-        user.setGender(getGender());
         user.setAccountExpired(getAccountExpired());
         user.setCredentialExpired(getCredentialExpired());
         user.setEnabled(getEnabled());
@@ -147,11 +125,9 @@ public class UserDTO extends AbstractDTO<User> {
         if (user == null)
             return null;
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setUsername(user.getUsername());
-        userDTO.setGender(user.getGender());
         userDTO.setAccountExpired(user.getAccountExpired());
         userDTO.setCredentialExpired(user.getCredentialExpired());
         userDTO.setEnabled(user.getEnabled());

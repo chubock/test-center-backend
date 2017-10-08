@@ -1,10 +1,10 @@
 package com.ztc.testcenter.shop.service;
 
 import com.ztc.testcenter.shop.domain.Order;
+import com.ztc.testcenter.shop.domain.OrderItem;
 import com.ztc.testcenter.shop.domain.Product;
 import com.ztc.testcenter.shop.repository.OrderRepository;
 import com.ztc.testcenter.shop.repository.ProductRepository;
-import com.ztc.testcenter.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yubar on 7/3/17.
@@ -30,7 +31,15 @@ public class ShopService {
         this.productRepository = productRepository;
     }
 
-    public Order createOrder(Order order) {
+    public Order createOrder(String username, Map<Long, Integer> products) {
+
+        Order order = new Order(username);
+        products.keySet()
+                .forEach(productId -> order.getOrderItems().add(new OrderItem(order,
+                        productRepository.getOne(productId),
+                        products.get(productId)))
+                );
+
         return orderRepository.save(order);
     }
 
@@ -38,8 +47,8 @@ public class ShopService {
         return orderRepository.findWithOrderItems(id);
     }
 
-    public Page<Order> getUserOrders(User user, Pageable pageable) {
-        return orderRepository.findByUser(user, pageable);
+    public Page<Order> getUserOrders(String username, Pageable pageable) {
+        return orderRepository.findByUsername(username, pageable);
     }
 
     public Product save(Product product) {

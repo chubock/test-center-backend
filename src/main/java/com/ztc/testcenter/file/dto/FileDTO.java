@@ -1,12 +1,11 @@
 package com.ztc.testcenter.file.dto;
 
-import com.ztc.testcenter.config.dto.AbstractDTO;
 import com.ztc.testcenter.file.domain.File;
 
 /**
  * Created by Yubar on 1/15/2017.
  */
-public class FileDTO extends AbstractDTO<File> {
+public class FileDTO {
 
     private Long id;
     private String name;
