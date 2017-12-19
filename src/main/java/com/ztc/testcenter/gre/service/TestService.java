@@ -196,7 +196,7 @@ public class TestService {
                 //Check if we can't find unique gre, then we have to find some questions anyway;
                 if (candidateQuestionsIds == null || candidateQuestionsIds.isEmpty()){
                     logger.warn("Couldn't find unique gre for user : " + testSection.getTest().getUsername() + ", difficulty: " + testSection.getTemplate().getDifficulty() + ", difficulty_level: " + item.getDifficulty() + ", free: " + testSection.getTest().getFree() + " (page_number: " + pageRequest.getPageNumber() + ", page_size: " + pageRequest.getPageSize());
-                    candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTemplate().getDifficulty(), item.getDifficulty(), item.getQuestionType(), testSection.getTest().getFree(), new PageRequest(random.nextInt((int) (countOfQuestions/10)), 10));
+                    candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTemplate().getDifficulty(), item.getDifficulty(), item.getQuestionType(), testSection.getTest().getFree(), new PageRequest(random.nextInt(countOfQuestions > 10 ? (int) (countOfQuestions/10) : 1), 10));
                 }
             } else {
                 Long countOfQuestions = questionRepository.countOfQuestions(item.getQuestionTemplate(), testSection.getTemplate().getDifficulty(), testSection.getTest().getFree());
@@ -206,7 +206,7 @@ public class TestService {
                 //Check if we can't find unique gre, then we have to find some questions anyway;
                 if (candidateQuestionsIds == null || candidateQuestionsIds.isEmpty()){
                     logger.warn("Couldn't find unique gre for user : " + testSection.getTest().getUsername() + ", difficulty: " + testSection.getTemplate().getDifficulty() + ", question_template: " + item.getQuestionTemplate().getLabel() + ", free: " + testSection.getTest().getFree() + " (page_number: " + pageRequest.getPageNumber() + ", page_size: " + pageRequest.getPageSize());
-                    candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getDifficulty(), item.getQuestionTemplate(), testSection.getTest().getFree(), new PageRequest(random.nextInt((int) (countOfQuestions/10)), 10));
+                    candidateQuestionsIds = testRepository.findQuestionIdForTest(testSection.getTest().getDifficulty(), item.getQuestionTemplate(), testSection.getTest().getFree(), new PageRequest(random.nextInt(countOfQuestions > 10 ? (int) (countOfQuestions/10) : 1), 10));
                 }
             }
             if (candidateQuestionsIds == null || candidateQuestionsIds.isEmpty())

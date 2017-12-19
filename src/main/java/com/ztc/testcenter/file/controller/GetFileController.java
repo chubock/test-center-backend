@@ -26,7 +26,6 @@ public class GetFileController {
     }
 
     @GetMapping("/file-service/{id}")
-    @PreAuthorize("hasAuthority('FILE_REST_SERVICE__UPLOAD_FILE')")
     public void handle(@PathVariable Long id, HttpServletResponse response) throws IOException {
         File file = fileService.find(id);
         if (file == null) {

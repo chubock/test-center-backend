@@ -30,7 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/registration-service/**")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/file-service/file/*")
+                .antMatchers(HttpMethod.GET, "/file-service/*")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

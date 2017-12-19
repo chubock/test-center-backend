@@ -29,7 +29,7 @@ public class FinishTestController {
         this.testService = testService;
     }
 
-    @PatchMapping("/gre-service/tests/{id}/finish")
+    @PostMapping("/gre-service/tests/{id}/finish")
     @PreAuthorize("hasAuthority('STUDENT')")
     public Date finishTest(@PathVariable Long id, @RequestBody Map<Long, String> answers) {
         return testService.finishTest(id, answers);

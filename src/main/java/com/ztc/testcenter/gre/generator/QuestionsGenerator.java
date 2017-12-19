@@ -4,7 +4,6 @@ import com.ztc.testcenter.file.service.FileService;
 import com.ztc.testcenter.gre.domain.question.*;
 import com.ztc.testcenter.gre.repository.question.QuestionTemplateRepository;
 import com.ztc.testcenter.gre.service.QuestionService;
-import com.ztc.testcenter.question.gre.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
