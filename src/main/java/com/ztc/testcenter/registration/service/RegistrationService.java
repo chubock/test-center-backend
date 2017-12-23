@@ -13,7 +13,6 @@ import com.ztc.testcenter.registration.repository.VerificationCodeRepository;
 import com.ztc.testcenter.user.service.UserService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +30,7 @@ import java.util.Date;
 public class RegistrationService {
 
     private final SecureRandom secureRandom = new SecureRandom();
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
     private final VerificationCodeRepository verificationCodeRepository;
     private final RegistrationCodeRepository registrationCodeRepository;
     private final UserService userService;
@@ -41,10 +40,13 @@ public class RegistrationService {
     @Autowired
     @SuppressWarnings("SpringJavaAutowiringInspection")
     public RegistrationService(
+            PasswordEncoder passwordEncoder,
             VerificationCodeRepository verificationCodeRepository,
             RegistrationCodeRepository registrationCodeRepository,
             UserService userService,
-            Logger logger, TestTicketService testTicketService) {
+            Logger logger,
+            TestTicketService testTicketService) {
+        this.passwordEncoder = passwordEncoder;
         this.verificationCodeRepository = verificationCodeRepository;
         this.registrationCodeRepository = registrationCodeRepository;
         this.userService = userService;
@@ -97,7 +99,6 @@ public class RegistrationService {
 
         r.use();
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setAuthorities(Collections.singletonList(Authority.STUDENT));
 
         user = userService.createUser(user);
