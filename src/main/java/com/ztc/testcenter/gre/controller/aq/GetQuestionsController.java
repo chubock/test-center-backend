@@ -29,9 +29,10 @@ public class GetQuestionsController {
     }
 
     @GetMapping("/gre-service/answered-questions")
-    @PreAuthorize("hasAuthority('STUDENT')")
+    @PreAuthorize("hasAnyAuthority('STUDENT', 'GRE_TEACHER')")
     public Page<QuestionDTO> getAnsweredQuestions(@ModelAttribute AnsweredQuestionSpecification specification, Authentication authentication, Pageable pageable) {
-        specification.setUsername(SecurityUtil.getUsername(authentication));
+        if (SecurityUtil.isStudent(authentication))
+            specification.setUsername(SecurityUtil.getUsername(authentication));
         return answeredQuestionService.findAnsweredQuestions(specification, pageable).map(QuestionDTO::valueOf);
     }
 }

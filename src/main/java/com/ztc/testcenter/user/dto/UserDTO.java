@@ -19,8 +19,6 @@ public class UserDTO {
     private Boolean credentialExpired = false;
     private Boolean locked = false;
     private List<String> authorities = new ArrayList<>();
-    private Integer freeGreTestCount = 1;
-    private Integer greTestCount = 0;
 
     public String getUsername() {
         return username;
@@ -92,22 +90,6 @@ public class UserDTO {
 
     public void setAuthorities(List<String> authorities) {
         this.authorities = authorities;
-    }
-
-    public Integer getFreeGreTestCount() {
-        return freeGreTestCount;
-    }
-
-    public void setFreeGreTestCount(Integer freeGreTestCount) {
-        this.freeGreTestCount = freeGreTestCount;
-    }
-
-    public Integer getGreTestCount() {
-        return greTestCount;
-    }
-
-    public void setGreTestCount(Integer greTestCount) {
-        this.greTestCount = greTestCount;
     }
 
     public User convert(User user) {
